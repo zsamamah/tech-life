@@ -584,7 +584,7 @@ $dbname = "tech-life";
           <br />
 
           <div class="item lite">
-           <div class="controls">
+           <!-- <div class="controls">
               <div class="checkbox-group" data-status="inactive">
                 <div class="checkbox"><i class="ion-android-done"></i></div>
                 <div class="label" data-value="Hp">Hp</div>
@@ -632,7 +632,7 @@ $dbname = "tech-life";
                 <div class="label" data-value="Microsoft">Microsoft</div>
                 <input type="checkbox" name="checkbox" value="" />
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <!-- /// -->
