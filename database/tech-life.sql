@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2022 at 06:12 PM
+-- Generation Time: Jan 26, 2022 at 06:58 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -37,7 +37,12 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'default');
+(1, 'default'),
+(2, 'action'),
+(3, 'fighting'),
+(4, 'sports'),
+(5, 'adventure'),
+(6, 'racing');
 
 -- --------------------------------------------------------
 
@@ -94,6 +99,17 @@ CREATE TABLE `products` (
   `discount` int(3) NOT NULL DEFAULT 1,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `price`, `description`, `image`, `stock`, `discount`, `category_id`) VALUES
+(1, 'Grand Theft Auto V', 20, 'The Criminal Enterprise Starter Pack is the fastest way for new Grand Theft Auto Online players to jumpstart their criminal empires. Do not purchase if you already own the Criminal Enterprise Starter Pack.', 'https://img.g2a.com/323x433/1x1x0/grand-theft-auto-v-criminal-enterprise-starter-pack-ps4-psn-key-europe/fd911188594b4ebfbe77628e', 10, 1, 2),
+(2, 'Batman: Arkham Knight', 15, 'In the explosive finale to the Arkham series, Batman faces the ultimate threat against the city he is sworn to protect.', 'https://img.g2a.com/323x433/1x1x0/batman-arkham-knight-psn-ps4-key-north-america/5912e7945bafe3ce796ca795', 5, 1, 5),
+(3, 'WWE 2K Battlegrounds', 10, 'Take your favorite WWE Superstars and Legends into battle with unrestrained, unhinged, and in-your-face pandemonium! Pull off over-the-top moves and use your special abilities to destroy your opponent while battling in interactive environments!', 'https://img.g2a.com/323x433/1x1x0/wwe-2k-battlegrounds-ps4-psn-key-europe/5fdb1c6346177c7e33723132', 10, 0, 3),
+(4, 'Fast & Furious: Crossroads', 25, 'Fast & Furious Crossroads is an action-adventure video game set in the Fast & Furious universe.', 'https://img.g2a.com/323x433/1x1x0/fast-furious-crossroads-ps4-psn-key-europe/5f2cf31b7e696c2e89796fb2', 5, 1, 6),
+(5, 'FIFA 2022', 25, 'FIFA 22 is the latest installment of the FIFA series developed by EA Canada and published by Electronic Arts. The game takes you back to the world of international football.', 'https://img.g2a.com/323x433/1x1x0/fifa-22-pc-origin-key-global/dce7598de0604b70ae47d576', 5, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -172,7 +188,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `comments`
@@ -196,7 +212,7 @@ ALTER TABLE `order_item`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
