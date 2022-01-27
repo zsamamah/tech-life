@@ -15,15 +15,18 @@ $dbname = "tech-life";
     if ($_GET['id']){
         if(isset($_SESSION['cart'])){
              for($index=0;$index<count($_SESSION['cart']);$index++){
-            if ($_SESSION['cart'][$index]['id']==$_GET['id'] && $_GET['type']=="add" || $_GET['typeCart']=="addToCart"){
+                
+            if ($_SESSION['cart'][$index]['id']==$_GET['id'] &&( $_GET['type']=="add" || $_GET['typeCart']=="addToCart"||$_GET['typeHome'])){ 
                 $_SESSION['cart'][$index]['quantity']+=1;
                 $found=true;
                 break;
-            }else if($_SESSION['cart'][$index]['quantity']>=2 && $_GET['type']=="min"){
+             }
+             else if($_SESSION['cart'][$index]['id']==$_GET['id'] && $_SESSION['cart'][$index]['quantity']>=2 && $_GET['type']=="min"){
                 $_SESSION['cart'][$index]['quantity']-=1;
                 $found=true;
                 break;
-            }else if($_SESSION['cart'][$index]['quantity']=1 && $_GET['type']=="min" || $_GET['type']=="remove"){
+            }
+            else if($_SESSION['cart'][$index]['id']==$_GET['id'] && $_SESSION['cart'][$index]['quantity']=1 && $_GET['type']=="min" || $_GET['type']=="remove"){
                 array_splice($_SESSION['cart'], $index,1);
                 $found=true;
                 break;
@@ -35,16 +38,21 @@ $dbname = "tech-life";
         $result=$connection->query($sql);
         $row = $result->fetch(PDO::FETCH_ASSOC) ;
              $_SESSION['cart'][]=["id"=>$_GET['id'],"name"=>$row['name'],"image"=>$row['image'],"price"=>$row['price'],"quantity"=>1];
-        
+
         }
-             
-       
+
+       echo "<pre>";
        var_dump($_SESSION['cart']);
      if($_GET['type']){
         header("Location:../cart/index.php");
-     }else{
+     }elseif($_GET['typeHome']){
+         header("Location:../home/index.php");
+     }
+     else {
           header("Location:./index.php");
      }
-      
+
     }
+      
+    
 ?>
