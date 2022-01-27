@@ -19,12 +19,16 @@ if (isset($_POST['signup'])) {
   $password = $_POST['password'];
   $confirmPassword = $_POST['password-confirm'];
 
-  if ($password  == $confirmPassword  && strlen($password) > 5  && strlen($name) > 8) {
-    //storing new user in database
-    $sql = "INSERT INTO users(name,phone,email,password)
-      VALUES ('$name','$phone','$email','$password')";
-    $conn->exec($sql);
-    header("location: ../login");
+  $stmt = $conn->prepare("SELECT * FROM users WHERE email='$email'");
+  $stmt->execute();
+  if ($stmt->rowCount() == null) {
+    if ($password  == $confirmPassword  && strlen($password) > 5  && strlen($name) > 8) {
+      //storing new user in database
+      $sql = "INSERT INTO users(name,phone,email,password)
+        VALUES ('$name','$phone','$email','$password')";
+      $conn->exec($sql);
+      header("location: ../login");
+    }
   }
 }
 
@@ -140,7 +144,6 @@ if (isset($_POST['signup'])) {
             </div>
           </div>
           <br />
-
           <p id="ErrMsg" style="color:brown"></p>
           <button type="submit" class="btn btn-primary" name="signup">Sign up</button>
 
@@ -455,11 +458,11 @@ if (isset($_POST['signup'])) {
 
       if (name.value.length < 5) {
         event.preventDefault();
-        Error.innerHTML = "Full name need to be 8 characters or more";
+        Error.innerHTML = "Full name must be 8 characters or more";
       }
       if (passsword.value.length < 5) {
         event.preventDefault();
-        Error.innerHTML += "<br> Passwords need to be 5 characters or more";
+        Error.innerHTML += "<br> Passwords must be 5 characters or more";
       }
       if (passsword.value != confirmPassword.value) {
         event.preventDefault();
