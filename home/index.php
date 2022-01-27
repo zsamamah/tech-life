@@ -42,7 +42,7 @@
 
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="../">Home</a></li>
+              <li class="active"><a href="../home">Home</a></li>
               <li><a href="../catalog/">Catalog</a></li>
               <li><a href="../blog/">Blog</a></li>
               <li><a href="../gallery/">Gallery</a></li>
@@ -110,14 +110,14 @@
                     <div class="row">
                       <div class="col-sm-8 col-sm-offset-2 align-center">
                         <img 
-                        style="     width: 20em;
-                        height:15em;"
+                        style="     width: 34em;
+                        height:25em;"
                         src="../assets/img/carousel/a.png" alt="Surface Pro"/>
                       </div>
                       <div class="col-sm-12 align-center">
-                        <h1>8 Windows Hybrid Laptops</h1>
-                        <p>The laptop comes with an Intel i5 chip and 8GB of RAM.</p>
-                        <a href="../catalog/">View surfaces ></a>
+                        <h1>New games for 2022</h1>
+                        <p>Find newest games and best deals</p>
+                        <a href="../catalog/">View catalog ></a>
                       </div>
                     </div>
                   </div>
@@ -135,15 +135,15 @@
                     <div class="row">
                       <div class="col-sm-5 col-sm-offset-1 align-center">
                         <img 
-                        style="     width: 20em;
-                        height: 15em;"
+                        style="     width: 28em;
+                        height: 25em;"
                        src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-xs hidden-sm"/>
                         <img src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-md hidden-lg"/>
                       </div>
                       <div class="col-sm-4 align-left">
                         <br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm">
                         <br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm">
-                        <h1>Luxury devices</h1>
+                        <h1>New games for 2022</h1>
                         <br>
                         
                         <p>
@@ -669,7 +669,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
       <hr>
 
-      <div class="container">
+      <!-- <div class="container">
         <div class="row">
           <div class="col-sm-8 col-md-9 payments">
             <p>Pay your order in the most convenient way</p>
@@ -683,7 +683,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             </div>
             <br>
 
-          </div>
+          </div> -->
           <div class="col-sm-4 col-md-3 align-right align-center-xs">
             <hr class="offset-sm hidden-sm">
             <hr class="offset-sm">
