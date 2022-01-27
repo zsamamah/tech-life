@@ -1,3 +1,19 @@
+<?php
+session_start();
+// if($_SESSION['logged_in']['is_admin']==='0')
+//   header("Location: ../welcome.php");
+try {
+  $sereverName = "localhost";
+  $dbName = "tech-life";
+  $dbusername = "root";
+  $dbpassword = "";
+  $conn = new PDO("mysql:host=$sereverName;dbname=$dbName", $dbusername, $dbpassword);
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  // echo "connection successfully!<br>";
+} catch (PDOException $e) {
+  echo "<br>" . $e->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -860,14 +876,293 @@
 
     <!-- Main content -->
     <div class="content">
-      <div class="container-fluid">
-        <div class="row">
-          
+      <div class="container-fluid row">
+        <!-- Horizontal Form start -->
+        <div class="col-md-6">
+        <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Add Product</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form class="form-horizontal" method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="Product Name">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                      <div class="form-group">
+                        <textarea name="description" class="form-control" rows="3" id="inputPassword3" placeholder="description"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Category</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" name="category">
+                    <!-- </select> -->
+                    <?php
+                    $sql = "SELECT id,name FROM categories";
+                    $result = $conn->query($sql);
+                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($result as $v){
+                      echo "<option value='{$v['id']}'>";
+                      echo $v['name'];
+                      echo "</option>";
+                    }
+                    ?>
+                    </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Image</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="image" class="form-control" id="inputPassword3" placeholder="image">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Stock</label>
+                    <div class="col-sm-10">
+                      <input type="number" name="stock" min="0" class="form-control" id="inputPassword3" placeholder="stock">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-10">
+                      <input type="number" name="price" min="0" class="form-control" id="inputPassword3" placeholder="price">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Discount</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="discount" class="form-control" id="inputPassword3" placeholder="discount">
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Add Product</button>
+                </div>
+                <!-- /.card-footer -->
+              </form>
+            </div>
+
+            <?php
+
+            if(isset($_POST['name']) && isset($_POST['description']) && isset($_POST['category']) && isset($_POST['image']) && isset($_POST['stock']) && isset($_POST['price']) && isset($_POST['discount'])){
+              $sql = "INSERT INTO products(name,description,image,category_id,price,stock,discount) VALUES('{$_POST['name']}','{$_POST['description']}','{$_POST['image']}','{$_POST['category']}','{$_POST['price']}','{$_POST['stock']}','{$_POST['discount']}')";
+              $conn->query($sql);
+            }
+
+            ?>
+
           <!-- /.col-md-6 -->
+          <!-- remove user -->
+        <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Remove User</h3>
+              </div>
+              <div class="card-body">
+                <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
+                <!-- <div class="row"> -->
+                  <div class="col-3">
+                    <input type="text" name="d_id" class="form-control" placeholder="Product ID" required>
+                  </div>
+                  <br>
+                  <div class="col-4">
+                    <input type="email" name="d_email" class="form-control" placeholder="Admin Email" required>
+                  </div>
+                  <br>
+                  <div class="col-5">
+                    <button type="submit" class="btn btn-primary" style="background-color: red;border: none;">Remove</button>
+                  </div>
+                <!-- </div> -->
+                </form>
+                <?php
+                if(isset($_POST['d_id'])&&$_POST['d_email']==="admin@admin.com"){
+                  $sql = "DELETE FROM products WHERE id='{$_POST['d_id']}'";
+                  $conn->exec($sql);
+                }
+                ?>
+              </div>
+            </div>
+        <!-- remove user -->
+
         </div>
-        <!-- /.row -->
-      </div>
+        <!-- Horizontal Form end -->
+
+        <!-- edit product start -->
+        <div class="col-md-6">
+        <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Edit Product</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Product ID</label>
+                    <input type="number" name="c_id" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter ID" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Name</label>
+                    <input type="text" name="c_name" class="form-control" id="exampleInputPassword1" placeholder="New Name">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Description</label>
+                    <div class="form-group">
+                        <textarea name="c_description" class="form-control" rows="3" id="inputPassword3" placeholder="New Description"></textarea>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Category</label>
+                    <select class="form-control" name="c_category">
+                    <!-- </select> -->
+                    <?php
+                    $sql = "SELECT id,name FROM categories";
+                    $result = $conn->query($sql);
+                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($result as $v){
+                      echo "<option value='{$v['id']}'>";
+                      echo $v['name'];
+                      echo "</option>";
+                    }
+                    ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Image</label>
+                    <input type="text" name="c_image" class="form-control" id="exampleInputPassword1" placeholder="New Image">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Stock</label>
+                    <input type="number" name="c_stock" class="form-control" id="exampleInputPassword1" placeholder="New Stock Value">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Price</label>
+                    <input type="number" name="c_price" class="form-control" id="exampleInputPassword1" placeholder="New Price">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Discount</label>
+                    <input type="text" name="c_discount" class="form-control" id="exampleInputPassword1" placeholder="New Discount">
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+
+            <?php
+
+            if(isset($_POST['c_id'])&&preg_match("/^[0-9]*$/",$_POST['c_id'])){
+              if(isset($_POST['c_name'])&&strlen($_POST['c_name'])>4){
+                $sql = "UPDATE products SET name='{$_POST['c_name']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_description'])&&strlen($_POST['c_description'])>4){
+                $sql = "UPDATE products SET description='{$_POST['c_description']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_category'])&&preg_match("/[0-9]/",$_POST['c_category'])){
+                $sql = "UPDATE products SET category_id='{$_POST['c_category']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_image'])&&strlen($_POST['c_image'])>4){
+                $sql = "UPDATE products SET image='{$_POST['c_image']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_stock'])&&preg_match("/[0-9]/",$_POST['c_stock'])){
+                $sql = "UPDATE products SET stock='{$_POST['c_stock']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_price'])&&preg_match("/[0-9]/",$_POST['c_price'])){
+                $sql = "UPDATE products SET price='{$_POST['c_price']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_discount'])&&preg_match("/[0-9]/",$_POST['c_discount'])){
+                $sql = "UPDATE products SET discount='{$_POST['c_discount']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+            }
+
+
+            ?>
+        
+            <!-- edit product end -->
+
+
+      </div></div>
       <!-- /.container-fluid -->
+
+      <!-- products table start -->
+      <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Fixed Header Table</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table table-head-fixed text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Category</th>
+                      <th>Price</th>
+                      <th>Discount</th>
+                      <th>Stock</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+
+                    $sql = "SELECT products.id,products.name,categories.name as cat,price,discount,stock,description FROM products INNER JOIN categories ON products.category_id=categories.id";
+                    $result = $conn->query($sql);
+                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                    // echo "<pre>";
+                    // print_r($result);
+                    // echo "</pre>";
+                    foreach($result as $val){
+                      echo "<tr>";
+                      echo "<td>{$val['id']}</td>";
+                      echo "<td>{$val['name']}</td>";
+                      echo "<td>{$val['cat']}</td>";
+                      echo "<td>".$val['price']."</td>";
+                      echo "<td>{$val['discount']}</td>";
+                      echo "<td>{$val['stock']}</td>";
+                      echo "<td>{$val['description']}</td>";
+                      echo "</tr>";
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+        <!-- products table end -->
+
+
     </div>
     <!-- /.content -->
   </div>
