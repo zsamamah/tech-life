@@ -1,5 +1,6 @@
 <?php 
 session_start();
+// unset($_SESSION['cart']);
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -569,7 +570,7 @@ $dbname = "tech-life";
                echo "<a style={} href='index.php'>All Product </a>";
                foreach($category as $cat){
               if($cat['name']!=="default"){
-    echo "<div class='checkbox-group' data-status='inactive'>";
+               echo "<div class='checkbox-group' data-status='inactive'>";
                echo "<div class='label' data-value='Laptops'><a href='index.php?id=$cat[id]'>
                $cat[name] </a> </div>";
               echo" </div>";
@@ -670,7 +671,7 @@ $dbname = "tech-life";
                   Details</a
                 >
                 <button class="btn btn-primary btn-rounded btn-sm">
-                  <i class="ion-bag"></i> Add to cart
+                  <i class="ion-bag"></i><a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo $product['id'] ?>&&typeCart=addToCart"> Add to cart</a>
                 </button>
               </div>
             </div> <?php } ?>
