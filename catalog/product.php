@@ -835,7 +835,7 @@ include_once("../cart/cart.php");
                 	<br>
                 </div>
                 <?php if(isset($_SESSION["Loggeduser"])) { ?>
-                <input type="hidden" name="user-id" value="<?php echo $_SESSION['Loggeduser']['id']; ?>"/>
+                <input type="hidden" name="user-id" value="<?php echo $_SESSION['LoggeduserId']; ?>"/>
                 <?php } ?>
                 <input type="hidden" name="product-id" value="<?php echo $id; ?>"/>
                 <!-- <div class="col-sm-6">
