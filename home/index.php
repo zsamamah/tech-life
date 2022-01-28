@@ -42,7 +42,7 @@
 
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="../">Home</a></li>
+              <li class="active"><a href="../home">Home</a></li>
               <li><a href="../catalog/">Catalog</a></li>
               <li><a href="../blog/">Blog</a></li>
               <li><a href="../gallery/">Gallery</a></li>
@@ -110,14 +110,13 @@
                     <div class="row">
                       <div class="col-sm-8 col-sm-offset-2 align-center">
                         <img 
-                        style="     width: 20em;
-                        height:15em;"
+                        
                         src="../assets/img/carousel/a.png" alt="Surface Pro"/>
                       </div>
                       <div class="col-sm-12 align-center">
-                        <h1>8 Windows Hybrid Laptops</h1>
-                        <p>The laptop comes with an Intel i5 chip and 8GB of RAM.</p>
-                        <a href="../catalog/">View surfaces ></a>
+                        <h1>New games for 2022</h1>
+                        <p>Find newest games and best deals</p>
+                        <a href="../catalog/">View catalog ></a>
                       </div>
                     </div>
                   </div>
@@ -135,15 +134,18 @@
                     <div class="row">
                       <div class="col-sm-5 col-sm-offset-1 align-center">
                         <img 
-                        style="     width: 20em;
-                        height: 15em;"
+
+
+                      
+
+
                        src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-xs hidden-sm"/>
                         <img src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-md hidden-lg"/>
                       </div>
                       <div class="col-sm-4 align-left">
                         <br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm">
                         <br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm">
-                        <h1>Luxury devices</h1>
+                        <h1>New games for 2022</h1>
                         <br>
                         
                         <p>
@@ -213,7 +215,11 @@
 
 
       <hr class="offset-md">
-  <?php
+ 
+        <div class='
+        row products'
+        > 
+        <?php
                                     
 $db_user="root";
 $db_pass="";
@@ -227,9 +233,6 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
        foreach ($row
       as $element){ ?>
 
-        <div class='
-        row products'
-        >
         <div class='
         col-sm-6 col-md-4 product'
         >
@@ -271,6 +274,8 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             ></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
           </div>
         </div>
+  
+     
 
 
         
@@ -338,7 +343,10 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
     <div class="container">
       <h2>BEST DEALS FOR YOU</h2>
-      <hr class="offset-md">
+      <hr class="offset-md"
+      > <div class='
+        row products'
+        >
       <?php
       $query = "SELECT * FROM products where discount=1 order by RAND() LIMIT 3  ";
                                     $stmt = $db->prepare($query);
@@ -346,9 +354,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
        foreach ($row
       as $element){ ?>
 
-        <div class='
-        row products'
-        >
+       
         <div class='
         col-sm-6 col-md-4 product'
         >
@@ -390,11 +396,15 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             ></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
           </div>
         </div>
+       
+      
+     
+       
 
 
       <?php
           } 
-          ?>
+          ?> </div>   </div>
 <!-- 
       <div class="row products">
         <div class="col-sm-6 col-md-3 product">
