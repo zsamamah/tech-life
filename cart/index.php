@@ -237,9 +237,7 @@ $items+=$product['quantity'];
                  echo "<span>Quantity of </span>". $row['name']."<span> is out of stock</span>";
                 }
                 elseif($product['quantity']<=$row['stock']){
-                  $sql = "INSERT INTO orders(user_id,total) VALUES ('$_SESSION[LoggeduserId]',$total)";
-                 $connection->exec($sql);
-                  echo "<script>window.location.href='../checkout/checkout.html'</script>";
+                  echo "<script>window.location.href='../checkout/index.html'</script>";
                 }
                 } }
               ?>
