@@ -2,6 +2,17 @@
 session_start();
 $total= 0;
 $items=0;
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tech-life";
+try{
+  $connection=new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
+  $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}catch(PDOException $e){
+  echo $sql . "<br>" . $e->getMessage();
+}
+
 if(isset($_SESSION['cart'])){
   foreach($_SESSION['cart'] as $product){
 $total+=$product['price']*$product['quantity'];
@@ -180,6 +191,7 @@ $items+=$product['quantity'];
         <div class="col-sm-8 col-md-4">
           <hr class="offset-md visible-sm" />
           <div class="panel panel-default">
+            <form method=post>
             <div class="panel-body">
               <h2 class="no-margin">Summary</h2>
               <hr class="offset-md" />
@@ -211,16 +223,35 @@ $items+=$product['quantity'];
                 </div>
               </div>
               <hr class="offset-md" />
-
-              <a href="../checkout/" class="btn btn-primary btn-lg justify"
-                ><i class="ion-android-checkbox-outline"></i>&nbsp;&nbsp;
+              <?php 
+              if($_SERVER["REQUEST_METHOD"]=="POST"){
+                $outOfStock=false;
+                foreach($_SESSION['cart'] as $product){
+                  $sql="SELECT * FROM products";
+                $result=$connection->query($sql);
+                $row = $result->fetch(PDO::FETCH_ASSOC) ;
+                if($product['quantity']>$row['stock']){
+                  $outOfStock=true;
+                 echo "<span>Quantity of </span>". $row['name']."<span> is out of stock</span>";
+                }
+                } 
+                if(!$outOfStock){
+                  $sql = "INSERT INTO orders('user_id','total')
+                  VALUES ('$_SESSION["LoggeduserId"]','$total')";
+                 $connection->exec($sql);
+                  echo "<script>window.location.href='../checkout/checkout.html'</script>";
+                }
+               
+              }
+              ?>
+             <button class="btn btn-primary btn-lg justify" style="height: 45px;" type="submit"><i class="ion-android-checkbox-outline"></i>&nbsp;&nbsp;
                 Checkout order</a
               >
               <hr class="offset-md" />
-
+              </button>
               <p>Payment method: Cash On Delivery</p>
         
-            </div>
+            </div></form>
           </div>
         </div>
       </div>
