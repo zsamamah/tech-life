@@ -29,7 +29,7 @@ $dbname = "tech-life";
       $resultCategory->execute();
       $category = $resultCategory->fetch(PDO::FETCH_ASSOC);
       $categoryName = $category['name'];
-      // print_r($category);
+      // print_r($_SESSION['Loggeduser']);
     }
 ?>
 
@@ -511,63 +511,27 @@ include_once("../cart/cart.php");
             <h1 class="h3">Recommendation for you</h1>
             
             <div class="row">
+              <?php  $query = "SELECT * FROM products WHERE category_id=$categoryID AND id!=$id order by RAND() LIMIT 4";
+                  $stmt = $connection->prepare($query);
+                  $stmt->execute(); 
+                  $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
+                  foreach($row as $val) { 
+                 ?>
+                  
               <div class="col-sm-6 col-md-3 product">
                 <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
-                <a href="./"><img src="../assets/img/products/chrome-book-11.jpg" alt="HP Chromebook 11"/></a>
+                <a href="./"><img src="<?php echo $val["image"] ?>" alt="HP Chromebook 11"/></a>
 
                 <div class="content">
-                  <h1 class="h4">HP Chromebook 11</h1>
-                  <p class="price">$199.99</p>
-                  <label>Laptops</label>
+                  <h1 class="h4"><?php echo $val["name"] ?></h1>
+                  <p class="price"><?php echo $val["price"] ?></p>
+                  <label><?php echo $categoryName ?></label>
 
-                  <a href="../catalog/product.html" class="btn btn-link"> Details</a>
+                  <a href="../catalog/product.php?details=<?php echo $val['id']?>" class="btn btn-link"> Details</a>
                   <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
                 </div>
               </div>
-
-              <div class="col-sm-6 col-md-3 product">
-                <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
-                <a href="./"><img src="../assets/img/products/chrome-book-14.jpg" alt="HP Chromebook 14"/></a>
-
-                <div class="content">
-                  <h1 class="h4">HP Chromebook 14</h1>
-                  <p class="sale">$209.99</p>
-                  <p class="price through">$249.99</p>
-                  <label>Laptops</label>
-
-                  <a href="../catalog/product.html" class="btn btn-link"> Details</a>
-                  <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-3 product">
-                <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
-                <a href="./"><img src="../assets/img/products/chrome-book-asus.jpg" alt="HP Chromebook 14"/></a>
-
-                <div class="content">
-                  <h1 class="h4">Asus Chromebook</h1>
-                  <p class="price">$299.99</p>
-                  <label>Laptops</label>
-
-                  <a href="../catalog/product.html" class="btn btn-link"> Details</a>
-                  <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
-                </div>
-              </div>
-
-
-              <div class="col-sm-6 col-md-3 product">
-                <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
-                <a href="./"><img src="../assets/img/products/ipad-air.jpg" alt="iPad Air"/></a>
-
-                <div class="content">
-                  <h1 class="h4">iPad Air</h1>
-                  <p class="price">$449.99</p>
-                  <label>Tablets</label>
-
-                  <a href="../catalog/product.html" class="btn btn-link"> Details</a>
-                  <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
-                </div>
-              </div>
+              <?php } ?>
             </div>
         </div>
     </section>
