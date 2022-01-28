@@ -16,6 +16,7 @@ try{
 if(isset($_SESSION['cart'])){
   foreach($_SESSION['cart'] as $product){
 $total+=$product['price']*$product['quantity'];
+$_SESSION['total']=$total;
 $items+=$product['quantity'];
 }
 }
