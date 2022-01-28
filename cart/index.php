@@ -1,7 +1,5 @@
 <?php 
 session_start();
-$total= 0;
-$items=0;
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -11,14 +9,6 @@ try{
   $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }catch(PDOException $e){
   echo $sql . "<br>" . $e->getMessage();
-}
-
-if(isset($_SESSION['cart'])){
-  foreach($_SESSION['cart'] as $product){
-$total+=$product['price']*$product['quantity'];
-$_SESSION['total']=$total;
-$items+=$product['quantity'];
-}
 }
 
 ?>
@@ -204,11 +194,15 @@ $items+=$product['quantity'];
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-xs-6">
-                    <p>Subtotal (<?php echo $items ?> items)</p>
+                    <p>Subtotal <?php  if(isset($_SESSION['items'])){
+                      echo $_SESSION['items'];
+                    } else echo 0;?> items</p>
                   </div>
                   <div class="col-xs-6">
                     <p><b><?php
-                      echo $total." "."JD";
+                    if(isset($_SESSION['total'])){
+                      echo $_SESSION['total']." "."JD";
+                    } else echo "0 JD";
                      ?></b></p>
                   </div>
                 </div>
@@ -222,7 +216,9 @@ $items+=$product['quantity'];
                   </div>
                   <div class="col-xs-6">
                     <h3 class="no-margin"><?php
-                      echo $total." "."JD";
+                    if(isset($_SESSION['total'])){
+                      echo $_SESSION['total']." "."JD";
+                    } else echo "0 JD";
                      ?></h3>
                   </div>
                 </div>

@@ -1,5 +1,7 @@
 <?php
 session_start();
+$_SESSION['total']= 0;
+$_SESSION['items']=0;
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -38,7 +40,7 @@ $dbname = "tech-life";
         $result=$connection->query($sql);
         $row = $result->fetch(PDO::FETCH_ASSOC) ;
              $_SESSION['cart'][]=["id"=>$_GET['id'],"name"=>$row['name'],"image"=>$row['image'],"price"=>$row['price'],"quantity"=>1];
-
+            
         }
 
        echo "<pre>";
@@ -47,11 +49,16 @@ $dbname = "tech-life";
         header("Location:../cart/index.php");
      }elseif($_GET['typeHome']){
          header("Location:../home/index.php");
+     }elseif($_GET['typecatalog']){
+        header("Location:../catalog/index.php");
      }
      else {
           header("Location:./index.php");
      }
-
+     foreach($_SESSION['cart'] as $product){
+        $_SESSION['total']+=$product['price']*$product['quantity'];
+        $_SESSION['items']+=$product['quantity'];
+                }
     }
       
     
