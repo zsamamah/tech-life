@@ -237,7 +237,12 @@ $items+=$product['quantity'];
                  echo "<span>Quantity of </span>". $row['name']."<span> is out of stock</span>";
                 }
                 elseif($product['quantity']<=$row['stock']){
-                  echo "<script>window.location.href='../checkout/index.html'</script>";
+                  if(isset($_SESSION["LoggeduserId"])){
+                    echo "<script>window.location.href='../checkout/index.html'</script>";
+                  }else{
+                    echo "<script>window.location.href='../login/index.php'</script>";
+                  }
+                  
                 }
                 } }
               ?>
