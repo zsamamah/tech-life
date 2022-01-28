@@ -62,7 +62,10 @@ $dbname = "tech-life";
     <![endif]-->
   </head>
   <body>
-    <div class="cart" data-toggle="inactive">
+    <?php 
+include_once("../cart/cart.php");
+ ?>
+    <!-- <div class="cart" data-toggle="inactive">
       <div class="label">
         <i class="ion-bag"></i> 7
       </div>
@@ -97,7 +100,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -123,7 +126,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>/input-group
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -149,7 +152,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -175,7 +178,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -201,7 +204,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -227,7 +230,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -253,15 +256,15 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
           </div>
 
-        </div>
+        </div> -->
 
-        <div class="checkout container-fluid">
+        <!-- <div class="checkout container-fluid">
           <div class="row">
             <div class="col-xs-3 col-sm-2">
               <div>
@@ -282,7 +285,7 @@ $dbname = "tech-life";
           </div>
         </div>
       </div>
-    </div>
+    </div> --> 
 
     <nav class="navbar navbar-default">
         <div class="container">
