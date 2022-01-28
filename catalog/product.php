@@ -1,3 +1,38 @@
+<?php 
+session_start();
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tech-life";
+	try{
+        $connection=new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
+        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }catch (PDOException $e){
+        echo $sql . "<br>" . $e->getMessage();
+    }
+
+    if(isset($_GET['details'])){
+      $id = $_GET['details'];
+      $result=$connection->prepare("SELECT * FROM products WHERE id=$id");
+      $result->execute();
+      $product = $result->fetch(PDO::FETCH_ASSOC);
+      // print_r($product);
+      $name = $product['name'];
+      $price = $product['price'];
+      $description = $product['description'];
+      $image = $product['image'];
+      $categoryID = $product['category_id'];
+      $discount = $product['discount']; 
+      $stock = $product['stock']; 
+    
+      $resultCategory=$connection->prepare("SELECT * FROM categories WHERE id=$categoryID");
+      $resultCategory->execute();
+      $category = $resultCategory->fetch(PDO::FETCH_ASSOC);
+      $categoryName = $category['name'];
+      // print_r($category);
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -301,25 +336,25 @@
               <!-- <button class="btn btn-control"></button> -->
 
               <div class="items">
-                <div class="item active" data-marker="1">
-                  <img src="../assets/img/product/1.jpg" alt="ChromeBook 11"/>
+                <div class="item active" style="text-align:center;" data-marker="1">
+                  <img style="height: 500px;  width: 60%;" src="<?php echo $image; ?>" alt="ChromeBook 11"/>
                 </div>
                 <div class="item" data-marker="2">
-                  <img src="../assets/img/product/2.jpg" alt="ChromeBook 11"/>
+                  <!-- <img src="../assets/img/product/2.jpg" alt="ChromeBook 11"/> -->
                 </div>
                 <div class="item" data-marker="3">
-                  <img src="../assets/img/product/3.jpg" alt="ChromeBook 11"/>
+                  <!-- <img src="../assets/img/product/3.jpg" alt="ChromeBook 11"/> -->
                 </div>
                 <div class="item" data-marker="4">
-                  <img src="../assets/img/product/4.jpg" alt="ChromeBook 11"/>
+                  <!-- <img src="../assets/img/product/4.jpg" alt="ChromeBook 11"/> -->
                 </div>
                 <div class="item" data-marker="5">
-                  <img src="../assets/img/product/5.jpg" alt="ChromeBook 11"/>
+                  <!-- <img src="../assets/img/product/5.jpg" alt="ChromeBook 11"/> -->
                 </div>
                 <div class="item" data-marker="6">
                   <div class="tiles">
                     <a href="#video" data-gallery="#video" data-source="youtube" data-id="hED0N4CFoqs" data-title="An upscale new Chromebook from HP" data-description="The new HP Chromebook 13 runs a Core M CPU inside a slim aluminum body.">
-                      <img src="../assets/img/product/video.jpg" alt="ChromeBook 11">
+                      <!-- <img src="../assets/img/product/video.jpg" alt="ChromeBook 11"> -->
 
                       <div class="overlay"></div>
                       <div class="content">
@@ -336,26 +371,25 @@
               </div>
 
               <ul class="markers">
-                <li data-marker="1" class="active"><img src="../assets/img/product/1.jpg" alt="Background"/></li>
-                <li data-marker="2"><img src="../assets/img/product/2.jpg" alt="Background"/></li>
-                <li data-marker="3"><img src="../assets/img/product/3.jpg" alt="Background"/></li>
-                <li data-marker="4"><img src="../assets/img/product/4.jpg" alt="Background"/></li>
-                <li data-marker="5"><img src="../assets/img/product/5.jpg" alt="Background"/></li>
-                <li data-marker="6"><img src="../assets/img/product/video.jpg" alt="Background"/></li>
+                <!-- <li data-marker="1" class="active"><img src="../assets/img/product/1.jpg" alt="Background"/></li> -->
+                <!-- <li data-marker="2"><img src="../assets/img/product/2.jpg" alt="Background"/></li> -->
+                <!-- <li data-marker="3"><img src="../assets/img/product/3.jpg" alt="Background"/></li> -->
+                <!-- <li data-marker="4"><img src="../assets/img/product/4.jpg" alt="Background"/></li> -->
+                <!-- <li data-marker="5"><img src="../assets/img/product/5.jpg" alt="Background"/></li> -->
+                <!-- <li data-marker="6"><img src="../assets/img/product/video.jpg" alt="Background"/></li> -->
               </ul>
             </div>
           </div>
           <div class="col-sm-5 col-md-5">
-            <img src="../assets/img/brands/hp.png" alt="HP" class="brand hidden-xs" />
+            <!-- <img src="../assets/img/brands/hp.png" alt="HP" class="brand hidden-xs" /> -->
 
-            <h1>HP Chromebook 11</h1>
+            <h1><?php echo $name; ?></h1>
 
-            <p> &middot; Chrome OS™</p>
-            <p> &middot; Intel® Celeron® processor</p>
-            <p> &middot; Intel HD Graphics</p>
+            <p> &middot; Category: <?php echo $categoryName; ?></p>
+            <p> &middot; Stock: <?php echo $stock; ?></p>
 
-            <p class="price">$209.99</p>
-            <p class="price through">$249.99</p>
+            <p class="price">$<?php echo $price; ?>JD</p>
+            <!-- <p class="price through">$249.99</p> -->
             <br><br>
 
             <button class="btn btn-primary btn-rounded"> <i class="ion-bag"></i> Add to cart</button>
@@ -366,11 +400,11 @@
 
 	    	<div class="row">
 	    		<div class="col-sm-7">
-	    			<h1>HP Chromebook 11</h1>
+	    			<h1><?php echo $name; ?></h1>
 		    		 <br>
 
 		    		 <p>
-		    		 	The stylish HP Chromebook provides a speedy connection to your protected online content and automatically updated apps, all within an ultra-thin full-sized notebook, providing a comfortable gateway to surf, socialize and play.
+             <?php echo $description; ?>
 		    		 </p>
 		    		 <br>
 
@@ -424,31 +458,31 @@
           </div>
           <div class="col-sm-5">
             <div class="comments">
-              <h2 class="h3">What do you think? (#3)</h2>
+              <h2 class="h3">Leave a Review</h2>
               <br>
 
 
               <div class="wrapper">
                 <div class="content">
-                  <h3>Anne Hathaway</h3>
-                  <label>2 years ago</label>
-                  <p>
-                    Apple Music brings iTunes music streaming to the UK. But is it worth paying for? In our Apple Music review, we examine the service's features, UK pricing, audio quality and music library
-                  </p>
+                <?php
+                $Comments=$connection->prepare("SELECT * FROM comments WHERE product_id=$id");
+                $Comments->execute();
+                if($Comments->rowCount()){
+                  foreach($Comments as $comment){ 
+                    $userID = $comment['user_id'];
+                    $User=$connection->prepare("SELECT * FROM users WHERE id=$userID");
+                    $User->execute();
+                    $selectedUser = $User->fetch(PDO::FETCH_ASSOC);
+                    echo "<h3>".$selectedUser["name"]."</h3>";
+                  // echo "<label>2 years ago</label>";
+                  echo "<p>".$comment['comment']."</p>";
+                }
+              } else {
+                echo "<p>No reviews yet</p>";
+              }
+                ?>
+                  
 
-
-                  <h3>Chris Hemsworth</h3>
-                  <label>Today</label>
-                  <p>
-                    Samsung's Galaxy S7 smartphone is getting serious hype. Here's what it does better than Apple's iPhone 6s.
-                  </p>
-
-
-                  <h3>Anne Hathaway</h3>
-                  <label>2 years ago</label>
-                  <p>
-                    Apple Music brings iTunes music streaming to the UK. But is it worth paying for? In our Apple Music review, we examine the service's features, UK pricing, audio quality and music library
-                  </p>
                 </div>
               </div>
               <br>
@@ -457,12 +491,12 @@
             </div>
             <br><br>
 
-            <div class="talk">
+            <!-- <div class="talk">
               <h2 class="h3">Do you have any questions?</h2>
               <p>Online chat with our manager</p>
 
               <button class="btn btn-default btn-sm"> <i class="ion-android-contact"></i> Lat's talk </button>
-            </div>
+            </div> -->
 	    		</div>
 	    	</div>
     	</div>
@@ -557,7 +591,7 @@
             <div class="col-xs-6 col-sm-3">
               <div class="item">
                 <i class="ion-ios-gear-outline"></i>
-                <h1> Manufacturer’s <br> <span>warranty</span></h1>
+                <h1> Manufacturers <br> <span>warranty</span></h1>
               </div>
             </div>
             <div class="col-xs-6 col-sm-3">
@@ -827,22 +861,26 @@
           </div>
           <div class="modal-body">
             <div class="container-fluid">
-            <form class="join" action="index.php" method="post">
+            <form class="join" action="comment.php" method="post">
               <div class="row">
               	<div class="col-sm-12">
                 	<textarea name="comment" placeholder="Type here" required="" class="form-control" rows="5"></textarea>
                 	<br>
                 </div>
-                <div class="col-sm-6">
+                <?php if(isset($_SESSION["Loggeduser"])) { ?>
+                <input type="hidden" name="user-id" value="<?php echo $_SESSION['Loggeduser']['id']; ?>"/>
+                <?php } ?>
+                <input type="hidden" name="product-id" value="<?php echo $id; ?>"/>
+                <!-- <div class="col-sm-6">
                     <input type="text" name="name" value="" placeholder="Name" required="" class="form-control" />
                 </div>
                 <div class="col-sm-6">
                     <input type="email" name="email" value="" placeholder="E-mail" required="" class="form-control" />
-                </div>
+                </div> -->
                 <div class="col-sm-12">
                 	<div class="align-center">
 	                	<br>
-	                	<button type="submit" class="btn btn-primary btn-sm"> <i class="ion-android-send"></i> Send</button>
+	                	<button type="submit" class="btn btn-primary btn-sm" name="send-comment"> <i class="ion-android-send"></i> Send</button>
                 		<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"> <i class="ion-android-share"></i> No, thanks </button>
 	                	<br><br>
                 	</div>

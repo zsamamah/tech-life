@@ -19,37 +19,28 @@ try {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Dashboard</title>
-  
+  <title>Products CRUD</title>
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
+  <!-- IonIcons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<!--
+`body` tag options:
+
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
+
+  * sidebar-collapse
+  * sidebar-mini
+-->
+<body class="hold-transition sidebar-mini">
 <div class="wrapper">
-
-  <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
-
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -235,7 +226,7 @@ try {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.php" class="nav-link active">
+                <a href="./index.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Users CRUD</p>
                 </a>
@@ -247,7 +238,7 @@ try {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index3.php" class="nav-link">
+                <a href="./index3.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products CRUD</p>
                 </a>
@@ -484,7 +475,7 @@ try {
           <li class="nav-header">EXAMPLES</li>
           <li class="nav-item">
             <a href="pages/calendar.html" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
                 Calendar
                 <span class="badge badge-info right">2</span>
@@ -870,12 +861,12 @@ try {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">Dashboard v3</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item active">Dashboard v3</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -884,187 +875,117 @@ try {
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
-
-                <p>New Orders</p>
+    <div class="content">
+      <div class="container-fluid row">
+        <!-- Horizontal Form start -->
+        <div class="col-md-6">
+        <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Add Product</h3>
               </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form class="form-horizontal" method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="Product Name">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                      <div class="form-group">
+                        <textarea name="description" class="form-control" rows="3" id="inputPassword3" placeholder="description"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Category</label>
+                    <div class="col-sm-10">
+                    <select class="form-control" name="category">
+                    <!-- </select> -->
+                    <?php
+                    $sql = "SELECT id,name FROM categories";
+                    $result = $conn->query($sql);
+                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($result as $v){
+                      echo "<option value='{$v['id']}'>";
+                      echo $v['name'];
+                      echo "</option>";
+                    }
+                    ?>
+                    </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Image</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="image" class="form-control" id="inputPassword3" placeholder="image">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Stock</label>
+                    <div class="col-sm-10">
+                      <input type="number" name="stock" min="0" class="form-control" id="inputPassword3" placeholder="stock">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-10">
+                      <input type="number" name="price" min="0" class="form-control" id="inputPassword3" placeholder="price">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Discount</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="discount" class="form-control" id="inputPassword3" placeholder="discount">
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-info">Add Product</button>
+                </div>
+                <!-- /.card-footer -->
+              </form>
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
+            <?php
 
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
+            if(isset($_POST['name']) && isset($_POST['description']) && isset($_POST['category']) && isset($_POST['image']) && isset($_POST['stock']) && isset($_POST['price']) && isset($_POST['discount'])){
+              $sql = "INSERT INTO products(name,description,image,category_id,price,stock,discount) VALUES('{$_POST['name']}','{$_POST['description']}','{$_POST['image']}','{$_POST['category']}','{$_POST['price']}','{$_POST['stock']}','{$_POST['discount']}')";
+              $conn->query($sql);
+            }
 
-                <p>Unique Visitors</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
-        <!-- /.row -->
+            ?>
 
-
-
-        <!-- add user -->
-        <div class="card card-primary">
-          <div class="card-header">
-            <h3 class="card-title">Add User</h3>
-          </div>
-          <!-- /.card-header -->
-          <!-- form start -->
-          <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-            <div class="card-body">
-              <div class="form-group">
-                <label for="exampleInputName">Full Name</label>
-                <input type="text" name="name" class="form-control" id="exampleInputName" placeholder="Enter name" required>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Phone</label>
-                <input type="tel" name="phone" class="form-control" id="exampleInputEmail1" placeholder="Enter phone number" required>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
-              </div>
-            </div>
-            <!-- /.card-body -->
-
-            <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-          <?php
-          if(isset($_POST['name'])&&isset($_POST['email'])&&isset($_POST['password'])){
-            $sql = "INSERT INTO users(name,phone,email,password) VALUES ('{$_POST['name']}','{$_POST['phone']}','{$_POST['email']}','{$_POST['password']}')";
-            $conn->query($sql);
-          }
-          ?>
-        </div>
-        <!-- add user -->
-
-        <!-- users table -->
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>ID</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-              </tr>
-              </thead>
-              <tbody>
-              <?php
-              $sql = "SELECT id,name,email,phone FROM users";
-              $data = $conn->query($sql);
-              $result = $data->fetchAll(PDO::FETCH_ASSOC);
-              // print_r($result);
-              foreach($result as $val){
-                echo "<tr>";
-                echo "<td>{$val['id']}</td>";
-                echo "<td>{$val['name']}</td>";
-                echo "<td>{$val['email']}</td>";
-                echo "<td>{$val['phone']}</td>";
-                // echo "<td>{$val['last_login']}</td>";
-                // echo "<td>{$val['date_created']}</td>";
-                echo "</tr>";
-              }
-              ?>
-              </tbody>
-              <tfoot>
-              <tr>
-                <th>ID</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-              </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- users table -->
-
-        <!-- remove user -->
+          <!-- /.col-md-6 -->
+          <!-- remove user -->
         <div class="card card-danger">
               <div class="card-header">
                 <h3 class="card-title">Remove User</h3>
               </div>
               <div class="card-body">
                 <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                <div class="row">
+                <!-- <div class="row"> -->
                   <div class="col-3">
-                    <input type="text" name="d_id" class="form-control" placeholder="User ID" required>
+                    <input type="text" name="d_id" class="form-control" placeholder="Product ID" required>
                   </div>
+                  <br>
                   <div class="col-4">
-                    <input type="email" name="d_email" class="form-control" placeholder="User Email" required>
+                    <input type="email" name="d_email" class="form-control" placeholder="Admin Email" required>
                   </div>
+                  <br>
                   <div class="col-5">
                     <button type="submit" class="btn btn-primary" style="background-color: red;border: none;">Remove</button>
                   </div>
-                </div>
+                <!-- </div> -->
                 </form>
                 <?php
-                if(isset($_POST['d_id'])&&isset($_POST['d_email'])){
-                  if($_POST['d_id']==='1') exit();
-                  $sql = "DELETE FROM users WHERE id='{$_POST['d_id']}' AND email='{$_POST['d_email']}'";
+                if(isset($_POST['d_id'])&&$_POST['d_email']==="admin@admin.com"){
+                  $sql = "DELETE FROM products WHERE id='{$_POST['d_id']}'";
                   $conn->exec($sql);
                 }
                 ?>
@@ -1072,76 +993,188 @@ try {
             </div>
         <!-- remove user -->
 
-        <!-- edit user -->
+        </div>
+        <!-- Horizontal Form end -->
+
+        <!-- edit product start -->
+        <div class="col-md-6">
         <div class="card card-primary">
-          <div class="card-header">
-            <h3 class="card-title">Edit User Data</h3>
-          </div>
-          <!-- /.card-header -->
-          <!-- form start -->
-          <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-            <div class="card-body">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" name="c_email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+              <div class="card-header">
+                <h3 class="card-title">Edit Product</h3>
               </div>
-              <div class="form-group">
-                <label for="exampleInputName">Full Name</label>
-                <input type="text" name="c_name" class="form-control" id="exampleInputName" placeholder="Enter name">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputName">Phone</label>
-                <input type="tel" name="c_phone" class="form-control" id="exampleInputName" placeholder="Enter phnoe number">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" name="c_password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Product ID</label>
+                    <input type="number" name="c_id" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter ID" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Name</label>
+                    <input type="text" name="c_name" class="form-control" id="exampleInputPassword1" placeholder="New Name">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Description</label>
+                    <div class="form-group">
+                        <textarea name="c_description" class="form-control" rows="3" id="inputPassword3" placeholder="New Description"></textarea>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Category</label>
+                    <select class="form-control" name="c_category">
+                    <!-- </select> -->
+                    <?php
+                    $sql = "SELECT id,name FROM categories";
+                    $result = $conn->query($sql);
+                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($result as $v){
+                      echo "<option value='{$v['id']}'>";
+                      echo $v['name'];
+                      echo "</option>";
+                    }
+                    ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Image</label>
+                    <input type="text" name="c_image" class="form-control" id="exampleInputPassword1" placeholder="New Image">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Stock</label>
+                    <input type="number" name="c_stock" class="form-control" id="exampleInputPassword1" placeholder="New Stock Value">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Price</label>
+                    <input type="number" name="c_price" class="form-control" id="exampleInputPassword1" placeholder="New Price">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Discount</label>
+                    <input type="text" name="c_discount" class="form-control" id="exampleInputPassword1" placeholder="New Discount">
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
             </div>
-            <!-- /.card-body -->
 
-            <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Edit Data</button>
+            <?php
+
+            if(isset($_POST['c_id'])&&preg_match("/^[0-9]*$/",$_POST['c_id'])){
+              if(isset($_POST['c_name'])&&strlen($_POST['c_name'])>4){
+                $sql = "UPDATE products SET name='{$_POST['c_name']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_description'])&&strlen($_POST['c_description'])>4){
+                $sql = "UPDATE products SET description='{$_POST['c_description']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_category'])&&preg_match("/[0-9]/",$_POST['c_category'])){
+                $sql = "UPDATE products SET category_id='{$_POST['c_category']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_image'])&&strlen($_POST['c_image'])>4){
+                $sql = "UPDATE products SET image='{$_POST['c_image']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_stock'])&&preg_match("/[0-9]/",$_POST['c_stock'])){
+                $sql = "UPDATE products SET stock='{$_POST['c_stock']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_price'])&&preg_match("/[0-9]/",$_POST['c_price'])){
+                $sql = "UPDATE products SET price='{$_POST['c_price']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_discount'])&&preg_match("/[0-9]/",$_POST['c_discount'])){
+                $sql = "UPDATE products SET discount='{$_POST['c_discount']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+            }
+
+
+            ?>
+        
+            <!-- edit product end -->
+
+
+      </div></div>
+      <!-- /.container-fluid -->
+
+      <!-- products table start -->
+      <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Fixed Header Table</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table table-head-fixed text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Category</th>
+                      <th>Price</th>
+                      <th>Discount</th>
+                      <th>Stock</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+
+                    $sql = "SELECT products.id,products.name,categories.name as cat,price,discount,stock,description FROM products INNER JOIN categories ON products.category_id=categories.id";
+                    $result = $conn->query($sql);
+                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                    // echo "<pre>";
+                    // print_r($result);
+                    // echo "</pre>";
+                    foreach($result as $val){
+                      echo "<tr>";
+                      echo "<td>{$val['id']}</td>";
+                      echo "<td>{$val['name']}</td>";
+                      echo "<td>{$val['cat']}</td>";
+                      echo "<td>".$val['price']."</td>";
+                      echo "<td>{$val['discount']}</td>";
+                      echo "<td>{$val['stock']}</td>";
+                      echo "<td>{$val['description']}</td>";
+                      echo "</tr>";
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
             </div>
-          </form>
-          <?php
-            if(isset($_POST['c_name']) && preg_match("/(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/", $_POST['c_name']) && $_POST['c_name']!==""){
-              $sql = "UPDATE users SET name='{$_POST['c_name']}' WHERE email='{$_POST['c_email']}'";
-              $conn->exec($sql);
-            }
-            if(isset($_POST['c_password']) && preg_match("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/", $_POST['c_password'])){
-              $sql = "UPDATE users SET password='{$_POST['c_password']}' WHERE email='{$_POST['c_email']}'";
-              $conn->exec($sql);
-            }
-            if(isset($_POST['c_phone']) && preg_match("/^[0-9]{10}$/",$_POST['c_phone'])){
-              $sql = "UPDATE users SET phone='{$_POST['c_phone']}' WHERE email='{$_POST['c_email']}'";
-              $conn->exec($sql);
-            }
-          ?>
-        </div>
-        <!-- edit user -->
+        <!-- products table end -->
 
 
-
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-7 connectedSortable">
-
-          </section>
-          <!-- /.Left col -->
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
-          <section class="col-lg-5 connectedSortable">
-
-          </section>
-          <!-- right col -->
-        </div>
-        <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
-    </section>
+    </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
   <footer class="main-footer">
     <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
     All rights reserved.
@@ -1149,48 +1182,23 @@ try {
       <b>Version</b> 3.1.0
     </div>
   </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
+<!-- REQUIRED SCRIPTS -->
+
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
+<!-- Bootstrap -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- ChartJS -->
-<script src="plugins/chart.js/Chart.min.js"></script>
-<!-- Sparkline -->
-<script src="plugins/sparklines/sparkline.js"></script>
-<!-- JQVMap -->
-<script src="plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="plugins/jquery-knob/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="plugins/moment/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Summernote -->
-<script src="plugins/summernote/summernote-bs4.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<!-- AdminLTE App -->
+<!-- AdminLTE -->
 <script src="dist/js/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="plugins/chart.js/Chart.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
+<script src="dist/js/pages/dashboard3.js"></script>
 </body>
 </html>
