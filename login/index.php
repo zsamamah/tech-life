@@ -123,6 +123,8 @@ try {
               // header("location: ../admin/index2.html");
             } else if ($stmt->rowCount() != null) {
               $_SESSION["Loggeduser"] = $row["name"];
+              $_SESSION["LoggeduserEmail"] = $row["email"];
+              $_SESSION["LoggeduserPhone"] = $row["phone"];
               $_SESSION["LoggeduserId"]=$row['id'];
               echo "<script>window.location.href='../home/index.php'</script>";
             } else {
