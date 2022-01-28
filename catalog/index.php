@@ -1,5 +1,6 @@
 <?php 
 session_start();
+// unset($_SESSION['cart']);
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -10,6 +11,7 @@ $dbname = "tech-life";
     }catch (PDOException $e){
         echo $sql . "<br>" . $e->getMessage();
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -498,7 +500,7 @@ $dbname = "tech-life";
     </nav>
     <hr class="offset-lg" />
 
-    <div class="container tags">
+    <!-- <div class="container tags">
       <div class="btn-group pull-right">
         <button
           type="button"
@@ -547,7 +549,7 @@ $dbname = "tech-life";
           <input type="radio" name="options" id="option6" /> Gaming
         </label>
       </div>
-    </div>
+    </div> -->
 
     <div class="container">
       <div class="row">
@@ -558,9 +560,6 @@ $dbname = "tech-life";
               <a href="#clear" data-action="open" class="down">
                 <i class="ion-android-arrow-dropdown"></i> Open</a
               >
-              <a href="#clear" data-action="clear">
-                <i class="ion-ios-trash-outline"></i> Clear</a
-              >
               <h1 class="h4">Type</h1>
             </div>
 
@@ -568,103 +567,24 @@ $dbname = "tech-life";
               <?php
                $category=$connection->prepare("SELECT * FROM categories");
                $category->execute();
-               foreach($category as $category){
-              ?> 
-              <div class="checkbox-group" data-status="inactive">
-                <div class="checkbox"><i class="ion-android-done"></i></div>
-                <div class="label" data-value="Laptops"><?php echo $category['name'] ?></div>
-                <input type="checkbox" name="checkbox" value="" />
-              </div>
-             <?php }?>
+               echo "<a style={} href='index.php'>All Product </a>";
+               foreach($category as $cat){
+              if($cat['name']!=="default"){
+               echo "<div class='checkbox-group' data-status='inactive'>";
+               echo "<div class='label' data-value='Laptops'><a href='index.php?id=$cat[id]'>
+               $cat[name] </a> </div>";
+              echo" </div>";
+              }
+          
+              }
+              ?>
             </div>
           </div>
 
-          <br />
-
-          <div class="item">
-            <div class="title">
-              <a href="#clear" data-action="open" class="down">
-                <i class="ion-android-arrow-dropdown"></i> Open</a
-              >
-              <a href="#clear" data-action="clear">
-                <i class="ion-ios-trash-outline"></i> Clear</a
-              >
-              <h1 class="h4">Screen</h1>
-            </div>
-
-            <div class="controls grid">
-              <div class="checkbox-group" data-status="inactive">
-                <div class="checkbox"><i class="ion-android-done"></i></div>
-                <div class="label" data-value="7 in">7 in</div>
-                <input type="checkbox" name="checkbox" value="" />
-              </div>
-
-              <div class="checkbox-group" data-status="inactive">
-                <div class="checkbox"><i class="ion-android-done"></i></div>
-                <div class="label" data-value="10 in">10 in</div>
-                <input type="checkbox" name="checkbox" value="" />
-              </div>
-
-              <div class="checkbox-group" data-status="inactive">
-                <div class="checkbox"><i class="ion-android-done"></i></div>
-                <div class="label" data-value="11 in">11 in</div>
-                <input type="checkbox" name="checkbox" value="" />
-              </div>
-
-              <div class="checkbox-group" data-status="inactive">
-                <div class="checkbox"><i class="ion-android-done"></i></div>
-                <div class="label" data-value="14 in">14 in</div>
-                <input type="checkbox" name="checkbox" value="" />
-              </div>
-
-              <div class="checkbox-group" data-status="inactive">
-                <div class="checkbox"><i class="ion-android-done"></i></div>
-                <div class="label" data-value="15 in">15 in</div>
-                <input type="checkbox" name="checkbox" value="" />
-              </div>
-
-              <div class="checkbox-group" data-status="inactive">
-                <div class="checkbox"><i class="ion-android-done"></i></div>
-                <div class="label" data-value="17 in">17 in</div>
-                <input type="checkbox" name="checkbox" value="" />
-              </div>
-            </div>
-          </div>
-
-          <br />
-
-          <div class="item">
-            <div class="title">
-              <a href="#clear" data-action="open" class="down">
-                <i class="ion-android-arrow-dropdown"></i> Open</a
-              >
-              <a href="#clear" data-action="clear-price">
-                <i class="ion-ios-trash-outline"></i> Clear</a
-              >
-              <h1 class="h4">Price</h1>
-            </div>
-
-            <div class="controls">
-              <br />
-              <div id="slider-price"></div>
-              <br />
-              <p id="amount"></p>
-            </div>
-          </div>
           <br />
 
           <div class="item lite">
-            <div class="title">
-              <a href="#clear" data-action="open" class="down">
-                <i class="ion-android-arrow-dropdown"></i> Open</a
-              >
-              <a href="#clear" data-action="clear">
-                <i class="ion-ios-trash-outline"></i> Clear</a
-              >
-              <h1 class="h4">Manufacturer</h1>
-            </div>
-
-            <div class="controls">
+           <!-- <div class="controls">
               <div class="checkbox-group" data-status="inactive">
                 <div class="checkbox"><i class="ion-android-done"></i></div>
                 <div class="label" data-value="Hp">Hp</div>
@@ -712,7 +632,7 @@ $dbname = "tech-life";
                 <div class="label" data-value="Microsoft">Microsoft</div>
                 <input type="checkbox" name="checkbox" value="" />
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <!-- /// -->
@@ -721,7 +641,11 @@ $dbname = "tech-life";
         <div class="col-sm-9 products">
           <div class="row">
             <?php
-            $result=$connection->prepare("SELECT * FROM products");
+             if(isset($_GET['id'])){
+              $result=$connection->prepare("SELECT * FROM products WHERE category_id=$_GET[id]");
+            }else{
+              $result=$connection->prepare("SELECT * FROM products");
+            }
             $result->execute();
             foreach($result as $product){ 
               $sql="SELECT * FROM categories WHERE id=$product[category_id]";
@@ -747,7 +671,7 @@ $dbname = "tech-life";
                   Details</a
                 >
                 <button class="btn btn-primary btn-rounded btn-sm">
-                  <i class="ion-bag"></i> Add to cart
+                  <i class="ion-bag"></i><a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo $product['id'] ?>&&typeCart=addToCart"> Add to cart</a>
                 </button>
               </div>
             </div> <?php } ?>

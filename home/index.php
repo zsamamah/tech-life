@@ -86,13 +86,13 @@
                   <div class="container">
                     <div class="row">
                       <div class="col-sm-12 align-center">
-                        <h1>New amazing laptops</h1>
-                        <p>Provide lightweight and powerull</p>
-                        <a href="../catalog/">More laptops ></a>
+                        <h1>New amazing Games</h1>
+                        <p>add to your wishlist now</p>
+                        <a href="../catalog/">More Games ></a>
                         <br><br>
                       </div>
                       <div class="col-sm-6 col-sm-offset-3 align-center">
-                        <img src="../assets/img/carousel/newlaptops.jpg" alt="Laptops"/>
+                        <img src="../assets/img/carousel/a (2).png" alt="Laptops"/>
                       </div>
                     </div>
                   </div>
@@ -109,7 +109,10 @@
                   <div class="container">
                     <div class="row">
                       <div class="col-sm-8 col-sm-offset-2 align-center">
-                        <img src="../assets/img/carousel/surfaces.jpg" alt="Surface Pro"/>
+                        <img 
+                        style="     width: 20em;
+                        height:15em;"
+                        src="../assets/img/carousel/a.png" alt="Surface Pro"/>
                       </div>
                       <div class="col-sm-12 align-center">
                         <h1>8 Windows Hybrid Laptops</h1>
@@ -131,8 +134,11 @@
                   <div class="container">
                     <div class="row">
                       <div class="col-sm-5 col-sm-offset-1 align-center">
-                        <img src="../assets/img/carousel/ipadair2.jpg" alt="iPad Air 2" class="hidden-xs hidden-sm"/>
-                        <img src="../assets/img/carousel/ipadair2m.jpg" alt="iPad Air 2" class="hidden-md hidden-lg"/>
+                        <img 
+                        style="     width: 20em;
+                        height: 15em;"
+                       src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-xs hidden-sm"/>
+                        <img src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-md hidden-lg"/>
                       </div>
                       <div class="col-sm-4 align-left">
                         <br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm">
@@ -141,10 +147,9 @@
                         <br>
                         
                         <p>
-                          Luxury watches, business tablets and 3D touch: How Apple plans to stay ahead in mobile.
-                          When it comes to the brand’s latest iPhones, the biggest excitement isn’t focused on the addition of a rose gold coloured device but the new 3D touch sensors.
+                        Gamers have known for a long time something that everyone else is starting to figure out: there’s community connection on the other side of a screen.
                         </p>
-                        <a href="../blog/item-photo.html">View article ></a>
+                        <a href="https://www.bbc.com/worklife/article/20201215-how-online-gaming-has-become-a-social-lifeline">View article ></a>
                       </div>
                     </div>
                   </div>
@@ -155,15 +160,15 @@
         </div>
 
         <ul class="markers">
-          <li data-marker="1"><img src="../assets/img/carousel/newlaptops.jpg" alt="Background"/></li>
-          <li data-marker="2" class="active"><img src="../assets/img/carousel/surfaces.jpg" alt="Background"/></li>
-          <li data-marker="3"><img src="../assets/img/carousel/ipadair2.jpg" alt="Background"/></li>
+          <li data-marker="1"><img src="../assets/img/carousel/a (2).png" alt="Background"/></li>
+          <li data-marker="2" class="active"><img src="../assets/img/carousel/a.png" alt="Background"/></li>
+          <li data-marker="3"><img src="../assets/img/carousel/c-removebg-preview.png" alt="Background"/></li>
         </ul>
       </div>
     </header>
     <br><br>
 
-    <div class="container">
+    <!-- <div class="container">
       <div class="row">
         <div class="col-sm-3 align-center">
           <a href="../blog/">
@@ -198,15 +203,80 @@
           <a href="../blog/">Products gallery</a>
         </div>
       </div>
-    </div>
+    </div> -->
     <hr class="offset-lg">
     <hr class="offset-lg">
 
     <div class="container">
       <h2>NEW PRODUCTS</h2>
-      <hr class="offset-md">
 
-      <div class="row products">
+
+
+      <hr class="offset-md">
+  <?php
+                                    
+$db_user="root";
+$db_pass="";
+$db_name="tech-life";
+$db=new PDO('mysql:host=localhost;dbname=' .$db_name. ';charset-utf8',$db_user,$db_pass);
+$db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+
+                                    $query = "SELECT * FROM products order by RAND() LIMIT 3";
+                                    $stmt = $db->prepare($query);
+      $stmt->execute(); $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
+       foreach ($row
+      as $element){ ?>
+
+        <div class='
+        row products'
+        >
+        <div class='
+        col-sm-6 col-md-4 product'
+        >
+          <a href='
+          #favorites'
+           class='
+          favorites'
+           data-favorite='
+          inactive'
+          ><i class='
+          ion-ios-heart-outline'
+          ></i></a>
+          <a href='
+          ./'
+          >
+          <img src=<?php echo $element['image'] ?> alt='product Image'
+          /></a>
+
+          <div class='
+          content'
+          >
+            <h1 class='
+            h4'
+            ><?php echo $element['name'] ?></h1>
+            <p class='
+            price'
+            ><?php echo $element['price']." "."JD"?></p>
+           <br>
+
+            <a href='
+            ../catalog/product.html'
+             class='
+            btn btn-link'
+            > </a>
+            <button class='
+            btn btn-primary btn-rounded btn-sm'
+            > <i class='
+            ion-bag'
+            ></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
+          </div>
+        </div>
+
+
+        
+        <?php   } ?>
+         
+      <!-- <div class="row products">
         <div class="col-sm-6 col-md-4 product">
           <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
           <a href="./"><img src="../assets/img/products/surface-pro.jpg" alt="Surface Pro"/></a>
@@ -264,12 +334,68 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="container">
-      <h2>RECOMMENDATION FOR YOU</h2>
+      <h2>BEST DEALS FOR YOU</h2>
       <hr class="offset-md">
+      <?php
+      $query = "SELECT * FROM products where discount=1 order by RAND() LIMIT 3  ";
+                                    $stmt = $db->prepare($query);
+      $stmt->execute(); $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
+       foreach ($row
+      as $element){ ?>
 
+        <div class='
+        row products'
+        >
+        <div class='
+        col-sm-6 col-md-4 product'
+        >
+          <a href='
+          #favorites'
+           class='
+          favorites'
+           data-favorite='
+          inactive'
+          ><i class='
+          ion-ios-heart-outline'
+          ></i></a>
+          <a href='
+          ./'
+          >
+          <img src=<?php echo $element['image'] ?> alt='product Image'
+          /></a>
+
+          <div class='
+          content'
+          >
+            <h1 class='
+            h4'
+            ><?php echo $element['name'] ?></h1>
+            <p class='
+            price'
+            ><?php echo $element['price']." "."JD"?></p>
+          
+<br>
+            <a href='
+            ../catalog/product.html'
+             class='
+            btn btn-link'
+            > </a>
+            <button class='
+            btn btn-primary btn-rounded btn-sm'
+            > <i class='
+            ion-bag'
+            ></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
+          </div>
+        </div>
+
+
+      <?php
+          } 
+          ?>
+<!-- 
       <div class="row products">
         <div class="col-sm-6 col-md-3 product">
           <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
@@ -383,7 +509,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <hr class="offset-lg">
     <hr class="offset-lg">
 
