@@ -119,10 +119,11 @@ try {
 
             if ($admin->rowCount() != null) {
               $_SESSION["Loggeduser"] = $row["name"];
-              header("location: ../admin/index2.html");
+              echo "<script>window.location.href='../admin/index.php'</script>";
+              // header("location: ../admin/index2.html");
             } else if ($stmt->rowCount() != null) {
               $_SESSION["Loggeduser"] = $row["name"];
-              header('Location:../index.php');
+              echo "<script>window.location.href='../home/index.php'</script>";
             } else {
               echo "<p style='color:brown'> User is not found!</p> <br>";
             }
