@@ -118,11 +118,11 @@ try {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($admin->rowCount() != null) {
-              $_SESSION["Loggeduser"] = $row["name"];
+              $_SESSION["Loggeduser"] = $row;
               echo "<script>window.location.href='../admin/index.php'</script>";
               // header("location: ../admin/index2.html");
             } else if ($stmt->rowCount() != null) {
-              $_SESSION["Loggeduser"] = $row["name"];
+              $_SESSION["Loggeduser"] = $row;
               echo "<script>window.location.href='../home/index.php'</script>";
             } else {
               echo "<p style='color:brown'> User is not found!</p> <br>";
