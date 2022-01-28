@@ -622,7 +622,15 @@ $_SESSION['final_total'] = $_SESSION['total']+$_SESSION['delivery'];
       foreach($_SESSION['cart'] as $val){
         $sql = "INSERT INTO order_item(order_id,product_id,quantity) VALUES('$orderID','{$val['id']}','{$val['quantity']}')";
         $conn->query($sql);
+        $sql = "UPDATE products SET stock=stock-{$val['quantity']} WHERE id={$val['id']}";
+        $conn->query($sql);
       }
+      unset($_SESSION['cart']);
+      unset($_SESSION['items']);
+      unset($_SESSION['total']);
+      unset($_SESSION['delivery']);
+      unset($_SESSION['final_total']);
+      echo "<script>window.location.href='../catalog/index.php'</script>";
     }
 
     ?>

@@ -123,7 +123,7 @@ if (isset($_POST['signup'])) {
         <br />
         <!-- form_____________________________ -->
 
-        <form class="join" action="index.php" method="post" id="RegisterForm">
+        <form class="join" action="<?php $_SERVER["PHP_SELF"] ?>" method="POST" id="RegisterForm">
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-12">
