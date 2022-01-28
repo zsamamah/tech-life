@@ -7,7 +7,7 @@ $dbname = "tech-life";
 	try{
         $connection=new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }catch(PDOExecption $e){
+    }catch (PDOException $e){
         echo $sql . "<br>" . $e->getMessage();
     }
 ?>
@@ -743,7 +743,7 @@ $dbname = "tech-life";
                 <p class="price"><?php echo $product['price']." "."JD" ?></p>
                 <label><?php echo strtoupper($row['name']) ?></label>
 
-                <a href="../catalog/product.html" class="btn btn-link">
+                <a href="../catalog/product.php?details=<?php echo $product['id']?>" class="btn btn-link">
                   Details</a
                 >
                 <button class="btn btn-primary btn-rounded btn-sm">
@@ -810,7 +810,7 @@ $dbname = "tech-life";
               <div class="item">
                 <i class="ion-ios-gear-outline"></i>
                 <h1>
-                  Manufacturer’s <br />
+                  Manufacturers <br />
                   <span>warranty</span>
                 </h1>
               </div>
