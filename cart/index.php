@@ -143,7 +143,7 @@ try{
 
                     <div class="media-body">
                       <h2 class="h4 media-heading"><?php echo $product['name'];?></h2>
-                      <p class="price"><?php echo $product['price']; ?></p>
+                      <p class="price"><?php echo $product['price']; ?> JD x <?php echo $product['quantity']; ?></p>
                     </div>
                     <div class="controls">
                       <div class="input-group">
