@@ -255,6 +255,8 @@
             ion-bag'></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
           </div>
         </div>
+  
+     
 
 
 

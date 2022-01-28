@@ -123,6 +123,7 @@ try {
               // header("location: ../admin/index2.html");
             } else if ($stmt->rowCount() != null) {
               $_SESSION["Loggeduser"] = $row["name"];
+              $_SESSION["LoggeduserId"]=$row['id'];
               echo "<script>window.location.href='../home/index.php'</script>";
             } else {
               echo "<p style='color:brown'> User is not found!</p> <br>";
