@@ -136,7 +136,9 @@ $items+=$product['quantity'];
             <div class="panel-body">
               <div class="checkout-cart">
                 <div class="content"> 
-                 <?php  foreach($_SESSION['cart'] as $product){ ?>
+                 <?php  
+                 if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){  
+                   foreach($_SESSION['cart'] as $product){ ?>
                   <div class="media">
                     <div class="media-left">
                       <a href="#">
@@ -182,7 +184,9 @@ $items+=$product['quantity'];
                       </div>
                       <a href="../catalog/addToCart.php?id=<?php echo $product['id']; ?>&& type=remove"> <i class="ion-trash-b"></i> Remove </a>
                     </div> 
-                  </div><?php } ?>
+                  </div><?php } } else echo "<p><b>Your Cart is Empty</b></p>";
+                  ?>
+               
                 </div>
               </div>
             </div>
@@ -225,24 +229,19 @@ $items+=$product['quantity'];
               <hr class="offset-md" />
               <?php 
               if($_SERVER["REQUEST_METHOD"]=="POST"){
-                $outOfStock=false;
                 foreach($_SESSION['cart'] as $product){
                   $sql="SELECT * FROM products";
                 $result=$connection->query($sql);
-                $row = $result->fetch(PDO::FETCH_ASSOC) ;
+                $row = $result->fetch(PDO::FETCH_ASSOC);
                 if($product['quantity']>$row['stock']){
-                  $outOfStock=true;
                  echo "<span>Quantity of </span>". $row['name']."<span> is out of stock</span>";
                 }
-                } 
-                if(!$outOfStock){
-                  $sql = "INSERT INTO orders('user_id','total')
-                  VALUES ('$_SESSION["LoggeduserId"]','$total')";
+                elseif($product['quantity']<=$row['stock']){
+                  $sql = "INSERT INTO orders(user_id,total) VALUES ('$_SESSION[LoggeduserId]',$total)";
                  $connection->exec($sql);
                   echo "<script>window.location.href='../checkout/checkout.html'</script>";
                 }
-               
-              }
+                } }
               ?>
              <button class="btn btn-primary btn-lg justify" style="height: 45px;" type="submit"><i class="ion-android-checkbox-outline"></i>&nbsp;&nbsp;
                 Checkout order</a
