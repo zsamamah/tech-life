@@ -110,8 +110,7 @@
                     <div class="row">
                       <div class="col-sm-8 col-sm-offset-2 align-center">
                         <img 
-                        style="     width: 34em;
-                        height:25em;"
+                        
                         src="../assets/img/carousel/a.png" alt="Surface Pro"/>
                       </div>
                       <div class="col-sm-12 align-center">
@@ -135,8 +134,11 @@
                     <div class="row">
                       <div class="col-sm-5 col-sm-offset-1 align-center">
                         <img 
-                        style="     width: 28em;
-                        height: 25em;"
+
+
+                      
+
+
                        src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-xs hidden-sm"/>
                         <img src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-md hidden-lg"/>
                       </div>
@@ -213,7 +215,11 @@
 
 
       <hr class="offset-md">
-  <?php
+ 
+        <div class='
+        row products'
+        > 
+        <?php
                                     
 $db_user="root";
 $db_pass="";
@@ -227,9 +233,6 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
        foreach ($row
       as $element){ echo "
 
-        <div class='
-        row products'
-        >
         <div class='
         col-sm-6 col-md-4 product'
         >
@@ -254,7 +257,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             <h1 class='
             h4'
             >$element[name]</h1>
-            <p class='
+            <p  style='color:gray'class='
             price'
             >$element[price]JD</p>
            <br>
@@ -271,12 +274,16 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             ></i> Add to cart</button>
           </div>
         </div>
+  
+     
 
 
         "
         ;
           } 
           ?>
+          </div>  
+            </div>
       <!-- <div class="row products">
         <div class="col-sm-6 col-md-4 product">
           <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
@@ -339,7 +346,10 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
     <div class="container">
       <h2>BEST DEALS FOR YOU</h2>
-      <hr class="offset-md">
+      <hr class="offset-md"
+      > <div class='
+        row products'
+        >
       <?php
       $query = "SELECT * FROM products where discount=1 order by RAND() LIMIT 3  ";
                                     $stmt = $db->prepare($query);
@@ -347,9 +357,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
        foreach ($row
       as $element){ echo "
 
-        <div class='
-        row products'
-        >
+       
         <div class='
         col-sm-6 col-md-4 product'
         >
@@ -374,7 +382,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             <h1 class='
             h4'
             >$element[name]</h1>
-            <p class='
+            <p style='color:gray' class='
             price'
             >$element[price]JD</p>
           
@@ -391,12 +399,16 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             ></i> Add to cart</button>
           </div>
         </div>
+       
+      
+     
+       
 
 
         "
         ;
           } 
-          ?>
+          ?> </div>   </div>
 <!-- 
       <div class="row products">
         <div class="col-sm-6 col-md-3 product">
@@ -669,7 +681,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
       <hr>
 
-      <!-- <div class="container">
+      <div class="container">
         <div class="row">
           <div class="col-sm-8 col-md-9 payments">
             <p>Pay your order in the most convenient way</p>
@@ -683,7 +695,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             </div>
             <br>
 
-          </div> -->
+          </div>
           <div class="col-sm-4 col-md-3 align-right align-center-xs">
             <hr class="offset-sm hidden-sm">
             <hr class="offset-sm">
