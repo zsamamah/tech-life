@@ -395,7 +395,8 @@ include_once("../cart/cart.php");
             <!-- <p class="price through">$249.99</p> -->
             <br><br>
 
-            <button class="btn btn-primary btn-rounded"> <i class="ion-bag"></i> Add to cart</button>
+            <a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo $id ?>&&typeCart=addToCart">
+            <button class="btn btn-primary btn-rounded"> <i class="ion-bag"></i> Add to cart</button></a>
           </div>
         </div>
     		<br><br><br>
