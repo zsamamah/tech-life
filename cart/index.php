@@ -1,12 +1,14 @@
 <?php 
 session_start();
-$total= 0;
-$items=0;
-if(isset($_SESSION['cart'])){
-  foreach($_SESSION['cart'] as $product){
-$total+=$product['price']*$product['quantity'];
-$items+=$product['quantity'];
-}
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tech-life";
+try{
+  $connection=new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
+  $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}catch(PDOException $e){
+  echo $sql . "<br>" . $e->getMessage();
 }
 
 ?>
@@ -125,7 +127,9 @@ $items+=$product['quantity'];
             <div class="panel-body">
               <div class="checkout-cart">
                 <div class="content"> 
-                 <?php  foreach($_SESSION['cart'] as $product){ ?>
+                 <?php  
+                 if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){  
+                   foreach($_SESSION['cart'] as $product){ ?>
                   <div class="media">
                     <div class="media-left">
                       <a href="#">
@@ -171,7 +175,9 @@ $items+=$product['quantity'];
                       </div>
                       <a href="../catalog/addToCart.php?id=<?php echo $product['id']; ?>&& type=remove"> <i class="ion-trash-b"></i> Remove </a>
                     </div> 
-                  </div><?php } ?>
+                  </div><?php } } else echo "<p><b>Your Cart is Empty</b></p>";
+                  ?>
+               
                 </div>
               </div>
             </div>
@@ -180,6 +186,7 @@ $items+=$product['quantity'];
         <div class="col-sm-8 col-md-4">
           <hr class="offset-md visible-sm" />
           <div class="panel panel-default">
+            <form method=post>
             <div class="panel-body">
               <h2 class="no-margin">Summary</h2>
               <hr class="offset-md" />
@@ -187,11 +194,15 @@ $items+=$product['quantity'];
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-xs-6">
-                    <p>Subtotal (<?php echo $items ?> items)</p>
+                    <p>Subtotal <?php  if(isset($_SESSION['items'])){
+                      echo $_SESSION['items'];
+                    } else echo 0;?> items</p>
                   </div>
                   <div class="col-xs-6">
                     <p><b><?php
-                      echo $total." "."JD";
+                    if(isset($_SESSION['total'])){
+                      echo $_SESSION['total']." "."JD";
+                    } else echo "0 JD";
                      ?></b></p>
                   </div>
                 </div>
@@ -205,22 +216,41 @@ $items+=$product['quantity'];
                   </div>
                   <div class="col-xs-6">
                     <h3 class="no-margin"><?php
-                      echo $total." "."JD";
+                    if(isset($_SESSION['total'])){
+                      echo $_SESSION['total']." "."JD";
+                    } else echo "0 JD";
                      ?></h3>
                   </div>
                 </div>
               </div>
               <hr class="offset-md" />
-
-              <a href="../checkout/" class="btn btn-primary btn-lg justify"
-                ><i class="ion-android-checkbox-outline"></i>&nbsp;&nbsp;
+              <?php 
+              if($_SERVER["REQUEST_METHOD"]=="POST"){
+                foreach($_SESSION['cart'] as $product){
+                  $sql="SELECT * FROM products";
+                $result=$connection->query($sql);
+                $row = $result->fetch(PDO::FETCH_ASSOC);
+                if($product['quantity']>$row['stock']){
+                 echo "<span>Quantity of </span>". $row['name']."<span> is out of stock</span>";
+                }
+                elseif($product['quantity']<=$row['stock']){
+                  if(isset($_SESSION["LoggeduserId"])){
+                    echo "<script>window.location.href='../checkout/index.php'</script>";
+                  }else{
+                    echo "<script>window.location.href='../login/index.php'</script>";
+                  }
+                  
+                }
+                } }
+              ?>
+             <button class="btn btn-primary btn-lg justify" style="height: 45px;" type="submit"><i class="ion-android-checkbox-outline"></i>&nbsp;&nbsp;
                 Checkout order</a
               >
               <hr class="offset-md" />
-
+              </button>
               <p>Payment method: Cash On Delivery</p>
         
-            </div>
+            </div></form>
           </div>
         </div>
       </div>

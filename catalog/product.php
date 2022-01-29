@@ -29,7 +29,7 @@ $dbname = "tech-life";
       $resultCategory->execute();
       $category = $resultCategory->fetch(PDO::FETCH_ASSOC);
       $categoryName = $category['name'];
-      // print_r($category);
+      // print_r($_SESSION['Loggeduser']);
     }
 ?>
 
@@ -62,7 +62,10 @@ $dbname = "tech-life";
     <![endif]-->
   </head>
   <body>
-    <div class="cart" data-toggle="inactive">
+    <?php 
+include_once("../cart/cart.php");
+ ?>
+    <!-- <div class="cart" data-toggle="inactive">
       <div class="label">
         <i class="ion-bag"></i> 7
       </div>
@@ -97,7 +100,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -123,7 +126,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>/input-group
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -149,7 +152,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -175,7 +178,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -201,7 +204,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -227,7 +230,7 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
@@ -253,15 +256,15 @@ $dbname = "tech-life";
                 <span class="input-group-btn">
                   <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
                 </span>
-              </div><!-- /input-group -->
+              </div>
 
               <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
             </div>
           </div>
 
-        </div>
+        </div> -->
 
-        <div class="checkout container-fluid">
+        <!-- <div class="checkout container-fluid">
           <div class="row">
             <div class="col-xs-3 col-sm-2">
               <div>
@@ -282,7 +285,7 @@ $dbname = "tech-life";
           </div>
         </div>
       </div>
-    </div>
+    </div> --> 
 
     <nav class="navbar navbar-default">
         <div class="container">
@@ -392,7 +395,8 @@ $dbname = "tech-life";
             <!-- <p class="price through">$249.99</p> -->
             <br><br>
 
-            <button class="btn btn-primary btn-rounded"> <i class="ion-bag"></i> Add to cart</button>
+            <a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo $id ?>&&typeCart=addToCart">
+            <button class="btn btn-primary btn-rounded"> <i class="ion-bag"></i> Add to cart</button></a>
           </div>
         </div>
     		<br><br><br>
@@ -508,63 +512,27 @@ $dbname = "tech-life";
             <h1 class="h3">Recommendation for you</h1>
             
             <div class="row">
+              <?php  $query = "SELECT * FROM products WHERE category_id=$categoryID AND id!=$id order by RAND() LIMIT 4";
+                  $stmt = $connection->prepare($query);
+                  $stmt->execute(); 
+                  $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
+                  foreach($row as $val) { 
+                 ?>
+                  
               <div class="col-sm-6 col-md-3 product">
                 <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
-                <a href="./"><img src="../assets/img/products/chrome-book-11.jpg" alt="HP Chromebook 11"/></a>
+                <a href="./"><img src="<?php echo $val["image"] ?>" alt="HP Chromebook 11"/></a>
 
                 <div class="content">
-                  <h1 class="h4">HP Chromebook 11</h1>
-                  <p class="price">$199.99</p>
-                  <label>Laptops</label>
+                  <h1 class="h4"><?php echo $val["name"] ?></h1>
+                  <p class="price"><?php echo $val["price"] ?></p>
+                  <label><?php echo $categoryName ?></label>
 
-                  <a href="../catalog/product.html" class="btn btn-link"> Details</a>
+                  <a href="../catalog/product.php?details=<?php echo $val['id']?>" class="btn btn-link"> Details</a>
                   <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
                 </div>
               </div>
-
-              <div class="col-sm-6 col-md-3 product">
-                <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
-                <a href="./"><img src="../assets/img/products/chrome-book-14.jpg" alt="HP Chromebook 14"/></a>
-
-                <div class="content">
-                  <h1 class="h4">HP Chromebook 14</h1>
-                  <p class="sale">$209.99</p>
-                  <p class="price through">$249.99</p>
-                  <label>Laptops</label>
-
-                  <a href="../catalog/product.html" class="btn btn-link"> Details</a>
-                  <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-3 product">
-                <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
-                <a href="./"><img src="../assets/img/products/chrome-book-asus.jpg" alt="HP Chromebook 14"/></a>
-
-                <div class="content">
-                  <h1 class="h4">Asus Chromebook</h1>
-                  <p class="price">$299.99</p>
-                  <label>Laptops</label>
-
-                  <a href="../catalog/product.html" class="btn btn-link"> Details</a>
-                  <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
-                </div>
-              </div>
-
-
-              <div class="col-sm-6 col-md-3 product">
-                <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
-                <a href="./"><img src="../assets/img/products/ipad-air.jpg" alt="iPad Air"/></a>
-
-                <div class="content">
-                  <h1 class="h4">iPad Air</h1>
-                  <p class="price">$449.99</p>
-                  <label>Tablets</label>
-
-                  <a href="../catalog/product.html" class="btn btn-link"> Details</a>
-                  <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
-                </div>
-              </div>
+              <?php } ?>
             </div>
         </div>
     </section>
@@ -868,7 +836,7 @@ $dbname = "tech-life";
                 	<br>
                 </div>
                 <?php if(isset($_SESSION["Loggeduser"])) { ?>
-                <input type="hidden" name="user-id" value="<?php echo $_SESSION['Loggeduser']['id']; ?>"/>
+                <input type="hidden" name="user-id" value="<?php echo $_SESSION['LoggeduserId']; ?>"/>
                 <?php } ?>
                 <input type="hidden" name="product-id" value="<?php echo $id; ?>"/>
                 <!-- <div class="col-sm-6">

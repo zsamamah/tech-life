@@ -1,3 +1,9 @@
+<?php
+session_start();
+require '../database.php';
+$_SESSION['delivery'] = $_SESSION['total']*0.05;
+$_SESSION['final_total'] = $_SESSION['total']+$_SESSION['delivery'];
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,6 +23,7 @@
     <link href="../assets/css/custom.css" rel="stylesheet">
     <link href="../assets/css/carousel.css" rel="stylesheet">
     <link href="../assets/ionicons-2.0.1/css/ionicons.css" rel="stylesheet">
+    <link href="../assets/css/team.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Catamaran:400,100,300' rel='stylesheet' type='text/css'>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -78,6 +85,7 @@
     </div>
     <hr class="offset-md">
 
+    <form method="POST" action="<?php $_SERVER["PHP_SELF"] ?>">
     <div class="container">
       <div class="row">
           <div class="col-md-8">
@@ -85,12 +93,28 @@
               <div class="panel-body">
                 <div class="checkout">
                     <div class="addresses box-select">
-                        <h2> 1. Delevery address</h2>
+                        <h2> 1. Delivery address</h2>
                         <hr class="offset-sm">
 
                         <address class="box-default sm-padding" data-style="selected">
                             <hr class="offset-sm">
 
+                            <h3 class="no-margin"><i class="ion-ios-person"></i> <?php echo $_SESSION['Loggeduser'] ?></h3>
+                            <p>
+                                <i class="ion-ios-email-outline"></i> <?php echo $_SESSION['LoggeduserEmail'] ?>
+                            </p>
+                            <p>
+                                <i class="ion-android-call"></i> <?php echo $_SESSION['LoggeduserPhone'] ?>
+                            </p>
+
+                            <div class="check">
+                                <i class="ion-checkmark-round"></i>
+                            </div>
+                            <hr class="offset-sm">
+                        </address>
+
+                        <!-- <address class="box-default sm-padding">
+                            <hr class="offset-sm">
                             <h3 class="no-margin"><i class="ion-ios-person"></i> John Doe</h3>
                             <p>
                                 <i class="ion-ios-location"></i> 100520, New York City, 45 Park Avenue, United States
@@ -100,27 +124,15 @@
                                 <i class="ion-checkmark-round"></i>
                             </div>
                             <hr class="offset-sm">
-                        </address>
-
-                        <address class="box-default sm-padding">
-                            <hr class="offset-sm">
-                            <h3 class="no-margin"><i class="ion-ios-person"></i> John Doe</h3>
-                            <p>
-                                <i class="ion-ios-location"></i> 100520, New York City, 45 Park Avenue, United States
-                            </p>
-
-                            <div class="check">
-                                <i class="ion-checkmark-round"></i>
-                            </div>
-                            <hr class="offset-sm">
-                        </address>
+                        </address> -->
 
                         <hr class="offset-sm">
-                        <a href="#addaddress" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <!-- <a href="#addaddress" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                           Add new address
-                        </a>
-                        <hr class="offset-sm">
-                        <div class="collapse" id="collapseExample">
+                        </a> 
+                        <hr class="offset-sm">-->
+
+                        <div class="collapse in" id="collapseExample">
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <div class="row group">
@@ -129,7 +141,7 @@
                                           <!-- <input type="text" class="form-control" name="country" value="" required="" placeholder="" /> -->
 
                                           <div class="group-select justify" tabindex='1'>
-                                              <input class="form-control select" id="country" name="country" value="United Kingdom" placeholder="" required="" />
+                                              <input class="form-control select" id="country" name="country" value="Jordan" placeholder="" required="" />
 
                                               <ul class="dropdown">
                                                 <li data-value="Aaland Islands">Aaland Islands</li>
@@ -397,43 +409,43 @@
                                       <div class="col-sm-4">
                                         <p>City</p>
 
-                                        <input type="text" class="form-control input-sm" name="city" value="" required="" placeholder="" />
+                                        <input type="text" class="form-control input-sm" name="city" value="" required="" placeholder="" required/>
                                       </div>
                                       <div class="col-sm-4">
                                         <hr class="offset-sm visible-xs">
                                         <p>Street</p>
 
-                                        <input type="text" class="form-control input-sm" name="street" value="" required="" placeholder="" />
+                                        <input type="text" class="form-control input-sm" name="street" value="" required="" placeholder="" required/>
                                       </div>
                                       <div class="col-sm-2">
                                         <hr class="offset-sm visible-xs">
                                         <p>Building</p>
 
-                                        <input type="text" class="form-control input-sm" name="bilding" value="" required="" placeholder="" />
+                                        <input type="text" class="form-control input-sm" name="bilding" value="" required="" placeholder="" required/>
                                       </div>
                                       <div class="col-sm-2">
                                         <hr class="offset-sm visible-xs">
                                         <p>Zip</p>
 
-                                        <input type="text" class="form-control input-sm" name="zip" value="" required="" placeholder="" />
+                                        <input type="text" class="form-control input-sm" name="zip" value="" required="" placeholder="" required/>
                                       </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="checkbox">
+                        <!-- <div class="checkbox">
                           <label>
                             <input type="checkbox" value="">
                             Use as billing address
                           </label>
-                        </div>
+                        </div> -->
 
                         <hr class="offset-sm">
                         <hr>
                     </div>
 
-                    <div class="delivery box-select">
+                    <!-- <div class="delivery box-select">
                         <h2> 2. Delevery option </h2>
                         <hr class="offset-sm">
 
@@ -487,25 +499,25 @@
 
                         <hr class="offset-sm">
                         <hr>
-                    </div>
+                    </div> -->
 
                     <div class="payment box-select">
-                        <h2> 3. Payment </h2>
+                        <h2> 2. Payment </h2>
                         <hr class="offset-sm">
                         
                         <div class="row"> 
                             <div class="col-md-6">
                                 <div class="box-default sm-padding" data-style="selected">
                                     <hr class="offset-sm">
-                                    <img src="../assets/img/payments/paypal.jpg" title="paypal" alt="paypal" />
-                                    <span>&nbsp;&nbsp;0% Service fee</span>
+                                    <img src="../assets/img/payments/cod.png" style="width: 40%;" title="paypal" alt="paypal" />
+                                    <span>&nbsp;&nbsp;5% Service fee</span>
                                     <div class="check">
                                         <i class="ion-checkmark-round"></i>
                                     </div>
                                     <hr class="offset-sm">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="box-default sm-padding">
                                     <hr class="offset-sm">
                                     <img src="../assets/img/payments/stripe.jpg" title="stripe" alt="stripe" />
@@ -515,7 +527,7 @@
                                     </div>
                                     <hr class="offset-sm">
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
 
@@ -524,7 +536,7 @@
                     </div>
 
                     <div class="payment box-select">
-                        <h2> 4. Remark </h2>
+                        <h2> 3. Remark </h2>
                         <hr class="offset-sm">
 
                         <textarea name="remark" class="form-control" placeholder="Please, type remark" rows="5"></textarea>
@@ -544,19 +556,19 @@
                   <div class="container-fluid">
                       <div class="row">
                           <div class="col-xs-6">
-                              <p>Subtotal (7 items)</p>
-                              <p>Discount</p>
+                              <p>Subtotal (<?php echo count($_SESSION['cart']) ?> items)</p>
                               <p>Delivery</p>
+                              <p>Discount</p>
                           </div>
                           <div class="col-xs-6">
-                              <p><b>$1499</b></p>
-                              <p><b>$0</b></p>
+                              <p><b><?php echo $_SESSION['total'] ?> JD</b></p>
+                              <p><b><?php echo $_SESSION['delivery'] ?> JD</b></p>
                               <p><b>$0</b></p>
                           </div>
                       </div>
                   </div>
 
-                  <div class="checkboxes">
+                  <!-- <div class="checkboxes">
                       <div class="radio">
                           <label>
                               <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
@@ -569,7 +581,7 @@
                             <span class="input-group-btn">
                               <button class="btn btn-primary btn-sm" type="button">Apply</button>
                             </span>
-                          </div><!-- /input-group -->
+                          </div>
                           <hr class="offset-sm">
                       </div>
                       <div class="radio">
@@ -578,7 +590,7 @@
                           Coupon
                         </label>
                       </div>
-                  </div>
+                  </div> -->
                   <hr>
 
                   <div class="container-fluid">
@@ -587,18 +599,41 @@
                               <h3 class="no-margin">Total sum</h3>
                           </div>
                           <div class="col-xs-6">
-                              <h3 class="no-margin">$1499</h3>
+                              <h3 class="no-margin"><?php echo $_SESSION['final_total'] ?></h3>
                           </div>
                       </div>
                   </div>
                   <hr class="offset-md">
 
-                  <button class="btn btn-primary btn-lg justify"><i class="ion-compose"></i>&nbsp;&nbsp; Confirm order</button>
+                  <button type="submit" class="btn btn-primary btn-lg justify"><i class="ion-compose"></i>&nbsp;&nbsp; Confirm order</button>
                 </div>
               </div>
           </div>
       </div>
     </div>
+    </form>
+    <?php
+    if(isset($_POST['country'])){
+      $address =  $_POST['country'].",".$_POST['city'].",".$_POST['street'].",".$_POST['bilding'].",".$_POST['zip'];
+      $sql = "INSERT INTO orders(user_id,total,delivery,address,remark) VALUES('{$_SESSION['LoggeduserId']}','{$_SESSION['total']}','{$_SESSION['delivery']}','$address','{$_POST['remark']}')";
+      $conn->query($sql);
+      $orderID = $conn->query("SELECT MAX(id) AS max_id FROM orders");
+      $orderID = $orderID->fetchColumn();
+      foreach($_SESSION['cart'] as $val){
+        $sql = "INSERT INTO order_item(order_id,product_id,quantity) VALUES('$orderID','{$val['id']}','{$val['quantity']}')";
+        $conn->query($sql);
+        $sql = "UPDATE products SET stock=stock-{$val['quantity']} WHERE id={$val['id']}";
+        $conn->query($sql);
+      }
+      unset($_SESSION['cart']);
+      unset($_SESSION['items']);
+      unset($_SESSION['total']);
+      unset($_SESSION['delivery']);
+      unset($_SESSION['final_total']);
+      echo "<script>window.location.href='../catalog/index.php'</script>";
+    }
+
+    ?>
     <hr class="offset-lg">
     <hr class="offset-lg">
 
