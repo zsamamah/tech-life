@@ -93,7 +93,7 @@ $_SESSION['final_total'] = $_SESSION['total']+$_SESSION['delivery'];
               <div class="panel-body">
                 <div class="checkout">
                     <div class="addresses box-select">
-                        <h2> 1. Delevery address</h2>
+                        <h2> 1. Delivery address</h2>
                         <hr class="offset-sm">
 
                         <address class="box-default sm-padding" data-style="selected">
