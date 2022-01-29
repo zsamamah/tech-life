@@ -1,5 +1,4 @@
 <?php
-session_start();
 // database Connection 
 $servername = "localhost";
 $username = "root";
@@ -43,50 +42,7 @@ try {
 </head>
 
 <body>
-  <nav class="navbar navbar-default">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="./"> <i class="ion-cube"></i> Unistore</a>
-      </div>
-
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="../">Home</a></li>
-          <li><a href="../catalog/">Catalog</a></li>
-          <li><a href="../blog/">Blog</a></li>
-          <li><a href="../gallery/">Gallery</a></li>
-          <li class="dropdown">
-            <a href="../catalog/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="../catalog/product.html">Product</a></li>
-              <li><a href="../cart/">Cart</a></li>
-              <li><a href="../checkout/">Checkout</a></li>
-              <li><a href="../faq/">FAQ</a></li>
-              <li><a href="../contacts/">Contacts</a></li>
-              <li role="separator" class="divider"></li>
-              <li class="dropdown-header">Variations</li>
-              <li><a href="../home">Home</a></li>
-              <li><a href="../blog/item-photo.html">Article Photo</a></li>
-              <li><a href="../blog/item-video.html">Article Video</a></li>
-              <li><a href="../blog/item-review.html">Article Review</a></li>
-            </ul>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="active"><a href="../login/"> <i class="ion-android-person"></i> Login </a></li>
-          <li><a href="../signup/"> Sign Up</a></li>
-        </ul>
-      </div>
-      <!--/.nav-collapse -->
-    </div>
-    <!--/.container-fluid -->
-  </nav>
+  <?php include '../navbar.php' ?>
   <hr class="offset-lg hidden-xs">
   <hr class="offset-md">
 
@@ -109,7 +65,7 @@ try {
             $password = $_POST['password'];
 
             //check the data from database
-            $stmt = $conn->prepare("SELECT * FROM users WHERE email='$email' AND password='$password'");
+            $stmt = $conn->prepare("SELECT * FROM users WHERE email='$email' AND password='$password' ");
             $stmt->execute();
 
             $admin = $conn->prepare("SELECT * FROM users WHERE email='$email' AND password='$password' AND is_admin=1 ");
@@ -118,15 +74,17 @@ try {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($admin->rowCount() != null) {
-              $_SESSION["Loggeduser"] = $row["name"];
+              $_SESSION["Loggeduser"] = $row;
               echo "<script>window.location.href='../admin/index.php'</script>";
               // header("location: ../admin/index2.html");
             } else if ($stmt->rowCount() != null) {
               $_SESSION["Loggeduser"] = $row["name"];
+              $_SESSION["LoggeduserEmail"] = $row["email"];
+              $_SESSION["LoggeduserPhone"] = $row["phone"];
               $_SESSION["LoggeduserId"]=$row['id'];
               echo "<script>window.location.href='../home/index.php'</script>";
             } else {
-              echo "<p style='color:brown'> User is not found!</p> <br>";
+              echo "<p style='color:brown'> invalid login please try again!</p> <br>";
             }
           }
           ?>

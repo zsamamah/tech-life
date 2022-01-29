@@ -1,5 +1,4 @@
 <?php
-session_start();
 // database Connection 
 $servername = "localhost";
 $username = "root";
@@ -12,7 +11,6 @@ try {
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
-// echo  $_SESSION["Loggeduser"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,11 +24,21 @@ try {
     <link href="../assets/css/custom.css" rel="stylesheet">
     <link href="../assets/ionicons-2.0.1/css/ionicons.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Catamaran:400,100,300' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
             color: #1a202c;
             text-align: left;
-            background-color: #e2e8f0;
+            background-color: #f0f3f7;
+        }
+
+        a:hover,
+        a:focus {
+
+            text-decoration: none;
+            background-color: #f6f6f6;
+            padding: 0.5em;
         }
 
         .form-container {
@@ -95,69 +103,23 @@ try {
             box-shadow: none !important;
         }
     </style>
+
 </head>
 
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="./"> <i class="ion-cube"></i> Unistore</a>
-            </div>
-
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="../">Home</a></li>
-                    <li><a href="../catalog/">Catalog</a></li>
-                    <li><a href="../blog/">Blog</a></li>
-                    <li><a href="../gallery/">Gallery</a></li>
-                    <li class="dropdown">
-                        <a href="../catalog/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="../catalog/product.html">Product</a></li>
-                            <li><a href="../cart/">Cart</a></li>
-                            <li><a href="../checkout/">Checkout</a></li>
-                            <li><a href="../faq/">FAQ</a></li>
-                            <li><a href="../contacts/">Contacts</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Variations</li>
-                            <li><a href="../home">Home</a></li>
-                            <li><a href="../blog/item-photo.html">Article Photo</a></li>
-                            <li><a href="../blog/item-video.html">Article Video</a></li>
-                            <li><a href="../blog/item-review.html">Article Review</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="../login/"> <i class="ion-android-person"></i> Login </a></li>
-                    <li><a href="../signup/"> Sign Up</a></li>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
-        <!--/.container-fluid -->
-    </nav>
-
+    <?php include '../navbar.php' ?>
     <div class="container form-container">
 
         <div class="row gutters-sm">
-            <div class="col-md-4 d-none d-md-block">
+            <div class="col-md-3 d-none d-md-block">
                 <div class="card">
                     <div class="card-body">
                         <nav class="nav flex-column nav-pills nav-gap-y-1">
-                            <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active col-sm-12 mt-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user mr-2">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>Profile Information
+                            <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active col-sm-12 mt-3" style="padding-top: 1.5em;line-height: 1;">
+                                Profile Information
                             </a>
-                            <a href="#account" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded col-sm-12 my-3" style="padding-top: 1.5em;line-height: 1;">
-                                <img width="24em" src="https://img.icons8.com/ios/50/000000/shopping-bag--v1.png" style="margin-right: 0.5em;" />Orders
+                            <a href="#orders" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded col-sm-12 my-3" style="padding-top: 1.5em;line-height: 1;">
+                                Orders
                             </a>
 
                         </nav>
@@ -200,30 +162,25 @@ try {
                         </ul>
                     </div>
                     <div class="card-body tab-content">
+                        <!-- profile_________________________________ -->
                         <div class="tab-pane active" id="profile">
                             <h6>YOUR PROFILE INFORMATION</h6>
                             <hr>
                             <!-- php code________________________________________________________________________________________-->
-                            <?php
-                            $loggedUser = $_SESSION["Loggeduser"];
-                            $stmt = $conn->prepare("SELECT * FROM users WHERE name='$loggedUser'");
-                            $stmt->execute();
-                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                            ?>
                             <!-- form______________________________________________________________________________________________-->
                             <form method="post" name="editForm" action="<?php $_SERVER["PHP_SELF"]; ?>">
                                 <div class="form-group">
                                     <label for="fullName">Full Name</label>
-                                    <input name="name" type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value='<?php echo $row["name"]; ?>'>
+                                    <input name="name" type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value='<?php echo $_SESSION["Loggeduser"] ?>'>
                                     <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input name="email" type="email" class="form-control" id="email" placeholder="Enter your website address" value='<?php echo $row["email"]; ?>'>
+                                    <input readonly name="email" type="email" class="form-control" id="email" placeholder="Enter your website address" value='<?php echo $_SESSION["LoggeduserEmail"] ?>'>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">phone number</label>
-                                    <input name="phone" type="text" class="form-control" id="phone" placeholder="Enter your phone number" value='<?php echo $row["phone"]; ?>'>
+                                    <input name="phone" type="text" class="form-control" id="phone" placeholder="Enter your phone number" value='<?php echo $_SESSION["LoggeduserPhone"] ?>'>
                                 </div>
                                 <br>
                                 <div class="row p-4">
@@ -236,157 +193,98 @@ try {
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="confirmpassword">Confirm password</label>
-                                            <input type="password" class="form-control" id="location" placeholder="confirm password">
+                                            <input type="password" name="confirmPassword" class="form-control" id="location" placeholder="confirm Password">
                                         </div>
                                     </div>
 
                                 </div>
-                                <div class="form-group small text-muted">
-                                    All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.
-                                </div>
                                 <!-- php code____________________________________________________________________________________________________________________________ -->
                                 <?php
+                                $loggedUser = $_SESSION["LoggeduserEmail"];
                                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     $name = $_POST['name'];
                                     $email = $_POST['email'];
                                     $phone = $_POST['phone'];
                                     $password = $_POST['password'];
-                                    $sql = $conn->prepare("UPDATE users SET name='$name', phone='$phone',email='$email',password='$password' WHERE name='$loggedUser'");
-                                    $sql->execute();
-                                    $_SESSION["Loggeduser"] = $name;
-                                    // header('location:../UserProfile');
+                                    if ($_POST['password'] != $_POST['confirmPassword']) {
+                                        echo "<p style='color:brown'> passwords do not match </p>";
+                                    }
+                                    if (strlen($password) < 5 && strlen($password) > 0) {
+                                        echo "<p style='color:brown'> password needs to be 5 characters or more </p>";
+                                    } else if (strlen($password) > 5) {
+                                        $sql = $conn->prepare("UPDATE users SET name='$name', phone='$phone',password='$password' WHERE email='$loggedUser'");
+                                        $sql->execute();
+                                        $_SESSION["Loggeduser"] = $name;
+                                        $_SESSION["LoggeduserPhone"] = $phone;
+                                        echo "<script>window.location.href='../UserProfile'</script>";
+                                    } else {
+                                        $sql = $conn->prepare("UPDATE users SET name='$name', phone='$phone' WHERE email='$loggedUser'");
+                                        $sql->execute();
+                                        $_SESSION["Loggeduser"] = $name;
+                                        $_SESSION["LoggeduserPhone"] = $phone;
+                                        echo "<script>window.location.href='../UserProfile'</script>";
+                                    }
                                 }
                                 ?>
+                                <div class="form-group small text-muted">
+                                    All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.
+                                </div>
+
                                 <button type="submit" class="btn btn-primary">Update Profile</button>
-                                <button type="reset" class="btn btn-light">Reset Changes</button>
                             </form>
                         </div>
-                        <div class="tab-pane" id="account">
-                            <h6>ACCOUNT SETTINGS</h6>
+                        <!-- /profile_________________________________ -->
+
+                        <!-- orders___________________ -->
+                        <div class="tab-pane" id="orders">
+                            <h6>Orders details</h6>
                             <hr>
-                            <form>
-                                <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Enter your username" value="kennethvaldez">
-                                    <small id="usernameHelp" class="form-text text-muted">After changing your username, your old username becomes available for anyone else to claim.</small>
-                                </div>
-                                <hr>
-                                <div class="form-group">
-                                    <label class="d-block text-danger">Delete Account</label>
-                                    <p class="text-muted font-size-sm">Once you delete your account, there is no going back. Please be certain.</p>
-                                </div>
-                                <button class="btn btn-danger" type="button">Delete Account</button>
-                            </form>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Order#</th>
+                                            <th>Date</th>
+                                            <th>items</th>
+                                            <th>Status</th>
+                                            <th>total</th>
+                                            <th>payment type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- php code___________________________________________________________ -->
+                                        <?php
+                                        $LoggedUserId = $_SESSION["LoggeduserId"];
+                                        // $data = $conn->query("SELECT * FROM orders WHERE user_id=$LoggedUserId ");
+                                        // $data->execute();
+                                        $data = $conn->prepare("SELECT order_id,date,SUM(order_item.quantity) AS quantity,total,delivery
+                                        FROM Orders 
+                                        INNER JOIN order_item ON orders.id=order_item.order_id WHERE user_id=$LoggedUserId GROUP BY order_id"); //GROUP BY order_id
+                                        $data->execute();
+                                        $row = $data->fetchAll(PDO::FETCH_ASSOC);
+                                        ?>
+                                        <?php
+                                        foreach ($row as $item) {
+                                        ?>
+                                            <tr class="table-row">
+                                                <td><?php echo $item["order_id"]; ?></td>
+                                                <td><?php echo $item["date"]; ?></td>
+                                                <td><?php echo $item["quantity"]; ?></td>
+                                                <td><span class="tag tag-success">Delivered</span></td>
+                                                <td><?php echo $item["total"]+$item['delivery'] . " JD"; ?></td>
+                                                <td>cash on delivery</td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-                        <div class="tab-pane" id="security">
-                            <h6>SECURITY SETTINGS</h6>
-                            <hr>
-                            <form>
-                                <div class="form-group">
-                                    <label class="d-block">Change Password</label>
-                                    <input type="text" class="form-control" placeholder="Enter your old password">
-                                    <input type="text" class="form-control mt-1" placeholder="New password">
-                                    <input type="text" class="form-control mt-1" placeholder="Confirm new password">
-                                </div>
-                            </form>
-                            <hr>
-                            <form>
-                                <div class="form-group">
-                                    <label class="d-block">Two Factor Authentication</label>
-                                    <button class="btn btn-info" type="button">Enable two-factor authentication</button>
-                                    <p class="small text-muted mt-2">Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to log in.</p>
-                                </div>
-                            </form>
-                            <hr>
-                            <form>
-                                <div class="form-group mb-0">
-                                    <label class="d-block">Sessions</label>
-                                    <p class="font-size-sm text-secondary">This is a list of devices that have logged into your account. Revoke any sessions that you do not recognize.</p>
-                                    <ul class="list-group list-group-sm">
-                                        <li class="list-group-item has-icon">
-                                            <div>
-                                                <h6 class="mb-0">San Francisco City 190.24.335.55</h6>
-                                                <small class="text-muted">Your current session seen in United States</small>
-                                            </div>
-                                            <button class="btn btn-light btn-sm ml-auto" type="button">More info</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="tab-pane" id="notification">
-                            <h6>NOTIFICATION SETTINGS</h6>
-                            <hr>
-                            <form>
-                                <div class="form-group">
-                                    <label class="d-block mb-0">Security Alerts</label>
-                                    <div class="small text-muted mb-3">Receive security alert notifications via email</div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
-                                        <label class="custom-control-label" for="customCheck1">Email each time a vulnerability is found</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck2" checked="">
-                                        <label class="custom-control-label" for="customCheck2">Email a digest summary of vulnerability</label>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-0">
-                                    <label class="d-block">SMS Notifications</label>
-                                    <ul class="list-group list-group-sm">
-                                        <li class="list-group-item has-icon">
-                                            Comments
-                                            <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                                                <label class="custom-control-label" for="customSwitch1"></label>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item has-icon">
-                                            Updates From People
-                                            <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch2">
-                                                <label class="custom-control-label" for="customSwitch2"></label>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item has-icon">
-                                            Reminders
-                                            <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch3" checked="">
-                                                <label class="custom-control-label" for="customSwitch3"></label>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item has-icon">
-                                            Events
-                                            <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch4" checked="">
-                                                <label class="custom-control-label" for="customSwitch4"></label>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item has-icon">
-                                            Pages You Follow
-                                            <div class="custom-control custom-control-nolabel custom-switch ml-auto">
-                                                <input type="checkbox" class="custom-control-input" id="customSwitch5">
-                                                <label class="custom-control-label" for="customSwitch5"></label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="tab-pane" id="billing">
-                            <h6>BILLING SETTINGS</h6>
-                            <hr>
-                            <form>
-                                <div class="form-group">
-                                    <label class="d-block mb-0">Payment Method</label>
-                                    <div class="small text-muted mb-3">You have not added a payment method</div>
-                                    <button class="btn btn-info" type="button">Add Payment Method</button>
-                                </div>
-                                <div class="form-group mb-0">
-                                    <label class="d-block">Payment History</label>
-                                    <div class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">You have not made any payment.</div>
-                                </div>
-                            </form>
-                        </div>
+                        <!-- /orders___________________ -->
                     </div>
                 </div>
             </div>

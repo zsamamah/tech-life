@@ -235,7 +235,7 @@ try{
                 }
                 elseif($product['quantity']<=$row['stock']){
                   if(isset($_SESSION["LoggeduserId"])){
-                    echo "<script>window.location.href='../checkout/index.html'</script>";
+                    echo "<script>window.location.href='../checkout/index.php'</script>";
                   }else{
                     echo "<script>window.location.href='../login/index.php'</script>";
                   }
