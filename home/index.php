@@ -280,7 +280,7 @@
         <h2>BEST DEALS FOR YOU</h2>
         <hr class="offset-md">
         <?php
-        $query = "SELECT * FROM products where discount=1 order by RAND() LIMIT 3  ";
+        $query = "SELECT * FROM products where discount!=1 order by RAND() LIMIT 3  ";
         $stmt = $db->prepare($query);
         $stmt->execute();
         $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
