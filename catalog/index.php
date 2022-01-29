@@ -180,19 +180,19 @@ include_once("../cart/cart.php");
               $row = $result->fetch(PDO::FETCH_ASSOC) ;
              ?>
             <div class="col-sm-6 col-md-4 product">
-                <img
+                <img style="width:100%;"
                   src=<?php echo $product['image'] ?>
-                  alt="HP Chromebook 11"
+                  alt=<?php echo $product['name'] ?>
               />
-              <div class="content">
+              <div class="content" style="width:100%;">
                 <h1 class="h4"><?php echo $product['name'] ?></h1>
                 <p class="price"><?php echo $product['price']." "."JD" ?></p>
                 <p class="price through"><?php 
                 if($product['discount'] != 1 ){
                   echo $product['price']-$product['price']*$product['discount']." "."JD";
                 } ?> </p>
-                <label><?php echo strtoupper($row['name']) ?></label>
-
+                <label ><?php echo strtoupper($row['name']) ?></label>
+                 
                 <a href="../catalog/product.php?details=<?php echo $product['id']?>" class="btn btn-link">
                   Details</a
                 >

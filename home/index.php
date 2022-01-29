@@ -186,16 +186,9 @@
         row products'>
         <div class='
         col-sm-6 col-md-4 product'>
-          <a href='
-          #favorites' class='
-          favorites' data-favorite='
-          inactive'><i class='
-          ion-ios-heart-outline'></i></a>
-          <a href='
-          ./'>
-            <img src=<?php echo $element['image'] ?> alt='product Image' /></a>
-
-          <div class='content'>
+         
+          <img src=<?php echo $element['image'] ?> alt='product Image' style="width:100%;"/></a>
+          <div class='content' style="width:100%;">
             <h1 class='h4'><?php echo $element['name'] ?></h1>
             <p class='price'><?php echo $element['price'] . " " . "JD" ?></p>
             <p class="price through"><?php 
@@ -205,9 +198,6 @@
             <br>
             <a href="../catalog/product.php?details=<?php echo $element['id'] ?>" class="btn btn-link">Details</a>
             <br>
-            <a href='
-            ../catalog/product.html' class='
-            btn btn-link'> </a>
             <button class='
             btn btn-primary btn-rounded btn-sm'> <i class='
             ion-bag'></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
@@ -293,20 +283,19 @@
 
           <div class='row products'>
             <div class='col-sm-6 col-md-4 product'>
-              <a href='#favorites' class='favorites' data-favorite='inactive'><i class='ion-ios-heart-outline'></i></a>
-              <a href='./'>
-                <img src=<?php echo $element['image'] ?> alt='product Image' /></a>
-              <div class='content'>
+             
+                <img src=<?php echo $element['image'] ?> alt='product Image' style="width:100%;"/>
+              <div class='content' style="width:100%;">
                 <h1 class='h4'><?php echo $element['name'] ?></h1>
                 <p class='price'><?php echo $element['price'] . " " . "JD" ?></p>
+                <p class="price through"><?php 
+                if($element['discount'] != 1 ){
+                  echo $element['price']-$element['price']*$element['discount']." "."JD";
+                } ?> </p>
                 <br>
                 <a href="../catalog/product.php?details=<?php echo $element['id'] ?>" class="btn btn-link">Details</a>
                 <br>
-                <a href='
-            ../catalog/product.html' class='
-            btn btn-link'> </a>
-                <button class='
-            btn btn-primary btn-rounded btn-sm'> <i class='
+                <button class=' btn btn-primary btn-rounded btn-sm'> <i class='
             ion-bag'></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
               </div>
             </div>
