@@ -69,8 +69,7 @@
                 <div class="container">
                   <div class="row">
                     <div class="col-sm-8 col-sm-offset-2 align-center">
-                      <img style="     width: 20em;
-                        height:15em;" src="../assets/img/carousel/a.png" alt="Surface Pro" />
+                      <img src="../assets/img/carousel/a.png" alt="Surface Pro" />
                     </div>
                     <div class="col-sm-12 align-center">
                       <h1>8 Windows Hybrid Laptops</h1>
@@ -92,8 +91,7 @@
                 <div class="container">
                   <div class="row">
                     <div class="col-sm-5 col-sm-offset-1 align-center">
-                      <img style="     width: 20em;
-                        height: 15em;" src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-xs hidden-sm" />
+                      <img src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-xs hidden-sm" />
                       <img src="../assets/img/carousel/c-removebg-preview.png" alt="game2" class="hidden-md hidden-lg" />
                     </div>
                     <div class="col-sm-4 align-left">
