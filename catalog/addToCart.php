@@ -39,7 +39,7 @@ $dbname = "tech-life";
             $sql="SELECT * FROM products WHERE id=$_GET[id]";
         $result=$connection->query($sql);
         $row = $result->fetch(PDO::FETCH_ASSOC) ;
-             $_SESSION['cart'][]=["id"=>$_GET['id'],"name"=>$row['name'],"image"=>$row['image'],"price"=>$row['price'],"quantity"=>1];
+             $_SESSION['cart'][]=["id"=>$_GET['id'],"name"=>$row['name'],"image"=>$row['image'],"price"=>$row['price'],"discount"=>$row['discount'],"quantity"=>1];
             
         }
 
@@ -56,7 +56,9 @@ $dbname = "tech-life";
           header("Location:./index.php");
      }
      foreach($_SESSION['cart'] as $product){
-        $_SESSION['total']+=$product['price']*$product['quantity'];
+         if($product['discount'] != 1 ){
+        $_SESSION['total']+=( $product['price']-$product['price']*$product['discount'])*$product['quantity'];
+        }else $_SESSION['total']+=$product['price']*$product['quantity'];
         $_SESSION['items']+=$product['quantity'];
                 }
     }

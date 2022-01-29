@@ -174,10 +174,13 @@ include_once("../cart/cart.php");
               $result=$connection->prepare("SELECT * FROM products");
           }
           $result->execute();
-            foreach($result as $product){ 
+          $row=$result->fetchAll(PDO::FETCH_ASSOC) ;
+          if(count($row)>0){
+            foreach($row as $product){ 
               $sql="SELECT * FROM categories WHERE id=$product[category_id]";
               $result=$connection->query($sql);
               $row = $result->fetch(PDO::FETCH_ASSOC) ;
+              if($product['stock']>0){
              ?>
             <div class="col-sm-6 col-md-4 product">
                 <img style="width:100%;"
@@ -200,7 +203,10 @@ include_once("../cart/cart.php");
                   <i class="ion-bag"></i><a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo $product['id'] ?>&&typeCart=addToCart"> Add to cart</a>
                 </button>
               </div>
-            </div> <?php } ?>
+            </div> <?php }}}else {
+               echo "<p style='text-align:center;margin:10% 0% 10% 0;font-size:5rem;'>No Results Found</p>";
+            }?>
+            
           </div>
 
           <nav>

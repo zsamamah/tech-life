@@ -38,7 +38,7 @@ try{
       rel="stylesheet"
       type="text/css"
     />
-
+    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -141,7 +141,11 @@ try{
 
                     <div class="media-body">
                       <h2 class="h4 media-heading"><?php echo $product['name'];?></h2>
-                      <p class="price"><?php echo $product['price']; ?> JD x <?php echo $product['quantity']; ?></p>
+                      <p class="price"><?php  
+                      if($product['discount'] != 1 ){
+                      echo $product['price']-$product['price']*$product['discount']." "."JD X".$product['quantity'];
+                      }
+                       else echo $product['price']." ". "JD X" . $product['quantity']; ?></p>
                     </div>
                     <div class="controls">
                       <div class="input-group">
@@ -225,11 +229,11 @@ try{
               <?php 
               if($_SERVER["REQUEST_METHOD"]=="POST"){
                 foreach($_SESSION['cart'] as $product){
-                  $sql="SELECT * FROM products";
+                  $sql="SELECT * FROM products WHERE id= $product[id]";
                 $result=$connection->query($sql);
                 $row = $result->fetch(PDO::FETCH_ASSOC);
-                if($product['quantity']>$row['stock']){
-                 echo "<span>Quantity of </span>". $row['name']."<span> is out of stock</span>";
+                if($product['quantity']>$row['stock']){ 
+                 echo "<span>There is </span>". $row['stock']."<span> items of </span>".$row['name']. "<span> in stock</span> <br>";
                 }
                 elseif($product['quantity']<=$row['stock']){
                   if(isset($_SESSION["LoggeduserId"])){
