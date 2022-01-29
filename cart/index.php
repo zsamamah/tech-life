@@ -229,6 +229,7 @@ try{
               <?php 
               if($_SERVER["REQUEST_METHOD"]=="POST"){
                 $found=false;
+                if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
                 foreach($_SESSION['cart'] as $product){
                   $sql="SELECT * FROM products WHERE id= $product[id]";
                 $result=$connection->query($sql);
@@ -236,14 +237,14 @@ try{
                 if($product['quantity']>$row['stock']){ 
                   $found=true;
                  echo "<span>There is only </span>". $row['stock']."<span> items of </span>".$row['name']. "<span> in stock</span> <br>";
-                } 
+                }  
                 } if(!$found){
                   if(isset($_SESSION["LoggeduserId"])){
                     echo "<script>window.location.href='../checkout/index.php'</script>";
                   }else{
                     echo "<script>window.location.href='../login/index.php'</script>";
                   }
-                } }
+                } }else echo "<p>Your Cart s empty</p>";}
               ?>
              <button class="btn btn-primary btn-lg justify" style="height: 45px;" type="submit"><i class="ion-android-checkbox-outline"></i>&nbsp;&nbsp;
                 Checkout order</a
