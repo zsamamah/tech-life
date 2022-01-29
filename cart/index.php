@@ -133,7 +133,7 @@ try{
                   <div class="media">
                     <div class="media-left">
                       <a href="#">
-                        <img
+                        <img style="cursor: auto;"
                           class="media-object"
                           src=<?php echo $product['image']; ?>
                           alt="HP Chromebook 11"
