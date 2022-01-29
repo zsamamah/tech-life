@@ -227,7 +227,11 @@ $db_name="tech-life";
 $db=new PDO('mysql:host=localhost;dbname=' .$db_name. ';charset-utf8',$db_user,$db_pass);
 $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
-                                    $query = "SELECT * FROM products order by RAND() LIMIT 3";
+                                    $query = "SELECT * FROM products ORDER BY id DESC
+                                    LIMIT 3";
+                                    // SELECT MAX(ID) FROM products LIMIT 3
+                                    
+                                    
                                     $stmt = $db->prepare($query);
       $stmt->execute(); $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
        foreach ($row
