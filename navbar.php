@@ -40,7 +40,7 @@ session_start();
 
             if (isset($_SESSION['Loggeduser'])) {
                 echo "  <ul class='nav navbar-nav navbar-right'>
-             <li><a href='../UserProfile'> <i class='ion-android-person'></i> Hello, " . $_SESSION['Loggeduser']['name'] . "  </a></li>
+             <li><a href='../UserProfile'> <i class='ion-android-person'></i> Hello, " . $_SESSION['Loggeduser'] . "  </a></li>
              <li>  <form method='POST'><input type='submit' value='Logout' name='logout' style='color:#777 ;background-color: transparent;border: none;padding-top: 13px;' /> </form></li>
            </ul>";
             } else {

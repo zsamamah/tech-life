@@ -171,16 +171,16 @@ try {
                             <form method="post" name="editForm" action="<?php $_SERVER["PHP_SELF"]; ?>">
                                 <div class="form-group">
                                     <label for="fullName">Full Name</label>
-                                    <input name="name" type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value='<?php echo $_SESSION["Loggeduser"]['name'] ?>'>
+                                    <input name="name" type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value='<?php echo $_SESSION["Loggeduser"] ?>'>
                                     <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input readonly name="email" type="email" class="form-control" id="email" placeholder="Enter your website address" value='<?php echo $_SESSION["Loggeduser"]['email'] ?>'>
+                                    <input readonly name="email" type="email" class="form-control" id="email" placeholder="Enter your website address" value='<?php echo $_SESSION["LoggeduserEmail"] ?>'>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">phone number</label>
-                                    <input name="phone" type="text" class="form-control" id="phone" placeholder="Enter your phone number" value='<?php echo $_SESSION["Loggeduser"]['phone'] ?>'>
+                                    <input name="phone" type="text" class="form-control" id="phone" placeholder="Enter your phone number" value='<?php echo $_SESSION["LoggeduserPhone"] ?>'>
                                 </div>
                                 <br>
                                 <div class="row p-4">
@@ -200,7 +200,7 @@ try {
                                 </div>
                                 <!-- php code____________________________________________________________________________________________________________________________ -->
                                 <?php
-                                $loggedUser = $_SESSION["Loggeduser"]['email'];
+                                $loggedUser = $_SESSION["LoggeduserEmail"];
                                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     $name = $_POST['name'];
                                     $email = $_POST['email'];
@@ -214,14 +214,14 @@ try {
                                     } else if (strlen($password) > 5) {
                                         $sql = $conn->prepare("UPDATE users SET name='$name', phone='$phone',password='$password' WHERE email='$loggedUser'");
                                         $sql->execute();
-                                        $_SESSION["Loggeduser"]['name'] = $name;
-                                        $_SESSION["Loggeduser"]['phone'] = $phone;
+                                        $_SESSION["Loggeduser"] = $name;
+                                        $_SESSION["LoggeduserPhone"] = $phone;
                                         echo "<script>window.location.href='../UserProfile'</script>";
                                     } else {
                                         $sql = $conn->prepare("UPDATE users SET name='$name', phone='$phone' WHERE email='$loggedUser'");
                                         $sql->execute();
-                                        $_SESSION["Loggeduser"]['name'] = $name;
-                                        $_SESSION["Loggeduser"]['phone'] = $phone;
+                                        $_SESSION["Loggeduser"] = $name;
+                                        $_SESSION["LoggeduserPhone"] = $phone;
                                         echo "<script>window.location.href='../UserProfile'</script>";
                                     }
                                 }
@@ -255,7 +255,7 @@ try {
                                     <tbody>
                                         <!-- php code___________________________________________________________ -->
                                         <?php
-                                        $LoggedUserId = $_SESSION["Loggeduser"]['id'];
+                                        $LoggedUserId = $_SESSION["LoggeduserId"];
                                         // $data = $conn->query("SELECT * FROM orders WHERE user_id=$LoggedUserId ");
                                         // $data->execute();
                                         $data = $conn->prepare("SELECT order_id,date,quantity,total
