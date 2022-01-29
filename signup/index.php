@@ -143,7 +143,6 @@ if (isset($_POST['signup'])) {
               </div>
             </div>
           </div>
-          <br />
           <p id="ErrMsg" style="color:brown"></p>
           <button type="submit" class="btn btn-primary" name="signup">Sign up</button>
 
