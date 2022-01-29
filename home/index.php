@@ -235,7 +235,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
                                     $stmt = $db->prepare($query);
       $stmt->execute(); $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
        foreach ($row
-      as $element){ echo "
+      as $element){ ?>
 
         <div class='
         col-sm-6 col-md-4 product'
@@ -252,7 +252,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
           <a href='
           ./'
           >
-          <img src='$element[image]' alt='product Image'
+          <img src=<?php echo $element['image'] ?> alt='product Image'
           /></a>
 
           <div class='
@@ -260,10 +260,10 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
           >
             <h1 class='
             h4'
-            >$element[name]</h1>
-            <p  style='color:gray'class='
+            ><?php echo $element['name'] ?></h1>
+            <p style="color:gray;" class='
             price'
-            >$element[price]JD</p>
+            ><?php echo $element['price']." "."JD"?></p>
            <br>
 
             <a href='
@@ -275,7 +275,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             btn btn-primary btn-rounded btn-sm'
             > <i class='
             ion-bag'
-            ></i> Add to cart</button>
+            ></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
           </div>
         </div>
   
@@ -355,11 +355,11 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         row products'
         >
       <?php
-      $query = "SELECT * FROM products where discount=1 order by RAND() LIMIT 3  ";
+      $query = "SELECT * FROM products where discount!=1 order by RAND() LIMIT 3  ";
                                     $stmt = $db->prepare($query);
       $stmt->execute(); $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
        foreach ($row
-      as $element){ echo "
+      as $element){ ?>
 
        
         <div class='
@@ -377,7 +377,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
           <a href='
           ./'
           >
-          <img src='$element[image]' alt='product Image'
+          <img src=<?php echo $element['image'] ?> alt='product Image'
           /></a>
 
           <div class='
@@ -385,10 +385,12 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
           >
             <h1 class='
             h4'
-            >$element[name]</h1>
-            <p style='color:gray' class='
+            ><?php echo $element['name'] ?></h1>
+            <p  style='color:grey
+             '
+             class='
             price'
-            >$element[price]JD</p>
+            ><?php echo $element['price']." "."JD"?></p>
           
 <br>
             <a href='
@@ -400,7 +402,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             btn btn-primary btn-rounded btn-sm'
             > <i class='
             ion-bag'
-            ></i> Add to cart</button>
+            ></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
           </div>
         </div>
        
@@ -409,8 +411,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
        
 
 
-        "
-        ;
+      <?php
           } 
           ?> </div>   </div>
 <!-- 
