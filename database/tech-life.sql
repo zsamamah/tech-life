@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2022 at 09:00 PM
+-- Generation Time: Jan 29, 2022 at 11:21 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -56,6 +56,17 @@ CREATE TABLE `comments` (
   `comment` varchar(255) NOT NULL,
   `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `user_id`, `comment`, `product_id`) VALUES
+(1, 6, 'hello its me', 2),
+(2, 6, 'hahahahah', 2),
+(3, 6, 'hahahaha', 2),
+(4, 6, 'hahahahaha', 2),
+(5, 6, 'hahahahahha', 2);
 
 -- --------------------------------------------------------
 
@@ -218,7 +229,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `orders`
