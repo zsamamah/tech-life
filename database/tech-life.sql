@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2022 at 11:21 AM
+-- Generation Time: Jan 29, 2022 at 12:07 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -90,7 +90,8 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `user_id`, `total`, `delivery`, `address`, `remark`, `date`) VALUES
 (7, 5, 80, 4, 'Jordan,Zarqa,zarqa , batrawi,26,13115', '', '2022-01-28'),
-(8, 6, 60, 3, 'Labore dolores neces,Quia expedita sunt i,Voluptatibus animi ,Quos architecto ab d,12489', 'Qui quasi voluptas d', '2022-01-28');
+(8, 6, 60, 3, 'Labore dolores neces,Quia expedita sunt i,Voluptatibus animi ,Quos architecto ab d,12489', 'Qui quasi voluptas d', '2022-01-28'),
+(9, 6, 15, 0.75, 'Saepe perspiciatis ,Omnis maiores corpor,Id dolore dolores be,Qui saepe rerum dolo,23639', 'Ut sit consequatur p', '2022-01-29');
 
 -- --------------------------------------------------------
 
@@ -114,7 +115,8 @@ INSERT INTO `order_item` (`id`, `order_id`, `product_id`, `quantity`) VALUES
 (8, 7, 5, 1),
 (9, 7, 2, 1),
 (10, 8, 4, 2),
-(11, 8, 3, 1);
+(11, 8, 3, 1),
+(12, 9, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -139,7 +141,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `name`, `price`, `description`, `image`, `stock`, `discount`, `category_id`) VALUES
 (1, 'Grand Theft Auto V', 20, 'The Criminal Enterprise Starter Pack is the fastest way for new Grand Theft Auto Online players to jumpstart their criminal empires. Do not purchase if you already own the Criminal Enterprise Starter Pack.', 'https://img.g2a.com/323x433/1x1x0/grand-theft-auto-v-criminal-enterprise-starter-pack-ps4-psn-key-europe/fd911188594b4ebfbe77628e', 8, 1, 2),
-(2, 'Batman: Arkham Knight', 15, 'In the explosive finale to the Arkham series, Batman faces the ultimate threat against the city he is sworn to protect.', 'https://img.g2a.com/323x433/1x1x0/batman-arkham-knight-psn-ps4-key-north-america/5912e7945bafe3ce796ca795', 4, 1, 5),
+(2, 'Batman: Arkham Knight', 15, 'In the explosive finale to the Arkham series, Batman faces the ultimate threat against the city he is sworn to protect.', 'https://img.g2a.com/323x433/1x1x0/batman-arkham-knight-psn-ps4-key-north-america/5912e7945bafe3ce796ca795', 3, 1, 5),
 (3, 'WWE 2K Battlegrounds', 10, 'Take your favorite WWE Superstars and Legends into battle with unrestrained, unhinged, and in-your-face pandemonium! Pull off over-the-top moves and use your special abilities to destroy your opponent while battling in interactive environments!', 'https://img.g2a.com/323x433/1x1x0/wwe-2k-battlegrounds-ps4-psn-key-europe/5fdb1c6346177c7e33723132', 9, 0.2, 3),
 (4, 'Fast & Furious: Crossroads', 25, 'Fast & Furious Crossroads is an action-adventure video game set in the Fast & Furious universe.', 'https://img.g2a.com/323x433/1x1x0/fast-furious-crossroads-ps4-psn-key-europe/5f2cf31b7e696c2e89796fb2', 3, 1, 6),
 (5, 'FIFA 2022', 25, 'FIFA 22 is the latest installment of the FIFA series developed by EA Canada and published by Electronic Arts. The game takes you back to the world of international football.', 'https://img.g2a.com/323x433/1x1x0/fifa-22-pc-origin-key-global/dce7598de0604b70ae47d576', 4, 1, 4);
@@ -235,13 +237,13 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `products`
