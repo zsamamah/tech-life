@@ -261,7 +261,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             <h1 class='
             h4'
             ><?php echo $element['name'] ?></h1>
-            <p style="color:gray;" class='
+            <p style='color:gray;' class='
             price'
             ><?php echo $element['price']." "."JD"?></p>
            <br>
@@ -283,7 +283,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
 
         "
-        ;
+        ;<?php
           } 
           ?>
           </div>  
@@ -386,7 +386,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             <h1 class='
             h4'
             ><?php echo $element['name'] ?></h1>
-            <p  style='color:grey
+            <p  style='color:grey;
              '
              class='
             price'
