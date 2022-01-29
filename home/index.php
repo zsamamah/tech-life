@@ -198,6 +198,10 @@
           <div class='content'>
             <h1 class='h4'><?php echo $element['name'] ?></h1>
             <p class='price'><?php echo $element['price'] . " " . "JD" ?></p>
+            <p class="price through"><?php 
+                if($element['discount'] != 1 ){
+                  echo $element['price']-$element['price']*$element['discount']." "."JD";
+                } ?> </p>
             <br>
             <a href="../catalog/product.php?details=<?php echo $element['id'] ?>" class="btn btn-link">Details</a>
             <br>

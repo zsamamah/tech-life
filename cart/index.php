@@ -132,13 +132,11 @@ try{
                    foreach($_SESSION['cart'] as $product){ ?>
                   <div class="media">
                     <div class="media-left">
-                      <a href="#">
-                        <img style="cursor: auto;"
+                        <img 
                           class="media-object"
                           src=<?php echo $product['image']; ?>
                           alt="HP Chromebook 11"
                         />
-                      </a>
                     </div>
 
                     <div class="media-body">
