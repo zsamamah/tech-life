@@ -11,7 +11,10 @@ $dbname = "tech-life";
     }catch (PDOException $e){
         echo $sql . "<br>" . $e->getMessage();
     }
-
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+  $sql="SELECT * FROM products
+  WHERE 'name' LIKE '%$POST[]%';"
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -158,6 +161,12 @@ include_once("../cart/cart.php");
 
         <!-- Products -->
         <div class="col-sm-9 products">
+          <form method="POST">
+        <div class="col-sm-12">
+                <input style="width: 50%;display:inline-block;" type="text" name="search" value="" placeholder="Search" class="form-control" id="search" />
+                <button type="submit" class="btn btn-primary" name="searchbtn">Search</button>
+              </div>
+            </form>
           <div class="row">
             <?php
              if(isset($_GET['id'])){
