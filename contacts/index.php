@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> FAQ &middot; Unistore &middot; Responsive E-Commerce Template</title>
+    <title> Contact Us &middot; Unistore &middot; Responsive E-Commerce Template</title>
 
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -27,147 +27,41 @@
     <![endif]-->
   </head>
   <body>
-    <nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="./"> <i class="ion-cube"></i> Unistore</a>
-          </div>
-
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li><a href="../">Home</a></li>
-              <li><a href="../catalog/">Catalog</a></li>
-              <li><a href="../blog/">Blog</a></li>
-              <li><a href="../gallery/">Gallery</a></li>
-              <li class="dropdown">
-                <a href="../catalog/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="../catalog/product.html">Product</a></li>
-                  <li><a href="../cart/">Cart</a></li>
-                  <li><a href="../checkout/">Checkout</a></li>
-                  <li class="active"><a href="../faq/">FAQ</a></li>
-                  <li><a href="../contacts/">Contacts</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Variations</li>
-                  <li><a href="../home">Home</a></li>
-                  <li><a href="../blog/item-photo.html">Article Photo</a></li>
-                  <li><a href="../blog/item-video.html">Article Video</a></li>
-                  <li><a href="../blog/item-review.html">Article Review</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="../login/"> <i class="ion-android-person"></i> Login </a></li>
-              <li><a href="../signup/"> Sign Up</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-    </nav>
+    <?php include '../navbar.php' ?>
     <hr class="offset-md">
 
-    <div class="container faq">
+    <div class="container">
         <div class="row">
-          <div class="col-sm-6">
-            <a class="" role="button" data-toggle="collapse" href="#question1" aria-expanded="true" aria-controls="question1">
-              <h1 class="h3">How much should I bid?</h1>
-            </a>
+          <div class="col-sm-4">
+            <div id="Address">
+              <address>
+                <label class="h3">Unistore, Inc.</label><br>
+                1305 Market Street, Suite 800<br>
+                San Francisco, CA 94102<br>
+                <abbr title="Phone">P:</abbr> (123) 456-7890
+              </address>
 
-            <div class="collapse" id="question1">
-              <div class="well">
-                <p>
-                  Unistore is great for finding deals, as long as you know what you're looking for and how much the item is worth. Having that information is vital to placing bids in correct amount and saving lots of money.
-                </p>
-              </div>
+              <address>
+                <strong>Support</strong><br>
+                <a href="mailto:#">sup@example.com</a>
+                <br><br>
+
+                <strong>Partners</strong><br>
+                <a href="mailto:#">col@example.com</a>
+              </address>
             </div>
-            <br>
-            <!-- //// -->
-
-            <a class="" role="button" data-toggle="collapse" href="#question3" aria-expanded="false" aria-controls="question3">
-              <h1 class="h3">What's the best way to find my favorite items?</h1>
-            </a>
-
-            <div class="collapse" id="question3">
-              <div class="well">
-                <p>
-                  If you're sick of trying to remember your searches for all the different types of spellings, all the different sellers you like, and all the different things you collect, Unistore provides you with an easy way to remember - My Unistore.
-                </p>
-              </div>
-            </div>
-            <br>
-            <!-- //// -->
-
-            <a class="" role="button" data-toggle="collapse" href="#question5" aria-expanded="false" aria-controls="question5">
-              <h1 class="h3">What should I use to pay?</h1>
-            </a>
-
-            <div class="collapse" id="question5">
-              <div class="well">
-                <p>
-                  Although we've heard of issues with PayPal, we still recommend them for nearly all purchases. Nearly all sellers accept PayPal payment, and many purchases are automatically covered for fraud protection. Please check PayPal.com for details on their account protection tips and fraud protection services.
-                </p>
-              </div>
-            </div>
-            <br>
-            <!-- //// -->
           </div>
-          <div class="col-sm-6">
-            <a class="" role="button" data-toggle="collapse" href="#question2" aria-expanded="true" aria-controls="question2">
-              <h1 class="h3">What's the best way to search?</h1>
-            </a>
-
-            <div class="collapse" id="question2">
-              <div class="well">
-                <p>
-                  Unistore search engine is pretty good but can be a bit overwhelming if you're not sure what you're looking for, or if you're just browsing. Unistore is constantly working at upgrading its search engine to make things easier to find (it's in their best interest to have as many buyers for items as possible).
-                </p>
-              </div>
-            </div>
-            <br>
-            <!-- //// -->
-
-            <a class="" role="button" data-toggle="collapse" href="#question4" aria-expanded="false" aria-controls="question4">
-              <h1 class="h3">What's a good shipping rate/method?</h1>
-            </a>
-
-            <div class="collapse" id="question4">
-              <div class="well">
-                <p>
-                  If possible, check with the seller to ask how they'll pack the item. I once received a used laptop that was literally scotch-taped into a used, ripped, USPS priority box that was too small so part of the computer was sticking out - with no padding what-so-ever. If you're getting breakable items, make sure the seller will pack it correctly.
-                </p>
-              </div>
-            </div>
-            <br>
-            <!-- //// -->
-
-            <a class="" role="button" data-toggle="collapse" href="#question6" aria-expanded="false" aria-controls="question6">
-              <h1 class="h3">What should I do if the item is defective/broken/wrong?</h1>
-            </a>
-
-            <div class="collapse" id="question6">
-              <div class="well">
-                <p>
-                  The first thing to do is to double check the item - make sure it actually is broken. You'll probably need to go over the item description on eBay to verify that it didn't arrive as promised. Next, contact the seller directly and describe the issue with the item.
-                </p>
-              </div>
-            </div>
-            <br>
-            <!-- //// -->
+          <div class="col-sm-8">
+            <div id="GoMap"></div>
           </div>
         </div>
+        <br>
     </div>
 
-    <hr class="offset-lg">
     <div class="gray">
       <div class="container align-center">
-        <hr class="offset-md">
-      	<h1> Need our assistance? </h1>
-      	<p> Please select a question above first so we can connect you <br class="visible-md visible-lg"> to the right agent. </p>
+        <h1> Need our help? </h1>
+        <p> Please select a question above first so we can connect you <br class="visible-md visible-lg"> to the right agent. </p>
 
         <div class="row">
           <div class="col-sm-4 col-sm-offset-4">
@@ -182,9 +76,8 @@
             </form>
           </div>
         </div>
-        <hr class="offset-lg">
-      	<hr class="offset-md">
       </div>
+      <br>
     </div>
     <hr class="offset-lg">
     <hr class="offset-lg">
@@ -428,12 +321,35 @@
     <script src="../assets/js/core.js"></script>
     <script src="../assets/js/carousel.js"></script>
 
-    <script type="text/javascript">
-      $(document).ready(function(){
-        setTimeout(function(){
-          $('.container.faq').find('.col-sm-6 > a:nth-child(1)').trigger('click');
-        }, 500);
-      });
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP-21Ac6nMc6WTzBS4aai8Ao7w1gcfM2A&callback=initMap"></script>
+
+
+    <script>
+      function initMap() {
+        var mapDiv = document.getElementById('GoMap');
+        var markerLatLng = {lat: 31.963158, lng: 35.930359};
+
+        var map = new google.maps.Map(mapDiv, {
+            center: {lat: 31.963158, lng: 35.930359},
+            zoom: 8
+        });
+
+         var marker = new google.maps.Marker({
+          position: markerLatLng,
+          map: map,
+          title: 'Unistore'
+        });
+
+
+        // google.maps.event.addListener(map, "rightclick", function(event) {
+        //     var lat = event.latLng.lat();
+        //     var lng = event.latLng.lng();
+        //     // populate yor box/field with lat, lng
+        //     console.log("Lat=" + lat + "; Lng=" + lng);
+        // });
+
+      }
     </script>
+
   </body>
 </html>

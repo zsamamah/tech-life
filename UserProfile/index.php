@@ -108,6 +108,11 @@ try {
 
 <body>
     <?php include '../navbar.php' ?>
+    <?php
+    if(!isset($_SESSION['Loggeduser'])){
+        echo "<script>window.location.href='../login'</script>";
+    }
+    ?>
     <div class="container form-container">
 
         <div class="row gutters-sm">
