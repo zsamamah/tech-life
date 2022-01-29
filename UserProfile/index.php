@@ -258,7 +258,7 @@ try {
                                         $LoggedUserId = $_SESSION["LoggeduserId"];
                                         // $data = $conn->query("SELECT * FROM orders WHERE user_id=$LoggedUserId ");
                                         // $data->execute();
-                                        $data = $conn->prepare("SELECT order_id,date,SUM(order_item.quantity) AS quantity,total
+                                        $data = $conn->prepare("SELECT order_id,date,SUM(order_item.quantity) AS quantity,total,delivery
                                         FROM Orders 
                                         INNER JOIN order_item ON orders.id=order_item.order_id WHERE user_id=$LoggedUserId GROUP BY order_id"); //GROUP BY order_id
                                         $data->execute();
@@ -272,7 +272,7 @@ try {
                                                 <td><?php echo $item["date"]; ?></td>
                                                 <td><?php echo $item["quantity"]; ?></td>
                                                 <td><span class="tag tag-success">Delivered</span></td>
-                                                <td><?php echo $item["total"] . "$"; ?></td>
+                                                <td><?php echo $item["total"]+$item['delivery'] . " JD"; ?></td>
                                                 <td>cash on delivery</td>
                                             </tr>
                                         <?php
