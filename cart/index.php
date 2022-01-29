@@ -228,21 +228,21 @@ try{
               <hr class="offset-md" />
               <?php 
               if($_SERVER["REQUEST_METHOD"]=="POST"){
+                $found=false;
                 foreach($_SESSION['cart'] as $product){
                   $sql="SELECT * FROM products WHERE id= $product[id]";
                 $result=$connection->query($sql);
                 $row = $result->fetch(PDO::FETCH_ASSOC);
                 if($product['quantity']>$row['stock']){ 
-                 echo "<span>There is </span>". $row['stock']."<span> items of </span>".$row['name']. "<span> in stock</span> <br>";
-                }
-                elseif($product['quantity']<=$row['stock']){
+                  $found=true;
+                 echo "<span>There is only </span>". $row['stock']."<span> items of </span>".$row['name']. "<span> in stock</span> <br>";
+                } 
+                } if(!$found){
                   if(isset($_SESSION["LoggeduserId"])){
                     echo "<script>window.location.href='../checkout/index.php'</script>";
                   }else{
                     echo "<script>window.location.href='../login/index.php'</script>";
                   }
-                  
-                }
                 } }
               ?>
              <button class="btn btn-primary btn-lg justify" style="height: 45px;" type="submit"><i class="ion-android-checkbox-outline"></i>&nbsp;&nbsp;
