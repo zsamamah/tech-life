@@ -258,9 +258,9 @@ try {
                                         $LoggedUserId = $_SESSION["Loggeduser"]['id'];
                                         // $data = $conn->query("SELECT * FROM orders WHERE user_id=$LoggedUserId ");
                                         // $data->execute();
-                                        $data = $conn->prepare("SELECT order_id,date,quantity,total
+                                        $data = $conn->prepare("SELECT order_id,date,SUM(order_item.quantity) AS quantity,total
                                         FROM Orders 
-                                        INNER JOIN order_item ON orders.id=order_item.order_id WHERE user_id=$LoggedUserId"); //GROUP BY order_id
+                                        INNER JOIN order_item ON orders.id=order_item.order_id WHERE user_id=$LoggedUserId GROUP BY order_id"); //GROUP BY order_id
                                         $data->execute();
                                         $row = $data->fetchAll(PDO::FETCH_ASSOC);
                                         ?>
