@@ -289,7 +289,7 @@
 
           <div class='row products'>
             <div class='col-sm-6 col-md-4 product'>
-              <a href='#favorites' class=favorites' data-favorite='inactive'><i class='ion-ios-heart-outline'></i></a>
+              <a href='#favorites' class='favorites' data-favorite='inactive'><i class='ion-ios-heart-outline'></i></a>
               <a href='./'>
                 <img src=<?php echo $element['image'] ?> alt='product Image' /></a>
               <div class='content'>
