@@ -194,7 +194,7 @@ try{
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-xs-6">
-                    <p>Subtotal <?php  if(isset($_SESSION['items'])){
+                    <p> <?php  if(isset($_SESSION['items'])){
                       echo $_SESSION['items'];
                     } else echo 0;?> items</p>
                   </div>
