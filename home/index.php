@@ -202,9 +202,10 @@
             <br>
             <a href="../catalog/product.php?details=<?php echo $element['id'] ?>" class="btn btn-link">Details</a>
             <br>
+            <a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'>
             <button class='
             btn btn-primary btn-rounded btn-sm'> <i class='
-            ion-bag'></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
+            ion-bag'></i> Add to cart</button></a>
           </div>
         </div>
   
@@ -303,9 +304,10 @@
                 } ?> </p>
                 <br>
                 <a href="../catalog/product.php?details=<?php echo $element['id'] ?>" class="btn btn-link">Details</a>
-                <br>
+                
+                <br><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'>
                 <button class=' btn btn-primary btn-rounded btn-sm'> <i class='
-            ion-bag'></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
+            ion-bag'></i> Add to cart</button></a>
               </div>
             </div>
 
