@@ -43,6 +43,7 @@ try {
 
         .form-container {
             margin-top: 3em;
+            margin-bottom: 10em;
         }
 
         .main-body {
