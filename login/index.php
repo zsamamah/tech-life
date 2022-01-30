@@ -74,7 +74,7 @@ try {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($admin->rowCount() != null) {
-              $_SESSION["Loggeduser"] = $row;
+              $_SESSION["Loggeduser"] = $row['name'];
               echo "<script>window.location.href='../admin/index.php'</script>";
               // header("location: ../admin/index2.html");
             } else if ($stmt->rowCount() != null) {
@@ -82,6 +82,7 @@ try {
               $_SESSION["LoggeduserEmail"] = $row["email"];
               $_SESSION["LoggeduserPhone"] = $row["phone"];
               $_SESSION["LoggeduserId"]=$row['id'];
+              $_SESSION["LoggeduserAdmin"]=$row['is_admin'];
               echo "<script>window.location.href='../home/index.php'</script>";
             } else {
               echo "<p style='color:brown'> invalid login please try again!</p> <br>";

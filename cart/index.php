@@ -181,7 +181,7 @@ try{
                   }else{
                     echo "<script>window.location.href='../login/index.php'</script>";
                   }
-                } }else echo "<p>Your Cart s empty</p>";}
+                } }else echo "<p>Your Cart Is Empty !</p>";}
               ?>
              <button class="btn btn-primary btn-lg justify" style="height: 45px;" type="submit"><i class="ion-android-checkbox-outline"></i>&nbsp;&nbsp;
                 Checkout order</a

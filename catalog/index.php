@@ -100,16 +100,16 @@ $dbname = "tech-life";
         <div class="col-sm-9 products">
          
         <div class="col-sm-12"> 
-          <div class="row"><form method="POST" style="display:flex;justify-content:center;">
+          <div class="row"><form method="GET" action="<?php $_SERVER['PHP_SELF']?>" style="display:flex;justify-content:center;">
                 <input style="width: 50%;margin-right:1rem;" type="text" name="search" value="" placeholder="Search" class="form-control" id="search" />
-                <button type="submit" class="btn btn-primary" name="searchbtn">Search</button>
+                <button type="submit" class="btn btn-primary">Search</button>
               </div>
             </form>
             <?php
              if(isset($_GET['id'])){
               $result=$connection->prepare("SELECT * FROM products WHERE category_id=$_GET[id]");
-            }elseif($_SERVER["REQUEST_METHOD"]=="POST"){
-              $result=$connection->prepare("SELECT * FROM products WHERE name LIKE '%$_POST[search]%'");            
+            }elseif(isset($_GET['search'])){
+              $result=$connection->prepare("SELECT * FROM products WHERE name LIKE '%$_GET[search]%'");            
             }
             else{
               $result=$connection->prepare("SELECT * FROM products");
