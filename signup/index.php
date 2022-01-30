@@ -129,7 +129,7 @@ if (isset($_POST['signup'])) {
       let confirmPassword = document.getElementById("confirmPassword");
       let Error = document.getElementById("ErrMsg");
 
-      if (name.value.length < 5) {
+      if (name.value.length < 8) {
         event.preventDefault();
         Error.innerHTML = "Full name must be 8 characters or more";
       }
