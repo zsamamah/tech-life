@@ -45,10 +45,8 @@ $dbname = "tech-life";
 
        echo "<pre>";
        var_dump($_SESSION['cart']);
-     if($_GET['type']){
+     if($_GET['type'] || $_GET['typeHome']){
         header("Location:../cart/index.php");
-     }elseif($_GET['typeHome']){
-         header("Location:../home/index.php");
      }elseif($_GET['typecatalog']){
         header("Location:../catalog/index.php");
      }

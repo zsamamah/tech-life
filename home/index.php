@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +9,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title> Unistore &middot; Responsive E-Commerce Template</title>
+  <title>Tech-Life | Home</title>
 
   <meta name="description" content="Bootstrap template for you store - E-Commerce Bootstrap Template">
   <meta name="keywords" content="unistore, e-commerce bootstrap template, premium e-commerce bootstrap template, premium bootstrap template, bootstrap template, e-commerce, bootstrap template, sunrise digital">
@@ -155,9 +158,10 @@
             <br>
             <a href="../catalog/product.php?details=<?php echo $element['id'] ?>" class="btn btn-link">Details</a>
             <br>
+            <a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'>
             <button class='
             btn btn-primary btn-rounded btn-sm'> <i class='
-            ion-bag'></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
+            ion-bag'></i> Add to cart</button></a>
           </div>
         </div>
 
@@ -194,8 +198,8 @@
             <br>
             <a href="../catalog/product.php?details=<?php echo $element['id'] ?>" class="btn btn-link">Details</a>
             <br>
-            <button class=' btn btn-primary btn-rounded btn-sm'> <i class='
-            ion-bag'></i><a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'> Add to cart</a></button>
+            <a style='color:white;text-decoration:none' href='../catalog/addToCart.php?id=<?php echo $element['id'] ?>&&typeHome=addToCart'><button class=' btn btn-primary btn-rounded btn-sm'> <i class='
+            ion-bag'></i> Add to cart</button></a>
           </div>
         </div>
 

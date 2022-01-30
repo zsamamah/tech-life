@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 ?>
 <nav class="navbar navbar-default">
     <div class="container">
