@@ -167,7 +167,10 @@
 
 
     <hr class="offset-md">
+    <div class='
+        row products'>
     <?php
+
 
     $db_user = "root";
     $db_pass = "";
@@ -182,8 +185,7 @@
     foreach ($row
       as $element) { ?>
 
-      <div class='
-        row products'>
+      
         <div class='
         col-sm-6 col-md-4 product'>
          
@@ -211,6 +213,8 @@
 
 
       <?php   } ?>
+              </div>
+              </div>
 
       <!-- <div class="row products">
         <div class="col-sm-6 col-md-4 product">
@@ -275,6 +279,7 @@
       <div class="container">
         <h2>BEST DEALS FOR YOU</h2>
         <hr class="offset-md">
+        <div class='row products'>
         <?php
         $query = "SELECT * FROM products where discount!=1 order by RAND() LIMIT 3  ";
         $stmt = $db->prepare($query);
@@ -283,7 +288,7 @@
         foreach ($row
           as $element) { ?>
 
-          <div class='row products'>
+          
             <div class='col-sm-6 col-md-4 product'>
              
                 <img src=<?php echo $element['image'] ?> alt='product Image' style="width:100%;"/>
@@ -308,6 +313,8 @@
           <?php
         }
           ?>
+          </div>
+      </div>
           <!-- 
       <div class="row products">
         <div class="col-sm-6 col-md-3 product">

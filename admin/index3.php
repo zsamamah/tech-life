@@ -943,6 +943,18 @@ try {
                       <input type="text" name="discount" class="form-control" id="inputPassword3" placeholder="discount">
                     </div>
                   </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Age Rating</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="age-rating" class="form-control" id="inputPassword3" placeholder="age-rating">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label">Online Reviews</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="online-reviews" class="form-control" id="inputPassword3" placeholder="online-reviews">
+                    </div>
+                  </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
@@ -954,8 +966,8 @@ try {
 
             <?php
 
-            if(isset($_POST['name']) && isset($_POST['description']) && isset($_POST['category']) && isset($_POST['image']) && isset($_POST['stock']) && isset($_POST['price']) && isset($_POST['discount'])){
-              $sql = "INSERT INTO products(name,description,image,category_id,price,stock,discount) VALUES('{$_POST['name']}','{$_POST['description']}','{$_POST['image']}','{$_POST['category']}','{$_POST['price']}','{$_POST['stock']}','{$_POST['discount']}')";
+            if(isset($_POST['name']) && isset($_POST['description']) && isset($_POST['category']) && isset($_POST['image']) && isset($_POST['stock']) && isset($_POST['price']) && isset($_POST['discount']) && isset($_POST['age-rating']) && isset($_POST['online-reviews'])){
+              $sql = "INSERT INTO products(name,description,image,category_id,price,stock,discount,online_reviews,age_rating) VALUES('{$_POST['name']}','{$_POST['description']}','{$_POST['image']}','{$_POST['category']}','{$_POST['price']}','{$_POST['stock']}','{$_POST['discount']}','{$_POST['online-reviews']}','{$_POST['age-rating']}')";
               $conn->query($sql);
             }
 
