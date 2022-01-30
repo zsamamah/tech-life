@@ -1,5 +1,5 @@
 <?php 
-session_start();
+// session_start();
 // unset($_SESSION['cart']);
 $servername = "localhost";
 $username = "root";
@@ -11,7 +11,6 @@ $dbname = "tech-life";
     }catch (PDOException $e){
         echo $sql . "<br>" . $e->getMessage();
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,71 +52,12 @@ $dbname = "tech-life";
   </head>
   <body>
 <?php 
-include_once("../cart/cart.php");
+// include_once("../cart/cart.php");
  ?>
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <button
-            type="button"
-            class="navbar-toggle collapsed"
-            data-toggle="collapse"
-            data-target="#navbar"
-            aria-expanded="false"
-            aria-controls="navbar"
-          >
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="./">
-            <i class="ion-cube"></i> Unistore</a
-          >
-        </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="../">Home</a></li>
-            <li class="active"><a href="../catalog/">Catalog</a></li>
-            <li><a href="../blog/">Blog</a></li>
-            <li><a href="../gallery/">Gallery</a></li>
-            <li class="dropdown">
-              <a
-                href="../catalog/"
-                class="dropdown-toggle"
-                data-toggle="dropdown"
-                role="button"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >More <span class="caret"></span
-              ></a>
-              <ul class="dropdown-menu">
-                <li><a href="../catalog/product.html">Product</a></li>
-                <li><a href="../cart/">Cart</a></li>
-                <li><a href="../checkout/">Checkout</a></li>
-                <li><a href="../faq/">FAQ</a></li>
-                <li><a href="../contacts/">Contacts</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Variations</li>
-                <li><a href="../home">Home</a></li>
-                <li><a href="../blog/item-photo.html">Article Photo</a></li>
-                <li><a href="../blog/item-video.html">Article Video</a></li>
-                <li><a href="../blog/item-review.html">Article Review</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="../login/"> <i class="ion-android-person"></i> Login </a>
-            </li>
-            <li><a href="../signup/"> Sign Up</a></li>
-          </ul>
-        </div>
-        <!--/.nav-collapse -->
-      </div>
-      <!--/.container-fluid -->
-    </nav>
+    <?php 
+    include '../navbar.php';
+    include '../cart/cart.php';
+     ?>
     <hr class="offset-lg" />
 
 
@@ -142,7 +82,7 @@ include_once("../cart/cart.php");
               if($cat['name']!=="default"){
                echo "<div class='checkbox-group' data-status='inactive'>";
                echo "<div class='label' data-value='Laptops'><a href='index.php?id=$cat[id]'>
-               $cat[name] </a> </div>";
+                $cat[name] </a> </div>";
               echo" </div>";
               }
           
@@ -158,34 +98,47 @@ include_once("../cart/cart.php");
 
         <!-- Products -->
         <div class="col-sm-9 products">
-          <div class="row">
+         
+        <div class="col-sm-12"> 
+          <div class="row"><form method="GET" action="<?php $_SERVER['PHP_SELF']?>" style="display:flex;justify-content:center;">
+                <input style="width: 50%;margin-right:1rem;" type="text" name="search" value="" placeholder="Search" class="form-control" id="search" />
+                <button type="submit" class="btn btn-primary">Search</button>
+              </div>
+            </form>
             <?php
              if(isset($_GET['id'])){
               $result=$connection->prepare("SELECT * FROM products WHERE category_id=$_GET[id]");
-            }else{
-              $result=$connection->prepare("SELECT * FROM products");
+            }elseif(isset($_GET['search'])){
+              $result=$connection->prepare("SELECT * FROM products WHERE name LIKE '%$_GET[search]%'");            
             }
-            $result->execute();
-            foreach($result as $product){ 
+            else{
+              $result=$connection->prepare("SELECT * FROM products");
+          }
+          $result->execute();
+          $row=$result->fetchAll(PDO::FETCH_ASSOC) ;
+          if(count($row)>0){
+            foreach($row as $product){ 
               $sql="SELECT * FROM categories WHERE id=$product[category_id]";
               $result=$connection->query($sql);
               $row = $result->fetch(PDO::FETCH_ASSOC) ;
+              if($product['stock']>0){
              ?>
             <div class="col-sm-6 col-md-4 product">
-              <a href="#favorites" class="favorites" data-favorite="inactive"
-                ><i class="ion-ios-heart-outline"></i
-              ></a>
-              <a href="./"
-                ><img
+                <img style="width:100%;"
                   src=<?php echo $product['image'] ?>
-                  alt="HP Chromebook 11"
-              /></a>
-             
-              <div class="content">
+                  alt=<?php echo $product['name'] ?>
+              />
+              <div class="content" style="width:100%;">
                 <h1 class="h4"><?php echo $product['name'] ?></h1>
-                <p class="price"><?php echo $product['price']." "."JD" ?></p>
-                <label><?php echo strtoupper($row['name']) ?></label>
-
+                <p class="price"><?php 
+                if($product['discount'] != 1 ){ echo $product['price']-$product['price']*$product['discount']." "."JD";}
+               else echo $product['price']." "."JD" ?></p>
+                <p class="price through"><?php 
+                if($product['discount'] != 1 ){
+                  echo  $product['price']." "."JD";
+                } ?> </p>
+                <label ><?php echo strtoupper($row['name']) ?></label>
+                 
                 <a href="../catalog/product.php?details=<?php echo $product['id']?>" class="btn btn-link">
                   Details</a
                 >
@@ -193,7 +146,10 @@ include_once("../cart/cart.php");
                   <i class="ion-bag"></i><a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo $product['id'] ?>&&typeCart=addToCart"> Add to cart</a>
                 </button>
               </div>
-            </div> <?php } ?>
+            </div> <?php }}}else {
+               echo "<p style='text-align:center;margin:10% 0% 10% 0;font-size:5rem;'>No Results Found</p>";
+            }?>
+            
           </div>
 
           <nav>

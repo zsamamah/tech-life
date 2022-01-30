@@ -1,5 +1,4 @@
 <?php 
-session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -24,6 +23,8 @@ $dbname = "tech-life";
       $categoryID = $product['category_id'];
       $discount = $product['discount']; 
       $stock = $product['stock']; 
+      $ageRating = $product['age_rating']; 
+      $onlineReviews = $product['online_reviews']; 
     
       $resultCategory=$connection->prepare("SELECT * FROM categories WHERE id=$categoryID");
       $resultCategory->execute();
@@ -40,7 +41,7 @@ $dbname = "tech-life";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> HP Chromebook 11 &middot; Unistore &middot; Responsive E-Commerce Template</title>
+    <title>Product</title>
 
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -63,272 +64,9 @@ $dbname = "tech-life";
   </head>
   <body>
     <?php 
+include '../navbar.php';
 include_once("../cart/cart.php");
  ?>
-    <!-- <div class="cart" data-toggle="inactive">
-      <div class="label">
-        <i class="ion-bag"></i> 7
-      </div>
-
-      <div class="overlay"></div>
-
-      <div class="window">
-        <div class="title">
-          <button type="button" class="close"><i class="ion-android-close"></i></button>
-          <h1 class="h3 info">Shopping cart</h1>
-        </div>
-
-        <div class="content">
-
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" src="../assets/img/products/chrome-book-11.jpg" alt="HP Chromebook 11"/>
-              </a>
-            </div>
-            <div class="media-body">
-              <h2 class="h4 media-heading">HP Chromebook 11</h2>
-              <label>Laptops</label>
-              <p class="price">$199.99</p>
-            </div>
-            <div class="controls">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="minus"><i class="ion-minus-round"></i></button>
-                </span>
-                <input type="text" class="form-control input-sm" placeholder="Qty" value="1" readonly="">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
-                </span>
-              </div>
-
-              <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
-            </div>
-          </div>
-
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" src="../assets/img/products/chrome-book-14.jpg" alt="HP Chromebook 11"/>
-              </a>
-            </div>
-            <div class="media-body">
-              <h2 class="h4 media-heading">HP Chromebook 14</h2>
-              <label>Laptops</label>
-              <p class="price">$209.99</p>
-            </div>
-            <div class="controls">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="minus"><i class="ion-minus-round"></i></button>
-                </span>
-                <input type="text" class="form-control input-sm" placeholder="Qty" value="1" readonly="">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
-                </span>
-              </div>/input-group
-
-              <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
-            </div>
-          </div>
-
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" src="../assets/img/products/ipad-air.jpg" alt="iPad Air"/>
-              </a>
-            </div>
-            <div class="media-body">
-              <h2 class="h4 media-heading">iPad Air</h2>
-              <label>Tablets</label>
-              <p class="price">$449.99</p>
-            </div>
-            <div class="controls">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="minus"><i class="ion-minus-round"></i></button>
-                </span>
-                <input type="text" class="form-control input-sm" placeholder="Qty" value="1" readonly="">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
-                </span>
-              </div>
-
-              <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
-            </div>
-          </div>
-
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" src="../assets/img/products/mi-pad-2.jpg" alt="HP Chromebook 11"/>
-              </a>
-            </div>
-            <div class="media-body">
-              <h2 class="h4 media-heading">Mi Pad 2</h2>
-              <label>Tablets</label>
-              <p class="price">$199.99</p>
-            </div>
-            <div class="controls">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="minus"><i class="ion-minus-round"></i></button>
-                </span>
-                <input type="text" class="form-control input-sm" placeholder="Qty" value="1" readonly="">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
-                </span>
-              </div>
-
-              <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
-            </div>
-          </div>
-
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" src="../assets/img/products/lenovo-yoga.jpg" alt="Lenovo Yoga"/>
-              </a>
-            </div>
-            <div class="media-body">
-              <h2 class="h4 media-heading">Lenovo Yoga</h2>
-              <label>Hybrid</label>
-              <p class="price">$199.99</p>
-            </div>
-            <div class="controls">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="minus"><i class="ion-minus-round"></i></button>
-                </span>
-                <input type="text" class="form-control input-sm" placeholder="Qty" value="1" readonly="">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
-                </span>
-              </div>
-
-              <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
-            </div>
-          </div>
-
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" src="../assets/img/products/surface-pro.jpg" alt="HP Chromebook 11"/>
-              </a>
-            </div>
-            <div class="media-body">
-              <h2 class="h4 media-heading">Surface Pro</h2>
-              <label>Hybrid</label>
-              <p class="price">$199.99</p>
-            </div>
-            <div class="controls">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="minus"><i class="ion-minus-round"></i></button>
-                </span>
-                <input type="text" class="form-control input-sm" placeholder="Qty" value="1" readonly="">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
-                </span>
-              </div>
-
-              <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
-            </div>
-          </div>
-
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" src="../assets/img/products/asus-transformer.jpg" alt="HP Chromebook 11"/>
-              </a>
-            </div>
-            <div class="media-body">
-              <h2 class="h4 media-heading">ASUS Transformer</h2>
-              <label>Hybrid</label>
-              <p class="price">$199.99</p>
-            </div>
-            <div class="controls">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="minus"><i class="ion-minus-round"></i></button>
-                </span>
-                <input type="text" class="form-control input-sm" placeholder="Qty" value="1" readonly="">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-sm" type="button" data-action="plus"><i class="ion-plus-round"></i></button>
-                </span>
-              </div>
-
-              <a href="#remove"> <i class="ion-trash-b"></i> Remove </a>
-            </div>
-          </div>
-
-        </div> -->
-
-        <!-- <div class="checkout container-fluid">
-          <div class="row">
-            <div class="col-xs-3 col-sm-2">
-              <div>
-                <p>Subtotal:</p>
-                <h3 class="h4">Total:</h3>
-              </div>
-            </div>
-            <div class="col-xs-3 col-sm-4">
-              <div class="total">
-                <p>$1 200</p>
-                <h3 class="h4">$1 200</h3>
-              </div>
-            </div>
-
-            <div class="col-xs-6 col-sm-6">
-              <a class="btn btn-primary" href="../checkout/"> Checkout order </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> --> 
-
-    <nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="./"> <i class="ion-cube"></i> Unistore</a>
-          </div>
-
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li><a href="../">Home</a></li>
-              <li class="active"><a href="../catalog/">Catalog</a></li>
-              <li><a href="../blog/">Blog</a></li>
-              <li><a href="../gallery/">Gallery</a></li>
-              <li class="dropdown">
-                <a href="../catalog/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li class="active"><a href="../catalog/product.html">Product</a></li>
-                  <li><a href="../cart/">Cart</a></li>
-                  <li><a href="../checkout/">Checkout</a></li>
-                  <li><a href="../faq/">FAQ</a></li>
-                  <li><a href="../contacts/">Contacts</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Variations</li>
-                  <li><a href="../home">Home</a></li>
-                  <li><a href="../blog/item-photo.html">Article Photo</a></li>
-                  <li><a href="../blog/item-video.html">Article Video</a></li>
-                  <li><a href="../blog/item-review.html">Article Review</a></li>
-                </ul>
-              </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="../login/"> <i class="ion-android-person"></i> Login </a></li>
-              <li><a href="../signup/"> Sign Up</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-    </nav>
     <hr class="offset-lg">
 
     <div class="product">
@@ -391,7 +129,14 @@ include_once("../cart/cart.php");
             <p> &middot; Category: <?php echo $categoryName; ?></p>
             <p> &middot; Stock: <?php echo $stock; ?></p>
 
-            <p class="price">$<?php echo $price; ?>JD</p>
+            <p class="price"><?php 
+                if($discount != 1 ){
+                echo $price-$price*$discount." "."JD";
+              }else echo $price." "."JD" ?></p>
+              <p class="price through"><?php 
+              if($discount != 1 ){
+                echo  $price." "."JD";
+              } ?> </p>
             <!-- <p class="price through">$249.99</p> -->
             <br><br>
 
@@ -416,49 +161,21 @@ include_once("../cart/cart.php");
              <br>
 
               <div class="row specification">
-                <div class="col-sm-6"> <label>Operating system</label> </div>
-                <div class="col-sm-6"> <p>Chrome OS™</p> </div>
+                <div class="col-sm-6"> <label>Category</label> </div>
+                <div class="col-sm-6"> <p><?php echo $categoryName ?></p> </div>
               </div>
               
               <div class="row specification">
-                <div class="col-sm-6"> <label>Processor</label> </div>
-                <div class="col-sm-6"> <p>Intel® Celeron® N2840 with Intel® HD Graphics (2.16 GHz, up to 2.58 GHz, 1 MB cache, 2 cores)</p> </div>
+                <div class="col-sm-6"> <label>Age Rating</label> </div>
+                <div class="col-sm-6"> <p><?php echo $ageRating ?></p> </div>
               </div>
 
               <div class="row specification">
-                <div class="col-sm-6"> <label>Processor technology</label> </div>
-                <div class="col-sm-6"> <p>Intel Turbo Boost Technology</p> </div>
+                <div class="col-sm-6"> <label>Online Reviews</label> </div>
+                <div class="col-sm-6"> <p><?php echo $onlineReviews ?></p> </div>
               </div>
 
-              <div class="row specification">
-                <div class="col-sm-6"> <label>Graphics</label> </div>
-                <div class="col-sm-6"> <p>Intel HD Graphics</p> </div>
-              </div>
-
-              <div class="row specification">
-                <div class="col-sm-6"> <label>Memory</label> </div>
-                <div class="col-sm-6"> <p>2 GB DDR3L SDRAM (onboard)</p> </div>
-              </div>
-
-              <div class="row specification">
-                <div class="col-sm-6"> <label>Hard drive</label> </div>
-                <div class="col-sm-6"> <p>16 GB eMMC</p> </div>
-              </div>
-
-              <div class="row specification">
-                <div class="col-sm-6"> <label>Wireless</label> </div>
-                <div class="col-sm-6"> <p>802.11ac (2x2) and Bluetooth® 4.0 combo</p> </div>
-              </div>
-
-              <div class="row specification">
-                <div class="col-sm-6"> <label>Power supply</label> </div>
-                <div class="col-sm-6"> <p>45 W AC power adapter</p> </div>
-              </div>
-
-              <div class="row specification">
-                <div class="col-sm-6"> <label>Battery</label> </div>
-                <div class="col-sm-6"> <p>3-cell, 36 Wh Li-ion</p> </div>
-              </div>
+             
           </div>
           <div class="col-sm-5">
             <div class="comments">
@@ -520,12 +237,20 @@ include_once("../cart/cart.php");
                  ?>
                   
               <div class="col-sm-6 col-md-3 product">
-                <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a>
+                <!-- <a href="#favorites" class="favorites" data-favorite="inactive"><i class="ion-ios-heart-outline"></i></a> -->
                 <a href="./"><img src="<?php echo $val["image"] ?>" alt="HP Chromebook 11"/></a>
 
                 <div class="content">
                   <h1 class="h4"><?php echo $val["name"] ?></h1>
-                  <p class="price"><?php echo $val["price"] ?></p>
+                  <p class="price"><?php 
+                if($val['discount'] != 1 ){
+                echo $val['price']-$val['price']*$val['discount']." "."JD";
+              }else echo $val['price']." "."JD" ?></p>
+              <p class="price through"><?php 
+              if($val['discount'] != 1 ){
+                echo  $val['price']." "."JD";
+              } ?> </p>
+               
                   <label><?php echo $categoryName ?></label>
 
                   <a href="../catalog/product.php?details=<?php echo $val['id']?>" class="btn btn-link"> Details</a>

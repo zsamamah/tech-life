@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2022 at 12:07 PM
+-- Generation Time: Jan 30, 2022 at 11:18 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -132,6 +132,8 @@ CREATE TABLE `products` (
   `image` varchar(255) NOT NULL,
   `stock` int(5) NOT NULL,
   `discount` float NOT NULL DEFAULT 1,
+  `online_reviews` varchar(255) NOT NULL,
+  `age_rating` varchar(255) NOT NULL,
   `category_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -139,12 +141,19 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `price`, `description`, `image`, `stock`, `discount`, `category_id`) VALUES
-(1, 'Grand Theft Auto V', 20, 'The Criminal Enterprise Starter Pack is the fastest way for new Grand Theft Auto Online players to jumpstart their criminal empires. Do not purchase if you already own the Criminal Enterprise Starter Pack.', 'https://img.g2a.com/323x433/1x1x0/grand-theft-auto-v-criminal-enterprise-starter-pack-ps4-psn-key-europe/fd911188594b4ebfbe77628e', 8, 1, 2),
-(2, 'Batman: Arkham Knight', 15, 'In the explosive finale to the Arkham series, Batman faces the ultimate threat against the city he is sworn to protect.', 'https://img.g2a.com/323x433/1x1x0/batman-arkham-knight-psn-ps4-key-north-america/5912e7945bafe3ce796ca795', 3, 1, 5),
-(3, 'WWE 2K Battlegrounds', 10, 'Take your favorite WWE Superstars and Legends into battle with unrestrained, unhinged, and in-your-face pandemonium! Pull off over-the-top moves and use your special abilities to destroy your opponent while battling in interactive environments!', 'https://img.g2a.com/323x433/1x1x0/wwe-2k-battlegrounds-ps4-psn-key-europe/5fdb1c6346177c7e33723132', 9, 0.2, 3),
-(4, 'Fast & Furious: Crossroads', 25, 'Fast & Furious Crossroads is an action-adventure video game set in the Fast & Furious universe.', 'https://img.g2a.com/323x433/1x1x0/fast-furious-crossroads-ps4-psn-key-europe/5f2cf31b7e696c2e89796fb2', 3, 1, 6),
-(5, 'FIFA 2022', 25, 'FIFA 22 is the latest installment of the FIFA series developed by EA Canada and published by Electronic Arts. The game takes you back to the world of international football.', 'https://img.g2a.com/323x433/1x1x0/fifa-22-pc-origin-key-global/dce7598de0604b70ae47d576', 4, 1, 4);
+INSERT INTO `products` (`id`, `name`, `price`, `description`, `image`, `stock`, `discount`, `online_reviews`, `age_rating`, `category_id`) VALUES
+(1, 'Grand Theft Auto V', 20, 'The Criminal Enterprise Starter Pack is the fastest way for new Grand Theft Auto Online players to jumpstart their criminal empires. Do not purchase if you already own the Criminal Enterprise Starter Pack.', 'https://img.g2a.com/323x433/1x1x0/grand-theft-auto-v-criminal-enterprise-starter-pack-ps4-psn-key-europe/fd911188594b4ebfbe77628e', 8, 1, '10/10', '+18', 2),
+(2, 'Batman: Arkham Knight', 15, 'In the explosive finale to the Arkham series, Batman faces the ultimate threat against the city he is sworn to protect.', 'https://img.g2a.com/323x433/1x1x0/batman-arkham-knight-psn-ps4-key-north-america/5912e7945bafe3ce796ca795', 3, 1, '8.5/10', '16', 5),
+(3, 'WWE 2K Battlegrounds', 10, 'Take your favorite WWE Superstars and Legends into battle with unrestrained, unhinged, and in-your-face pandemonium! Pull off over-the-top moves and use your special abilities to destroy your opponent while battling in interactive environments!', 'https://img.g2a.com/323x433/1x1x0/wwe-2k-battlegrounds-ps4-psn-key-europe/5fdb1c6346177c7e33723132', 9, 0.2, '7/10', 'T', 3),
+(4, 'Fast & Furious: Crossroads', 25, 'Fast & Furious Crossroads is an action-adventure video game set in the Fast & Furious universe.', 'https://img.g2a.com/323x433/1x1x0/fast-furious-crossroads-ps4-psn-key-europe/5f2cf31b7e696c2e89796fb2', 3, 1, '7/10', 'T', 6),
+(5, 'FIFA 2022', 25, 'FIFA 22 is the latest installment of the FIFA series developed by EA Canada and published by Electronic Arts. The game takes you back to the world of international football.', 'https://img.g2a.com/323x433/1x1x0/fifa-22-pc-origin-key-global/dce7598de0604b70ae47d576', 4, 1, '7.5/10', 'T', 4),
+(11, 'God of War', 35, 'God of War is an action video game with RPG elements, developed by Santa Monica Studio and released thanks to PlayStation PC LLC in 2022 for personal computers.', 'https://img.g2a.com/323x433/1x1x0/god-of-war-pc-steam-key-global/98c4f59fc39f44aaa432445e', 12, 1, '10/10', '+18', 5),
+(12, 'Horizon Zero Dawn', 25, 'A unique gaming experience that puts you in the role of a post-apocalyptic robo-animals hunter, Aloy, who sets out on the quest to uncover her own past and prevent an even worse future to happen.', 'https://img.g2a.com/323x433/1x1x0/horizon-zero-dawn-pc-steam-key-global/5f02c6a57e696c6f690471f2', 10, 1, '9/10', '16', 5),
+(13, 'NBA 2K22', 22, 'After the lackluster reception of the last installment, NBA 2K22 could turn out to be what the fans have been waiting for.', 'https://img.g2a.com/323x433/1x1x0/nba-2k22-pc-steam-key-global/1bce4b4fdb554c79b94ebb49', 13, 0.3, '6/10', 'T', 4),
+(14, 'Shadow of Mordor', 15, 'Meet Talion, a Gondorian ranger who lost all he had when Sauron\'s forces came back to Mordor. Middle-Earth: Shadow of Mordor is a third-person open-world action game developed by Monolith Productions.', 'https://img.g2a.com/323x433/1x1x0/middle-earth-shadow-of-mordor-game-of-the-year-edition-steam-key-global/5911a9c8ae653a2ed4758101', 9, 1, '8.5/10', '+18', 5),
+(15, 'Dying Light 2', 25, 'Explore the huge open city and the environment that dynamically changes according to the choices you make.', 'https://img.g2a.com/323x433/1x1x0/dying-light-2-pc-steam-key-global/a7f11c7ff17142279fbd79d3', 8, 1, '8/10', '+18', 2),
+(16, 'Forza Horizon 5', 40, 'Forza Horizon 5 brings the best the developers at Playground Games have to offer. With over 400 available cars, a dynamic, open world divided into several biomes, and stunning visuals.', 'https://img.g2a.com/323x433/1x1x0/forza-horizon-5-xbox-series-x-s-windows-10-xbox-live-key-global/dc4f80e65c984df5bc42b658', 17, 0.2, '8.5/10', 'T', 6),
+(17, 'Tekken 7', 25, 'Tekken 7 is the next chapter in the story of clan Mishina. Devil Gene\'s mysteries will be revealed at last, and the dynamics of the Mishima clan are likely to shift significantly.', 'https://img.g2a.com/323x433/1x1x0/tekken-7-steam-key-global/59a479ac5bafe388224d4522', 13, 1, '7.5/10', '16', 3);
 
 -- --------------------------------------------------------
 
@@ -249,7 +258,7 @@ ALTER TABLE `order_item`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `users`

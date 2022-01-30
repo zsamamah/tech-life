@@ -1,5 +1,4 @@
-<?php 
-session_start();
+<?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -38,7 +37,7 @@ try{
       rel="stylesheet"
       type="text/css"
     />
-
+    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -47,69 +46,7 @@ try{
     <![endif]-->
   </head>
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <div class="navbar-header">
-          <button
-            type="button"
-            class="navbar-toggle collapsed"
-            data-toggle="collapse"
-            data-target="#navbar"
-            aria-expanded="false"
-            aria-controls="navbar"
-          >
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="../">
-            <i class="ion-cube"></i> Unistore</a
-          >
-        </div>
-
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="../">Home</a></li>
-            <li><a href="../catalog/">Catalog</a></li>
-            <li><a href="../blog/">Blog</a></li>
-            <li><a href="../gallery/">Gallery</a></li>
-            <li class="dropdown">
-              <a
-                href="../catalog/"
-                class="dropdown-toggle"
-                data-toggle="dropdown"
-                role="button"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >More <span class="caret"></span
-              ></a>
-              <ul class="dropdown-menu">
-                <li><a href="../catalog/product.html">Product</a></li>
-                <li class="active"><a href="../cart/">Cart</a></li>
-                <li><a href="../checkout/">Checkout</a></li>
-                <li><a href="../faq/">FAQ</a></li>
-                <li><a href="../contacts/">Contacts</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Variations</li>
-                <li><a href="../home">Home</a></li>
-                <li><a href="../blog/item-photo.html">Article Photo</a></li>
-                <li><a href="../blog/item-video.html">Article Video</a></li>
-                <li><a href="../blog/item-review.html">Article Review</a></li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="../login/"> <i class="ion-android-person"></i> Login </a>
-            </li>
-            <li><a href="../signup/"> Sign Up</a></li>
-          </ul>
-        </div>
-        <!--/.nav-collapse -->
-      </div>
-      <!--/.container-fluid -->
-    </nav>
+    <?php include '../navbar.php' ?>
     <hr class="offset-md" />
 
     <div class="box">
@@ -132,18 +69,20 @@ try{
                    foreach($_SESSION['cart'] as $product){ ?>
                   <div class="media">
                     <div class="media-left">
-                      <a href="#">
-                        <img
+                        <img 
                           class="media-object"
                           src=<?php echo $product['image']; ?>
                           alt="HP Chromebook 11"
                         />
-                      </a>
                     </div>
 
                     <div class="media-body">
                       <h2 class="h4 media-heading"><?php echo $product['name'];?></h2>
-                      <p class="price"><?php echo $product['price']; ?></p>
+                      <p class="price"><?php  
+                      if($product['discount'] != 1 ){
+                      echo $product['price']-$product['price']*$product['discount']." "."JD X".$product['quantity'];
+                      }
+                       else echo $product['price']." ". "JD X" . $product['quantity']; ?></p>
                     </div>
                     <div class="controls">
                       <div class="input-group">
@@ -194,7 +133,7 @@ try{
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-xs-6">
-                    <p>Subtotal <?php  if(isset($_SESSION['items'])){
+                    <p> <?php  if(isset($_SESSION['items'])){
                       echo $_SESSION['items'];
                     } else echo 0;?> items</p>
                   </div>
@@ -226,22 +165,23 @@ try{
               <hr class="offset-md" />
               <?php 
               if($_SERVER["REQUEST_METHOD"]=="POST"){
+                $found=false;
+                if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
                 foreach($_SESSION['cart'] as $product){
-                  $sql="SELECT * FROM products";
+                  $sql="SELECT * FROM products WHERE id= $product[id]";
                 $result=$connection->query($sql);
                 $row = $result->fetch(PDO::FETCH_ASSOC);
-                if($product['quantity']>$row['stock']){
-                 echo "<span>Quantity of </span>". $row['name']."<span> is out of stock</span>";
-                }
-                elseif($product['quantity']<=$row['stock']){
+                if($product['quantity']>$row['stock']){ 
+                  $found=true;
+                 echo "<span>There is only </span>". $row['stock']."<span> items of </span>".$row['name']. "<span> in stock</span> <br>";
+                }  
+                } if(!$found){
                   if(isset($_SESSION["LoggeduserId"])){
                     echo "<script>window.location.href='../checkout/index.php'</script>";
                   }else{
                     echo "<script>window.location.href='../login/index.php'</script>";
                   }
-                  
-                }
-                } }
+                } }else echo "<p>Your Cart Is Empty !</p>";}
               ?>
              <button class="btn btn-primary btn-lg justify" style="height: 45px;" type="submit"><i class="ion-android-checkbox-outline"></i>&nbsp;&nbsp;
                 Checkout order</a

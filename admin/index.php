@@ -1,7 +1,7 @@
 <?php
 session_start();
-// if($_SESSION['logged_in']['is_admin']==='0')
-//   header("Location: ../welcome.php");
+if($_SESSION['Loggeduser']==='0')
+  header("Location: ../home");
 try {
   $sereverName = "localhost";
   $dbName = "tech-life";
