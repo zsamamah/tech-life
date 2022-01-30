@@ -190,10 +190,12 @@
           <img src=<?php echo $element['image'] ?> alt='product Image' style="width:100%;"/></a>
           <div class='content' style="width:100%;">
             <h1 class='h4'><?php echo $element['name'] ?></h1>
-            <p class='price'><?php echo $element['price'] . " " . "JD" ?></p>
-            <p class="price through"><?php 
+            <p class="price"><?php 
+                if($element['discount'] != 1 ){ echo $element['price']-$element['price']*$element['discount']." "."JD";}
+               else echo $element['price']." "."JD" ?></p>
+                <p class="price through"><?php 
                 if($element['discount'] != 1 ){
-                  echo $element['price']-$element['price']*$element['discount']." "."JD";
+                  echo  $element['price']." "."JD";
                 } ?> </p>
             <br>
             <a href="../catalog/product.php?details=<?php echo $element['id'] ?>" class="btn btn-link">Details</a>
@@ -287,10 +289,12 @@
                 <img src=<?php echo $element['image'] ?> alt='product Image' style="width:100%;"/>
               <div class='content' style="width:100%;">
                 <h1 class='h4'><?php echo $element['name'] ?></h1>
-                <p class='price'><?php echo $element['price'] . " " . "JD" ?></p>
+                <p class="price"><?php 
+                if($element['discount'] != 1 ){ echo $element['price']-$element['price']*$element['discount']." "."JD";}
+               else echo $element['price']." "."JD" ?></p>
                 <p class="price through"><?php 
                 if($element['discount'] != 1 ){
-                  echo $element['price']-$element['price']*$element['discount']." "."JD";
+                  echo  $element['price']." "."JD";
                 } ?> </p>
                 <br>
                 <a href="../catalog/product.php?details=<?php echo $element['id'] ?>" class="btn btn-link">Details</a>

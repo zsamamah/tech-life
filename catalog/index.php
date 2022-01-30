@@ -189,10 +189,12 @@ include_once("../cart/cart.php");
               />
               <div class="content" style="width:100%;">
                 <h1 class="h4"><?php echo $product['name'] ?></h1>
-                <p class="price"><?php echo $product['price']." "."JD" ?></p>
+                <p class="price"><?php 
+                if($product['discount'] != 1 ){ echo $product['price']-$product['price']*$product['discount']." "."JD";}
+               else echo $product['price']." "."JD" ?></p>
                 <p class="price through"><?php 
                 if($product['discount'] != 1 ){
-                  echo $product['price']-$product['price']*$product['discount']." "."JD";
+                  echo  $product['price']." "."JD";
                 } ?> </p>
                 <label ><?php echo strtoupper($row['name']) ?></label>
                  
