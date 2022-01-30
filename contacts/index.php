@@ -65,15 +65,24 @@
 
         <div class="row">
           <div class="col-sm-4 col-sm-offset-4">
-            <form class="contact" action="index.php" method="post">
-              <textarea class="form-control" name="message" placeholder="Message" required="" rows="5"></textarea>
+            <form class="contact" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
+              <textarea class="form-control" name="message" placeholder="Message" required rows="5"></textarea>
               <br>
 
-              <input type="email" name="email" value="" placeholder="E-mail" required="" class="form-control" />
+              <input type="email" name="email" value="" placeholder="E-mail" required class="form-control" />
               <br>
 
               <button type="submit" class="btn btn-primary justify"> Send question <i class="ion-android-send"></i> </button>
             </form>
+            <?php
+            require '../database.php';
+            if(isset($_POST['message']) && isset($_POST['email'])){
+              $sql = "INSERT INTO contacts(message,email) VALUES('{$_POST['message']}','{$_POST['email']}')";
+              $conn->query($sql);
+              echo "Your Message Submitted !<br>We Will Contact You Soon!";
+            }
+
+            ?>
           </div>
         </div>
       </div>

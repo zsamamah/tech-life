@@ -477,14 +477,24 @@
                 <p>Get more information and receive special discounts for our products.</p>
                 <hr class="offset-sm">
 
-                <form action="index.php" method="post">
+                <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
                   <div class="input-group">
-                    <input type="email" name="email" value="" placeholder="E-mail" required="" class="form-control">
+                    <input type="email" name="new_email" value="" placeholder="E-mail" required class="form-control">
                     <span class="input-group-btn">
                       <button type="submit" class="btn btn-primary"> Subscribe <i class="ion-android-send"></i> </button>
                     </span>
                   </div><!-- /input-group -->
                 </form>
+                <?php
+
+                require '../database.php';
+                if(isset($_POST['new_email'])){
+                  $conn->query("INSERT INTO newsletter(email) VALUES('{$_POST['new_email']}')");
+                  echo "Email Added Successfully !";
+                }
+
+
+                ?>
                 <hr class="offset-lg">
                 <hr class="offset-md">
 
