@@ -10,7 +10,7 @@ session_start();
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../home"> <i class="ion-cube"></i> Unistore</a>
+            <a class="navbar-brand" href="../home"> <i class="ion-cube"></i> tech-life</a>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
