@@ -43,6 +43,7 @@ try {
 
         .form-container {
             margin-top: 3em;
+            margin-bottom: 10em;
         }
 
         .main-body {
@@ -109,7 +110,7 @@ try {
 <body>
     <?php include '../navbar.php' ?>
     <?php
-    if(!isset($_SESSION['Loggeduser'])){
+    if (!isset($_SESSION['Loggeduser'])) {
         echo "<script>window.location.href='../login'</script>";
     }
     ?>
@@ -277,7 +278,7 @@ try {
                                                 <td><?php echo $item["date"]; ?></td>
                                                 <td><?php echo $item["quantity"]; ?></td>
                                                 <td><span class="tag tag-success">Delivered</span></td>
-                                                <td><?php echo $item["total"]+$item['delivery'] . " JD"; ?></td>
+                                                <td><?php echo $item["total"] + $item['delivery'] . " JD"; ?></td>
                                                 <td>cash on delivery</td>
                                             </tr>
                                         <?php
@@ -296,6 +297,18 @@ try {
         </div>
 
     </div>
+    <?php include '../footer.php' ?>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../assets/js/jquery-latest.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/core.js"></script>
+    <script src="../assets/js/catalog.js"></script>
+
+    <script type="text/javascript" src="../assets/js/jquery-ui-1.11.4.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.ui.touch-punch.js"></script>
 </body>
 
 </html>
