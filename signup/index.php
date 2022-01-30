@@ -11,27 +11,6 @@ try {
 } catch (PDOException $e) {
   echo "Connection failed: " . $e->getMessage();
 }
-// add new user
-if (isset($_POST['signup'])) {
-  $name = $_POST['name'];
-  $phone = $_POST['phone'];
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  $confirmPassword = $_POST['password-confirm'];
-
-  $stmt = $conn->prepare("SELECT * FROM users WHERE email='$email'");
-  $stmt->execute();
-  if ($stmt->rowCount() == null) {
-    if ($password  == $confirmPassword  && strlen($password) > 5  && strlen($name) > 8) {
-      //storing new user in database
-      $sql = "INSERT INTO users(name,phone,email,password)
-        VALUES ('$name','$phone','$email','$password')";
-      $conn->exec($sql);
-      header("location: ../login");
-    }
-  }
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,6 +76,30 @@ if (isset($_POST['signup'])) {
               </div>
             </div>
           </div>
+          <?php
+          // add new user
+          if (isset($_POST['signup'])) {
+            $name = $_POST['name'];
+            $phone = $_POST['phone'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $confirmPassword = $_POST['password-confirm'];
+
+            $stmt = $conn->prepare("SELECT * FROM users WHERE email='$email'");
+            $stmt->execute();
+            if ($stmt->rowCount() == null) {
+              if ($password  == $confirmPassword  && strlen($password) > 5  && strlen($name) > 8) {
+                //storing new user in database
+                $sql = "INSERT INTO users(name,phone,email,password)
+                 VALUES ('$name','$phone','$email','$password')";
+                $conn->exec($sql);
+                echo "<script>window.location.href='../login'</script>";
+              }
+            } else {
+              echo "<p  style='color:brown'>account already exists please login</p>";
+            }
+          }
+          ?>
           <p id="ErrMsg" style="color:brown"></p>
           <button type="submit" class="btn btn-primary" name="signup">Sign up</button>
 
