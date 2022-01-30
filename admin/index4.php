@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!$_SESSION['Loggeduser'])
-header("Location: ../home");
+  header("Location: ../home");
 include "update-category.php";
 try {
   $sereverName = "localhost";
@@ -99,7 +99,7 @@ try {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.php" class="nav-link active">
+                <a href="./index2.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categories CRUD</p>
                 </a>
@@ -111,7 +111,7 @@ try {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index4.php" class="nav-link">
+                <a href="./index4.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Contact CRUD</p>
                 </a>
@@ -132,11 +132,11 @@ try {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Categories</h1>
+            <h1 class="m-0">Contacts</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Categories</li>
+              <li class="breadcrumb-item active">Contacts</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -146,95 +146,11 @@ try {
 
     <!-- Main content -->
     <div class="content">
-      <div class="container-fluid row">
-        <!-- Horizontal Form start -->
-        <div class="col-md-6">
-        <div class="card card-info">
-              <div class="card-header">
-                <h3 class="card-title">Add Category</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form class="form-horizontal" method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
-                <div class="card-body">
-                  <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="category-name" class="form-control" id="inputEmail3" placeholder="Category Name">
-                    </div>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-info">Add Category</button>
-                </div>
-                <!-- /.card-footer -->
-              </form>
-            </div>
-
-            <?php
-
-            if(isset($_POST['category-name'])){
-              $sql = "INSERT INTO categories (name) VALUES('{$_POST['category-name']}')";
-              $conn->query($sql);
-            }
-
-            ?>
-
-          <!-- /.col-md-6 -->
-
-
-        </div>
-        <!-- Horizontal Form end -->
-
-        <!-- edit product start -->
-        <div class="col-md-6">
-        <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Edit Category</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
-                <div class="card-body">
-                <input type="hidden" name="category-id" value="<?php echo $id ?>">
-                  <div class="form-group row">
-                    <label for="exampleInputPassword1" class="col-sm-2 col-form-label">Name</label>
-                    <div class="col-sm-10">
-                    <input type="text" name="c_name" class="form-control" id="exampleInputPassword1" value="<?php echo $categoryName ?>" placeholder="New Name">
-          </div>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" name="update-category" class="btn btn-primary">Update</button>
-                </div>
-              </form>
-            </div>
-
-            <?php
-
-            if(isset($_POST['c_id'])&&preg_match("/^[0-9]*$/",$_POST['c_id'])){
-              if(isset($_POST['c_name'])&&strlen($_POST['c_name'])>4){
-                $sql = "UPDATE categories SET name='{$_POST['c_name']}' WHERE id={$_POST['c_id']}";
-                $conn->query($sql);
-              }
-            }
-
-
-            ?>
-        
-            <!-- edit product end -->
-
-
-      </div></div>
-      <!-- /.container-fluid -->
 
       <!-- products table start -->
       <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Categories</h3>
+                <h3 class="card-title">Contacts</h3>
 
               </div>
               <!-- /.card-header -->
@@ -242,16 +158,16 @@ try {
                 <table class="table table-head-fixed text-nowrap">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Category Name</th>
-                      <th>Edit</th>
+                      <th>Email</th>
+                      <th>Message</th>
+                      <th>Replay</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
 
-                    $sql = "SELECT * FROM categories";
+                    $sql = "SELECT * FROM contacts";
                     $result = $conn->query($sql);
                     $result = $result->fetchAll(PDO::FETCH_ASSOC);
                     // echo "<pre>";
@@ -259,10 +175,10 @@ try {
                     // echo "</pre>";
                     foreach($result as $val){ ?>
                       <tr>
-                      <td><?php echo $val['id']; ?></td>
-                      <td><?php echo $val['name']; ?></td>
-                      <td><a href="index2.php?edit=<?php echo $val['id']?>">Edit</a></td>
-                      <td><form method="post" action="update-category.php"><button class="btn btn-danger" type="submit" name="delete" value="<?php echo $val['id'] ?>">Delete</button></form></td>
+                      <td><?php echo $val['email']; ?></td>
+                      <td><?php echo $val['message']; ?></td>
+                      <td><a href="mailto:<?php echo $val['email']; ?>">Replay</a></td>
+                      <td><form method="post" action="delete-message.php"><button class="btn btn-danger" type="submit" name="delete" value="<?php echo $val['id'] ?>">Delete</button></form></td>
                       </tr>
                    <?php }
                     ?>
