@@ -178,7 +178,7 @@
     $db = new PDO('mysql:host=localhost;dbname=' . $db_name . ';charset-utf8', $db_user, $db_pass);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query = "SELECT * FROM products order by RAND() LIMIT 3";
+    $query = "SELECT * FROM products order by id desc LIMIT 3";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $row = $stmt->fetchALL(PDO::FETCH_ASSOC);
