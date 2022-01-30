@@ -1,6 +1,6 @@
 <?php
 session_start();
-if($_SESSION['Loggeduser']==='0')
+if(!$_SESSION['Loggeduser'])
   header("Location: ../home");
 try {
   $sereverName = "localhost";
