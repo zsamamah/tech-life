@@ -71,11 +71,11 @@
                     <div class="col-sm-8 col-sm-offset-2 align-center">
                       <img src="../assets/img/carousel/a.png" alt="Surface Pro" />
                     </div>
-                    <div class="col-sm-12 align-center">
-                      <h1>8 Windows Hybrid Laptops</h1>
-                      <p>The laptop comes with an Intel i5 chip and 8GB of RAM.</p>
-                      <a href="../catalog/">View surfaces ></a>
-                    </div>
+                    <div style="margin-bottom:2em;" class="col-sm-12 align-center">
+                        <h1>New games for 2022</h1>
+                        <p>Find newest games and best deals</p>
+                        <a href="../catalog/">View catalog ></a>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -97,7 +97,7 @@
                     <div class="col-sm-4 align-left">
                       <br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm">
                       <br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm">
-                      <h1>Luxury devices</h1>
+                      <h1>New Games</h1>
                       <br>
 
                       <p>
