@@ -10,34 +10,17 @@ session_start();
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="./"> <i class="ion-cube"></i> Unistore</a>
+            <a class="navbar-brand" href="../home"> <i class="ion-cube"></i> Unistore</a>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="../home">Home</a></li>
                 <li><a href="../catalog/">Catalog</a></li>
-                <li><a href="../blog/">Blog</a></li>
-                <li><a href="../gallery/">Gallery</a></li>
-                <li class="dropdown">
-                    <a href="../catalog/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="../catalog/product.html">Product</a></li>
-                        <li><a href="../cart/">Cart</a></li>
-                        <li><a href="../checkout/">Checkout</a></li>
-                        <li><a href="../faq/">FAQ</a></li>
-                        <li><a href="../contacts/">Contacts</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Variations</li>
-                        <li><a href="../home">Home</a></li>
-                        <li><a href="../blog/item-photo.html">Article Photo</a></li>
-                        <li><a href="../blog/item-video.html">Article Video</a></li>
-                        <li><a href="../blog/item-review.html">Article Review</a></li>
-                    </ul>
-                </li>
+                <li><a href="../cart/">Cart</a></li>
+                <li><a href="../contacts/">Contacts</a></li>
             </ul>
             <?php
-
             if (isset($_SESSION['Loggeduser'])) {
                 echo "  <ul class='nav navbar-nav navbar-right'>
              <li><a href='../UserProfile'> <i class='ion-android-person'></i> Hello, " . $_SESSION['Loggeduser'] . "  </a></li>
@@ -51,6 +34,15 @@ session_start();
             }
             if (isset($_POST['logout'])) {
                 unset($_SESSION['Loggeduser']);
+                unset($_SESSION['LoggeduserId']);
+                unset($_SESSION['LoggeduserPhone']);
+                unset($_SESSION['LoggeduserEmail']);
+                unset($_SESSION['LoggeduserAdmin']);
+                unset($_SESSION['total']);
+                unset($_SESSION['cart']);
+                unset($_SESSION['items']);
+                unset($_SESSION['final_total']);
+                unset($_SESSION['delivery']);
                 echo "<script>window.location.href='../home/index.php'</script>";
             }
 
