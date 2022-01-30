@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "update-category.php";
 // if($_SESSION['logged_in']['is_admin']==='0')
 //   header("Location: ../welcome.php");
 try {
@@ -175,44 +176,7 @@ try {
             ?>
 
           <!-- /.col-md-6 -->
-          <!-- remove user -->
-        <div class="card card-danger">
-              <div class="card-header">
-                <h3 class="card-title">Remove Category</h3>
-              </div>
-              <div class="card-body">
-                <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                <!-- <div class="row"> -->
-                  <div class="col-3">
-                    <input type="text" name="cat_id" class="form-control" placeholder="Category ID" required>
-                  </div>
-                  <br>
-                  <div class="col-4">
-                    <input type="email" name="d_email" class="form-control" placeholder="Admin Email" required>
-                  </div>
-                  <br>
-                  <div class="col-5">
-                    <button type="submit" class="btn btn-primary" style="background-color: red;border: none;">Remove</button>
-                  </div>
-                <!-- </div> -->
-                </form>
-                <?php
-                if(isset($_POST['cat_id'])&&$_POST['d_email']==="admin@admin.com"){
-                  $cat_id = $_POST['cat_id'];
-                if($cat_id == 1){
-                echo '<script>alert("default cant be deleted")</script>';
-                } else {
-                $updateProduct = "UPDATE products SET category_id=1 WHERE category_id=$cat_id";
-                $updatedProductConnect = $conn->prepare($updateProduct);
-                $updatedProductConnect->execute();
-                $sql = "DELETE FROM categories WHERE id='$cat_id'";
-                $conn->query($sql); 
-                }
-                }
-                ?>
-              </div>
-            </div>
-        <!-- remove user -->
+
 
         </div>
         <!-- Horizontal Form end -->
@@ -227,19 +191,18 @@ try {
               <!-- form start -->
               <form method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
                 <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Category ID</label>
-                    <input type="number" name="c_id" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter ID" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Name</label>
-                    <input type="text" name="c_name" class="form-control" id="exampleInputPassword1" placeholder="New Name">
+                <input type="hidden" name="category-id" value="<?php echo $id ?>">
+                  <div class="form-group row">
+                    <label for="exampleInputPassword1" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="c_name" class="form-control" id="exampleInputPassword1" value="<?php echo $categoryName ?>" placeholder="New Name">
+          </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" name="update-category" class="btn btn-primary">Update</button>
                 </div>
               </form>
             </div>
@@ -275,6 +238,8 @@ try {
                     <tr>
                       <th>ID</th>
                       <th>Category Name</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -286,12 +251,14 @@ try {
                     // echo "<pre>";
                     // print_r($result);
                     // echo "</pre>";
-                    foreach($result as $val){
-                      echo "<tr>";
-                      echo "<td>{$val['id']}</td>";
-                      echo "<td>{$val['name']}</td>";
-                      echo "</tr>";
-                    }
+                    foreach($result as $val){ ?>
+                      <tr>
+                      <td><?php echo $val['id']; ?></td>
+                      <td><?php echo $val['name']; ?></td>
+                      <td><a href="index2.php?edit=<?php echo $val['id']?>">Edit</a></td>
+                      <td><form method="post" action="update-category.php"><button class="btn btn-danger" type="submit" name="delete" value="<?php echo $val['id'] ?>">Delete</button></form></td>
+                      </tr>
+                   <?php }
                     ?>
                   </tbody>
                 </table>

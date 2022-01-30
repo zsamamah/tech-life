@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "update-product.php";
 // if($_SESSION['logged_in']['is_admin']==='0')
 //   header("Location: ../welcome.php");
 try {
@@ -234,38 +235,6 @@ try {
 
             ?>
 
-          <!-- /.col-md-6 -->
-          <!-- remove user -->
-        <div class="card card-danger">
-              <div class="card-header">
-                <h3 class="card-title">Remove Product</h3>
-              </div>
-              <div class="card-body">
-                <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-                <!-- <div class="row"> -->
-                  <div class="col-3">
-                    <input type="text" name="d_id" class="form-control" placeholder="Product ID" required>
-                  </div>
-                  <br>
-                  <div class="col-4">
-                    <input type="email" name="d_email" class="form-control" placeholder="Admin Email" required>
-                  </div>
-                  <br>
-                  <div class="col-5">
-                    <button type="submit" class="btn btn-primary" style="background-color: red;border: none;">Remove</button>
-                  </div>
-                <!-- </div> -->
-                </form>
-                <?php
-                if(isset($_POST['d_id'])&&$_POST['d_email']==="admin@admin.com"){
-                  $sql = "DELETE FROM products WHERE id='{$_POST['d_id']}'";
-                  $conn->exec($sql);
-                }
-                ?>
-              </div>
-            </div>
-        <!-- remove user -->
-
         </div>
         <!-- Horizontal Form end -->
 
@@ -277,25 +246,16 @@ try {
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
+              <form method="POST" action="update-product.php">
                 <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Product ID</label>
-                    <input type="number" name="c_id" min="0" class="form-control" id="exampleInputEmail1" placeholder="Enter ID" required>
-                  </div>
+                <input type="hidden" name="product-id" value="<?php echo $id ?>">
                   <div class="form-group">
                     <label for="exampleInputPassword1">Name</label>
-                    <input type="text" name="c_name" class="form-control" id="exampleInputPassword1" placeholder="New Name">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Description</label>
-                    <div class="form-group">
-                        <textarea name="c_description" class="form-control" rows="3" id="inputPassword3" placeholder="New Description"></textarea>
-                      </div>
+                    <input type="text" name="p_name" class="form-control" id="exampleInputPassword1" placeholder="New Name" value="<?php echo $productName; ?>">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Category</label>
-                    <select class="form-control" name="c_category">
+                    <select class="form-control" name="p_category">
                     <!-- </select> -->
                     <?php
                     $sql = "SELECT id,name FROM categories";
@@ -311,25 +271,29 @@ try {
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Image</label>
-                    <input type="text" name="c_image" class="form-control" id="exampleInputPassword1" placeholder="New Image">
+                    <input type="text" name="p_image" class="form-control" id="exampleInputPassword1" placeholder="New Image" value="<?php echo $productImage; ?>">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Stock</label>
-                    <input type="number" name="c_stock" class="form-control" id="exampleInputPassword1" placeholder="New Stock Value">
+                    <input type="number" name="p_stock" class="form-control" id="exampleInputPassword1" placeholder="New Stock Value" value="<?php echo $productStock; ?>">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Price</label>
-                    <input type="number" name="c_price" class="form-control" id="exampleInputPassword1" placeholder="New Price">
+                    <input type="number" name="p_price" class="form-control" id="exampleInputPassword1" placeholder="New Price" value="<?php echo $productPrice; ?>">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Discount</label>
-                    <input type="text" name="c_discount" class="form-control" id="exampleInputPassword1" placeholder="New Discount">
+                    <input type="text" name="p_discount" class="form-control" id="exampleInputPassword1" placeholder="New Discount" value="<?php echo $productDiscount; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Age Rating</label>
+                    <input type="text" name="p_age-rating" class="form-control" id="exampleInputPassword1" placeholder="New Age Rating" value="<?php echo $productAgeRating; ?>">
                   </div>
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary" name="update-product">Update</button>
                 </div>
               </form>
             </div>
@@ -393,29 +357,36 @@ try {
                       <th>Discount</th>
                       <th>Stock</th>
                       <th>Description</th>
+                      <th>Age Rating</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
 
-                    $sql = "SELECT products.id,products.name,categories.name as cat,price,discount,stock,description FROM products INNER JOIN categories ON products.category_id=categories.id";
+                    $sql = "SELECT products.id,products.name,categories.name as cat,price,discount,stock,description,age_rating FROM products INNER JOIN categories ON products.category_id=categories.id";
                     $result = $conn->query($sql);
                     $result = $result->fetchAll(PDO::FETCH_ASSOC);
                     // echo "<pre>";
                     // print_r($result);
                     // echo "</pre>";
-                    foreach($result as $val){
-                      echo "<tr>";
-                      echo "<td>{$val['id']}</td>";
-                      echo "<td>{$val['name']}</td>";
-                      echo "<td>{$val['cat']}</td>";
-                      echo "<td>".$val['price']."</td>";
-                      echo "<td>{$val['discount']}</td>";
-                      echo "<td>{$val['stock']}</td>";
-                      echo "<td>{$val['description']}</td>";
-                      echo "</tr>";
-                    }
-                    ?>
+                    foreach($result as $val){ ?>
+                      <tr>
+                      <td><?php echo $val['id']; ?></td>
+                      <td><?php echo $val['name'];?></td>
+                      <td><?php echo $val['cat'];?></td>
+                      <td><?php echo $val['price']; ?></td>
+                      <td><?php echo $val['discount']; ?></td>
+                      <td><?php echo $val['stock']; ?></td>
+                      <td><?php echo $val['description']; ?></td>
+                      <td><?php echo $val['age_rating']; ?></td>
+                      <td><a href="index3.php?edit=<?php echo $val['id'];?>">Edit</a></td>
+                      <td><form method="post" action="update-product.php"><button class="btn btn-danger" type="submit" name="delete" value="<?php echo $val['id'] ?>">Delete</button></form></td>
+                      </tr>
+
+                      <?php }; ?>
+                  
                   </tbody>
                 </table>
               </div>
