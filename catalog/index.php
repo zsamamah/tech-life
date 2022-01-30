@@ -11,7 +11,6 @@ $dbname = "tech-life";
     }catch (PDOException $e){
         echo $sql . "<br>" . $e->getMessage();
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,7 +82,7 @@ $dbname = "tech-life";
               if($cat['name']!=="default"){
                echo "<div class='checkbox-group' data-status='inactive'>";
                echo "<div class='label' data-value='Laptops'><a href='index.php?id=$cat[id]'>
-               $cat[name] </a> </div>";
+                $cat[name] </a> </div>";
               echo" </div>";
               }
           
@@ -99,34 +98,47 @@ $dbname = "tech-life";
 
         <!-- Products -->
         <div class="col-sm-9 products">
-          <div class="row">
+         
+        <div class="col-sm-12"> 
+          <div class="row"><form method="POST" style="display:flex;justify-content:center;">
+                <input style="width: 50%;margin-right:1rem;" type="text" name="search" value="" placeholder="Search" class="form-control" id="search" />
+                <button type="submit" class="btn btn-primary" name="searchbtn">Search</button>
+              </div>
+            </form>
             <?php
              if(isset($_GET['id'])){
               $result=$connection->prepare("SELECT * FROM products WHERE category_id=$_GET[id]");
-            }else{
-              $result=$connection->prepare("SELECT * FROM products");
+            }elseif($_SERVER["REQUEST_METHOD"]=="POST"){
+              $result=$connection->prepare("SELECT * FROM products WHERE name LIKE '%$_POST[search]%'");            
             }
-            $result->execute();
-            foreach($result as $product){ 
+            else{
+              $result=$connection->prepare("SELECT * FROM products");
+          }
+          $result->execute();
+          $row=$result->fetchAll(PDO::FETCH_ASSOC) ;
+          if(count($row)>0){
+            foreach($row as $product){ 
               $sql="SELECT * FROM categories WHERE id=$product[category_id]";
               $result=$connection->query($sql);
               $row = $result->fetch(PDO::FETCH_ASSOC) ;
+              if($product['stock']>0){
              ?>
             <div class="col-sm-6 col-md-4 product">
-              <a href="#favorites" class="favorites" data-favorite="inactive"
-                ><i class="ion-ios-heart-outline"></i
-              ></a>
-              <a href="./"
-                ><img
+                <img style="width:100%;"
                   src=<?php echo $product['image'] ?>
-                  alt="HP Chromebook 11"
-              /></a>
-             
-              <div class="content">
+                  alt=<?php echo $product['name'] ?>
+              />
+              <div class="content" style="width:100%;">
                 <h1 class="h4"><?php echo $product['name'] ?></h1>
-                <p class="price"><?php echo $product['price']." "."JD" ?></p>
-                <label><?php echo strtoupper($row['name']) ?></label>
-
+                <p class="price"><?php 
+                if($product['discount'] != 1 ){ echo $product['price']-$product['price']*$product['discount']." "."JD";}
+               else echo $product['price']." "."JD" ?></p>
+                <p class="price through"><?php 
+                if($product['discount'] != 1 ){
+                  echo  $product['price']." "."JD";
+                } ?> </p>
+                <label ><?php echo strtoupper($row['name']) ?></label>
+                 
                 <a href="../catalog/product.php?details=<?php echo $product['id']?>" class="btn btn-link">
                   Details</a
                 >
@@ -134,7 +146,10 @@ $dbname = "tech-life";
                   <i class="ion-bag"></i><a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo $product['id'] ?>&&typeCart=addToCart"> Add to cart</a>
                 </button>
               </div>
-            </div> <?php } ?>
+            </div> <?php }}}else {
+               echo "<p style='text-align:center;margin:10% 0% 10% 0;font-size:5rem;'>No Results Found</p>";
+            }?>
+            
           </div>
 
           <nav>
