@@ -19,7 +19,7 @@ try {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Dashboard</title>
+  <title>Order Details</title>
   
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -99,7 +99,7 @@ try {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.php" class="nav-link active">
+                <a href="./index.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Users CRUD</p>
                 </a>
@@ -123,7 +123,7 @@ try {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index5.php" class="nav-link">
+                <a href="./index5.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Orders CRUD</p>
                 </a>
@@ -139,129 +139,162 @@ try {
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Users</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Users</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- add user -->
-        <div class="card card-primary">
-          <div class="card-header">
-            <h3 class="card-title">Add User</h3>
-          </div>
-          <!-- /.card-header -->
-          <!-- form start -->
-          <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-            <div class="card-body">
-              <div class="form-group">
-                <label for="exampleInputName">Full Name</label>
-                <input type="text" name="name" class="form-control" id="exampleInputName" placeholder="Enter name" required>
+  <?php
+      $sql = "SELECT name,email,phone FROM users INNER JOIN orders ON orders.user_id = users.id WHERE orders.id={$_GET['id']}";
+      $userData = $conn->query($sql);
+      $userData = $userData->fetch(PDO::FETCH_ASSOC);
+      $sql = "SELECT id,status,total,delivery,address,remark,date FROM orders WHERE id={$_GET['id']}";
+      $orderData = $conn->query($sql);
+      $orderData = $orderData->fetch(PDO::FETCH_ASSOC);
+      $sql = "SELECT products.name,products.price,products.discount,quantity FROM order_item INNER JOIN products ON products.id=order_item.product_id WHERE order_item.order_id={$_GET['id']}";
+      $productsData = $conn->query($sql);
+      $productsData = $productsData->fetchAll(PDO::FETCH_ASSOC);
+    //   echo "<pre>";
+    //   print_r($userData);
+    //   echo "</pre>";
+    //   echo "<pre>";
+    //   print_r($orderData);
+    //   echo "</pre>";
+    //   echo "<pre>";
+    //   print_r($productsData);
+    //   echo "</pre>";
+      ?>
+
+  <div class="invoice p-3 mb-3">
+              <!-- title row -->
+              <div class="row">
+                <div class="col-12">
+                  <h4>
+                    <i class="fas fa-globe"></i> Tech - Life
+                  </h4>
+                </div>
+                <!-- /.col -->
               </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+              <!-- info row -->
+              <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                  From
+                  <address>
+                    <strong>Tech - Life Inc.</strong><br>
+                    795 Folsom Ave, Suite 600<br>
+                    San Francisco, CA 94107<br>
+                    Phone: +(962) 777-684-935<br>
+                    Email: info@tech-life.com
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                  To
+                  <address>
+                    <strong><?php echo $userData['name'] ?></strong><br>
+                    <?php echo $orderData['address'] ?><br>
+                    Phone: <?php echo $userData['phone'] ?><br>
+                    Email: <?php echo $userData['email'] ?>
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                  <br>
+                  <b>Order ID:</b> <?php echo $orderData['id'] ?><br>
+                  <b>Payment Due:</b> <?php echo $orderData['date'] ?><br>
+                  <b>Delivery Status:</b>
+                   <?php echo $orderData['status'] ?>
+                </div>
+                <!-- /.col -->
               </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Phone</label>
-                <input type="tel" name="phone" class="form-control" id="exampleInputEmail1" placeholder="Enter phone number" required>
+              <!-- /.row -->
+
+              <!-- Table row -->
+              <div class="row">
+                <div class="col-12 table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>Qty</th>
+                      <th>Product</th>
+                      <th>Total Price</th>
+                      <th>Sub Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+
+                        foreach($productsData as $val){
+                            echo"<tr>";
+                            echo "<td>".$val['quantity']."</td>";
+                            echo "<td>".$val['name']."</td>";
+                            if($val['discount']!=='1')
+                            echo "<td>".$val['price']-$val['price']*$val['discount']."JD X ".$val['quantity']."</td>";
+                            else
+                            echo "<td>".$val['price']."JD X ".$val['quantity']."</td>";
+                            if($val['discount']!=='1')
+                            echo "<td>".($val['price']-$val['price']*$val['discount'])*$val['quantity']." JD</td>";
+                            else
+                            echo "<td>".$val['price']*$val['quantity']." JD</td>";
+                            echo"</tr>";
+                        }
+
+
+                        ?>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.col -->
               </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+              <!-- /.row -->
+
+              <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-6">
+                  <p class="lead">Remark:</p>
+                  <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                    <?php
+                    echo $orderData['remark'];
+                    ?>
+                  </p>
+                </div>
+                <!-- /.col -->
+                <div class="col-6">
+                  <p class="lead">Payment Details:</p>
+
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <th style="width:50%">Subtotal:</th>
+                        <td><?php echo $orderData['total']-2.5 ?> JD</td>
+                      </tr>
+                      <tr>
+                        <th>Delivery:</th>
+                        <td>2.5 JD</td>
+                      </tr>
+                      <tr>
+                        <th>Total:</th>
+                        <td><?php echo $orderData['total'] ?> JD</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+              <!-- this row will not appear when printing -->
+              <div class="row no-print">
+                <div class="col-12">
+                  <a href="javascript:window.print()" rel="noopener" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                  <?php
+                  if($orderData['status']==='Pending'){
+                      echo"<a href='deliver-order.php?id={$orderData['id']}'>
+                      <button type='button' class='btn btn-success float-right'><i class='far fa-credit-card'></i> Delivered Order
+                      </button>
+                        </a>";
+                  }
+                  ?>
+                </div>
               </div>
             </div>
-            <!-- /.card-body -->
 
-            <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-          <?php
-          if(isset($_POST['name'])&&isset($_POST['email'])&&isset($_POST['password'])){
-            $sql = "INSERT INTO users(name,phone,email,password) VALUES ('{$_POST['name']}','{$_POST['phone']}','{$_POST['email']}','{$_POST['password']}')";
-            $conn->query($sql);
-          }
-          ?>
-        </div>
-        <!-- add user -->
-
-        <!-- users table -->
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>ID</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-              </thead>
-              <tbody>
-              <?php
-              $sql = "SELECT id,name,email,phone FROM users";
-              $data = $conn->query($sql);
-              $result = $data->fetchAll(PDO::FETCH_ASSOC);
-              // print_r($result);
-              foreach($result as $val){
-                echo "<tr>";
-                echo "<td>{$val['id']}</td>";
-                echo "<td>{$val['name']}</td>";
-                echo "<td>{$val['email']}</td>";
-                echo "<td>{$val['phone']}</td>";
-                echo "<td><a href='./edit-user.php?email={$val['email']}'><button value='{$val['id']}' class='btn btn-primary' style='background-color: blue;border: none;'>Edit</button></a></td>";
-                echo "<td><a href='./delete-user.php?d_id={$val['id']}'><button value='{$val['id']}' class='btn btn-primary' style='background-color: red;border: none;'>Remove</button></a></td>";
-                // echo "<td>{$val['last_login']}</td>";
-                // echo "<td>{$val['date_created']}</td>";
-                echo "</tr>";
-              }
-              ?>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- users table -->
-
-
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-7 connectedSortable">
-
-          </section>
-          <!-- /.Left col -->
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
-          <section class="col-lg-5 connectedSortable">
-
-          </section>
-          <!-- right col -->
-        </div>
-        <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">

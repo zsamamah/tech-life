@@ -19,7 +19,7 @@ try {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Products CRUD</title>
+  <title>Orders CRUD</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -102,7 +102,7 @@ try {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index3.php" class="nav-link active">
+                <a href="./index3.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products CRUD</p>
                 </a>
@@ -114,7 +114,7 @@ try {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index5.php" class="nav-link">
+                <a href="./index5.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Orders CRUD</p>
                 </a>
@@ -135,11 +135,11 @@ try {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Products</h1>
+            <h1 class="m-0">Orders</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Products</li>
+              <li class="breadcrumb-item active">Orders</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -147,119 +147,11 @@ try {
     </div>
     <!-- /.content-header -->
 
-    <!-- Main content -->
-    <div class="content">
-      <div class="container-fluid row">
-        <!-- Horizontal Form start -->
-        <div class="col-md-6">
-        <div class="card card-info">
-              <div class="card-header">
-                <h3 class="card-title">Add Product</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form class="form-horizontal" method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
-                <div class="card-body">
-                  <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="name" class="form-control" id="inputEmail3" placeholder="Product Name">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Description</label>
-                    <div class="col-sm-10">
-                      <div class="form-group">
-                        <textarea name="description" class="form-control" rows="3" id="inputPassword3" placeholder="description"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Category</label>
-                    <div class="col-sm-10">
-                    <select class="form-control" name="category">
-                    <!-- </select> -->
-                    <?php
-                    $sql = "SELECT id,name FROM categories";
-                    $result = $conn->query($sql);
-                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result as $v){
-                      echo "<option value='{$v['id']}'>";
-                      echo $v['name'];
-                      echo "</option>";
-                    }
-                    ?>
-                    </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Image</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="image" class="form-control" id="inputPassword3" placeholder="image">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Stock</label>
-                    <div class="col-sm-10">
-                      <input type="number" name="stock" min="0" class="form-control" id="inputPassword3" placeholder="stock">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Price</label>
-                    <div class="col-sm-10">
-                      <input type="number" name="price" min="0" class="form-control" id="inputPassword3" placeholder="price">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Discount</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="discount" class="form-control" id="inputPassword3" placeholder="discount">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Age Rating</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="age-rating" class="form-control" id="inputPassword3" placeholder="age-rating">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Online Reviews</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="online-reviews" class="form-control" id="inputPassword3" placeholder="online-reviews">
-                    </div>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-info">Add Product</button>
-                </div>
-                <!-- /.card-footer -->
-              </form>
-            </div>
-
-            <?php
-
-            if(isset($_POST['name']) && isset($_POST['description']) && isset($_POST['category']) && isset($_POST['image']) && isset($_POST['stock']) && isset($_POST['price']) && isset($_POST['discount']) && isset($_POST['age-rating']) && isset($_POST['online-reviews'])){
-              $sql = "INSERT INTO products(name,description,image,category_id,price,stock,discount,online_reviews,age_rating) VALUES('{$_POST['name']}','{$_POST['description']}','{$_POST['image']}','{$_POST['category']}','{$_POST['price']}','{$_POST['stock']}','{$_POST['discount']}','{$_POST['online-reviews']}','{$_POST['age-rating']}')";
-              $conn->query($sql);
-            }
-
-            ?>
-
-        </div>
-        <!-- Horizontal Form end -->
-
-        <div class="col-md-6">
-         
-
-
-      </div></div>
-      <!-- /.container-fluid -->
 
       <!-- products table start -->
       <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Products</h3>
+                <h3 class="card-title">Orders</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0" style="height: 300px;">
@@ -267,21 +159,18 @@ try {
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Name</th>
-                      <th>Category</th>
-                      <th>Price</th>
-                      <th>Discount</th>
-                      <th>Stock</th>
-                      <th>Description</th>
-                      <th>Age Rating</th>
-                      <th>Edit</th>
+                      <th>Username</th>
+                      <th>Phone</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                      <th>Details</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
 
-                    $sql = "SELECT products.id,products.name,categories.name as cat,price,discount,stock,description,age_rating FROM products INNER JOIN categories ON products.category_id=categories.id";
+                    $sql = "SELECT orders.id as id,name,phone,orders.total,orders.status FROM users INNER JOIN orders ON orders.user_id=users.id";
                     $result = $conn->query($sql);
                     $result = $result->fetchAll(PDO::FETCH_ASSOC);
                     // echo "<pre>";
@@ -291,14 +180,11 @@ try {
                       <tr>
                       <td><?php echo $val['id']; ?></td>
                       <td><?php echo $val['name'];?></td>
-                      <td><?php echo $val['cat'];?></td>
-                      <td><?php echo $val['price']; ?></td>
-                      <td><?php echo $val['discount']; ?></td>
-                      <td><?php echo $val['stock']; ?></td>
-                      <td><?php echo $val['description']; ?></td>
-                      <td><?php echo $val['age_rating']; ?></td>
-                      <td><a href="edit-product.php?edit=<?php echo $val['id'];?>&&category=<?php echo $val['cat'] ?>">Edit</a></td>
-                      <td><form method="post" action="update-product.php"><button class="btn btn-danger" type="submit" name="delete" value="<?php echo $val['id'] ?>">Delete</button></form></td>
+                      <td><?php echo $val['phone'];?></td>
+                      <td><?php echo $val['total']; ?></td>
+                      <td><?php echo $val['status']; ?></td>
+                      <td><a href="view-order.php?id=<?php echo $val['id']?>">Details</a></td>
+                      <td><a href="delete-order.php?id=<?php echo $val['id'] ?>"><button class="btn btn-danger">Delete</button></a></td>
                       </tr>
 
                       <?php }; ?>

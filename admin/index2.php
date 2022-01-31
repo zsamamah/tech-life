@@ -116,6 +116,12 @@ try {
                   <p>Contact CRUD</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="./index5.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Orders CRUD</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -146,7 +152,7 @@ try {
 
     <!-- Main content -->
     <div class="content">
-      <div class="container-fluid row">
+      <div class="container-fluid">
         <!-- Horizontal Form start -->
         <div class="col-md-6">
         <div class="card card-info">
@@ -187,50 +193,6 @@ try {
         </div>
         <!-- Horizontal Form end -->
 
-        <!-- edit product start -->
-        <div class="col-md-6">
-        <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Edit Category</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
-                <div class="card-body">
-                <input type="hidden" name="category-id" value="<?php echo $id ?>">
-                  <div class="form-group row">
-                    <label for="exampleInputPassword1" class="col-sm-2 col-form-label">Name</label>
-                    <div class="col-sm-10">
-                    <input type="text" name="c_name" class="form-control" id="exampleInputPassword1" value="<?php echo $categoryName ?>" placeholder="New Name">
-          </div>
-                  </div>
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" name="update-category" class="btn btn-primary">Update</button>
-                </div>
-              </form>
-            </div>
-
-            <?php
-
-            if(isset($_POST['c_id'])&&preg_match("/^[0-9]*$/",$_POST['c_id'])){
-              if(isset($_POST['c_name'])&&strlen($_POST['c_name'])>4){
-                $sql = "UPDATE categories SET name='{$_POST['c_name']}' WHERE id={$_POST['c_id']}";
-                $conn->query($sql);
-              }
-            }
-
-
-            ?>
-        
-            <!-- edit product end -->
-
-
-      </div></div>
-      <!-- /.container-fluid -->
-
       <!-- products table start -->
       <div class="card">
               <div class="card-header">
@@ -261,7 +223,7 @@ try {
                       <tr>
                       <td><?php echo $val['id']; ?></td>
                       <td><?php echo $val['name']; ?></td>
-                      <td><a href="index2.php?edit=<?php echo $val['id']?>">Edit</a></td>
+                      <td><a href="edit-category.php?edit=<?php echo $val['id']?>">Edit</a></td>
                       <td><form method="post" action="update-category.php"><button class="btn btn-danger" type="submit" name="delete" value="<?php echo $val['id'] ?>">Delete</button></form></td>
                       </tr>
                    <?php }

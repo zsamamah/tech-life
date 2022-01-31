@@ -1,5 +1,7 @@
 <?php
 session_start();
+if(isset($_SESSION['Loggeduser']))
+header("Location: ../home");
 // database Connection 
 $servername = "localhost";
 $username = "root";
@@ -76,6 +78,9 @@ try {
 
             if ($admin->rowCount() != null) {
               $_SESSION["Loggeduser"] = $row['name'];
+              $_SESSION["LoggeduserId"] = $row['id'];
+              $_SESSION["LoggeduserEmail"] = $row['email'];
+              $_SESSION["LoggeduserPhone"] = $row['phone'];
               echo "<script>window.location.href='../admin/index.php'</script>";
               // header("location: ../admin/index2.html");
             } else if ($stmt->rowCount() != null) {

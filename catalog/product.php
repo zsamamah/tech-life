@@ -206,7 +206,7 @@ else{
                     $User = $connection->prepare("SELECT * FROM users WHERE id=$userID");
                     $User->execute();
                     $selectedUser = $User->fetch(PDO::FETCH_ASSOC);
-                    echo "<h3>" . $selectedUser["name"] . "</h3>";
+                    echo "<h3>" . $selectedUser["name"] . "</h3>";                
                     // echo "<label>2 years ago</label>";
                     echo "<p>" . $comment['comment'] . "</p>";
                   }
@@ -276,6 +276,41 @@ else{
   <br><br>
 
   <?php include '../footer.php' ?>
+
+  <div class="modal fade" id="Modal-Comment" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header align-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="ion-android-close"></i></span></button>
+            <h1 class="h4 modal-title">Add your comment</h1>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+            <form class="join" action="comment.php" method="post">
+              <div class="row">
+                  <div class="col-sm-12">
+                    <textarea name="comment" placeholder="Type here" required="" class="form-control" rows="5"></textarea>
+                    <br>
+                </div>
+                <?php if(isset($_SESSION["Loggeduser"])) { ?>
+                <input type="hidden" name="user-id" value="<?php echo $_SESSION['LoggeduserId']; ?>"/>
+                <?php } ?>
+                <input type="hidden" name="product-id" value="<?php echo $id; ?>"/>
+                <div class="col-sm-12">
+                    <div class="align-center">
+                        <br>
+                        <button type="submit" class="btn btn-primary btn-sm" name="send-comment"> <i class="ion-android-send"></i> Send</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"> <i class="ion-android-share"></i> No, thanks </button>
+                        <br><br>
+                    </div>
+                </div>
+              </div>
+             </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="../assets/js/jquery-latest.min.js"></script>

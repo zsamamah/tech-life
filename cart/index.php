@@ -102,6 +102,12 @@ try {
             </div>
           </div>
         </div>
+        <form action="../catalog/" method="POST">
+        <button class="btn btn-primary btn-lg justify" style="height: 45px; width:30%;" type="submit">
+            Continue Shopping</a>
+            <hr class="offset-md" />
+          </button>
+        </form>
       </div>
       <div class="col-sm-8 col-md-4">
         <hr class="offset-md visible-sm" />
