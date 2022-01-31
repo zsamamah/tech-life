@@ -266,7 +266,8 @@ else{
               <label><?php echo $categoryName ?></label>
 
               <a href="../catalog/product.php?details=<?php echo $val['id'] ?>" class="btn btn-link"> Details</a>
-              <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
+              <a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo  $val['id'] ?>&&typeCart=addToCart">
+            <button class="btn btn-primary btn-rounded"> <i class="ion-bag"></i> Add to cart</button></a>
             </div>
           </div>
         <?php } ?>
