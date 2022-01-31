@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2022 at 05:51 PM
+-- Generation Time: Jan 31, 2022 at 01:02 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -67,7 +67,9 @@ INSERT INTO `comments` (`id`, `user_id`, `comment`, `product_id`) VALUES
 (3, 6, 'hahahaha', 2),
 (4, 6, 'hahahahaha', 2),
 (5, 6, 'hahahahahha', 2),
-(6, 5, 'hello', 1);
+(6, 5, 'hello', 1),
+(7, 6, 'NICE GAME', 5),
+(8, 6, 'TEST', 5);
 
 -- --------------------------------------------------------
 
@@ -121,6 +123,7 @@ INSERT INTO `newsletter` (`id`, `email`) VALUES
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `status` varchar(255) DEFAULT 'Pending',
   `total` float NOT NULL,
   `delivery` float NOT NULL,
   `address` varchar(255) NOT NULL,
@@ -132,11 +135,13 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `total`, `delivery`, `address`, `remark`, `date`) VALUES
-(7, 5, 80, 4, 'Jordan,Zarqa,zarqa , batrawi,26,13115', '', '2022-01-28'),
-(8, 6, 60, 3, 'Labore dolores neces,Quia expedita sunt i,Voluptatibus animi ,Quos architecto ab d,12489', 'Qui quasi voluptas d', '2022-01-28'),
-(9, 6, 15, 0.75, 'Saepe perspiciatis ,Omnis maiores corpor,Id dolore dolores be,Qui saepe rerum dolo,23639', 'Ut sit consequatur p', '2022-01-29'),
-(10, 5, 35, 1.75, 'Jordan,Quia expedita sunt i,Voluptatibus animi ,Quos architecto ab d,12489', '', '2022-01-30');
+INSERT INTO `orders` (`id`, `user_id`, `status`, `total`, `delivery`, `address`, `remark`, `date`) VALUES
+(7, 5, 'Delivered', 80, 4, 'Jordan,Zarqa,zarqa , batrawi,26,13115', '', '2022-01-28'),
+(8, 6, 'Delivered', 60, 3, 'Labore dolores neces,Quia expedita sunt i,Voluptatibus animi ,Quos architecto ab d,12489', 'Qui quasi voluptas d', '2022-01-28'),
+(9, 6, 'Delivered', 15, 0.75, 'Saepe perspiciatis ,Omnis maiores corpor,Id dolore dolores be,Qui saepe rerum dolo,23639', 'Ut sit consequatur p', '2022-01-29'),
+(10, 5, 'Delivered', 35, 1.75, 'Jordan,Quia expedita sunt i,Voluptatibus animi ,Quos architecto ab d,12489', '', '2022-01-30'),
+(11, 1, 'Delivered', 25, 1.25, 'Tempora quia aut non,Enim voluptatem Hic,Distinctio Similiqu,Vero deserunt duis v,77421', 'In fugiat deserunt ', '2022-01-31'),
+(14, 6, 'Delivered', 48.4, 2.5, 'Jordan,zarqa,mecca st,26,1111', 'Please deliver this order ASAP\r\nThank you all.', '2022-01-31');
 
 -- --------------------------------------------------------
 
@@ -163,7 +168,11 @@ INSERT INTO `order_item` (`id`, `order_id`, `product_id`, `quantity`) VALUES
 (11, 8, 3, 1),
 (12, 9, 2, 1),
 (13, 10, 1, 1),
-(14, 10, 2, 1);
+(14, 10, 2, 1),
+(15, 11, 4, 1),
+(19, 14, 3, 1),
+(20, 14, 12, 1),
+(21, 14, 13, 1);
 
 -- --------------------------------------------------------
 
@@ -189,14 +198,14 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`, `description`, `image`, `stock`, `discount`, `online_reviews`, `age_rating`, `category_id`) VALUES
-(1, 'Grand Theft Auto V', 20, 'The Criminal Enterprise Starter Pack is the fastest way for new Grand Theft Auto Online players to jumpstart their criminal empires. Do not purchase if you already own the Criminal Enterprise Starter Pack.', 'https://img.g2a.com/323x433/1x1x0/grand-theft-auto-v-criminal-enterprise-starter-pack-ps4-psn-key-europe/fd911188594b4ebfbe77628e', 7, 1, '10/10', '+18', 2),
-(2, 'Batman: Arkham Knight', 15, 'In the explosive finale to the Arkham series, Batman faces the ultimate threat against the city he is sworn to protect.', 'https://img.g2a.com/323x433/1x1x0/batman-arkham-knight-psn-ps4-key-north-america/5912e7945bafe3ce796ca795', 2, 1, '8.5/10', '16', 5),
-(3, 'WWE 2K Battlegrounds', 10, 'Take your favorite WWE Superstars and Legends into battle with unrestrained, unhinged, and in-your-face pandemonium! Pull off over-the-top moves and use your special abilities to destroy your opponent while battling in interactive environments!', 'https://img.g2a.com/323x433/1x1x0/wwe-2k-battlegrounds-ps4-psn-key-europe/5fdb1c6346177c7e33723132', 9, 0.2, '7/10', 'T', 3),
-(4, 'Fast & Furious: Crossroads', 25, 'Fast & Furious Crossroads is an action-adventure video game set in the Fast & Furious universe.', 'https://img.g2a.com/323x433/1x1x0/fast-furious-crossroads-ps4-psn-key-europe/5f2cf31b7e696c2e89796fb2', 3, 1, '7/10', 'T', 6),
+(1, 'Grand Theft Auto V', 20, 'The Criminal Enterprise Starter Pack is the fastest way for new Grand Theft Auto Online players to jumpstart their criminal empires. Do not purchase if you already own the Criminal Enterprise Starter Pack.', 'https://img.g2a.com/323x433/1x1x0/grand-theft-auto-v-criminal-enterprise-starter-pack-ps4-psn-key-europe/fd911188594b4ebfbe77628e', 6, 1, '10/10', '+18', 2),
+(2, 'Batman: Arkham Knight', 15, 'In the explosive finale to the Arkham series, Batman faces the ultimate threat against the city he is sworn to protect.', 'https://img.g2a.com/323x433/1x1x0/batman-arkham-knight-psn-ps4-key-north-america/5912e7945bafe3ce796ca795', 1, 1, '8.5/10', '16', 5),
+(3, 'WWE 2K Battlegrounds', 10, 'Take your favorite WWE Superstars and Legends into battle with unrestrained, unhinged, and in-your-face pandemonium! Pull off over-the-top moves and use your special abilities to destroy your opponent while battling in interactive environments!', 'https://img.g2a.com/323x433/1x1x0/wwe-2k-battlegrounds-ps4-psn-key-europe/5fdb1c6346177c7e33723132', 8, 0.2, '7/10', 'T', 3),
+(4, 'Fast & Furious: Crossroads', 25, 'Fast & Furious Crossroads is an action-adventure video game set in the Fast & Furious universe.', 'https://img.g2a.com/323x433/1x1x0/fast-furious-crossroads-ps4-psn-key-europe/5f2cf31b7e696c2e89796fb2', 2, 1, '7/10', 'T', 6),
 (5, 'FIFA 2022', 25, 'FIFA 22 is the latest installment of the FIFA series developed by EA Canada and published by Electronic Arts. The game takes you back to the world of international football.', 'https://img.g2a.com/323x433/1x1x0/fifa-22-pc-origin-key-global/dce7598de0604b70ae47d576', 4, 1, '7.5/10', 'T', 4),
 (11, 'God of War', 35, 'God of War is an action video game with RPG elements, developed by Santa Monica Studio and released thanks to PlayStation PC LLC in 2022 for personal computers.', 'https://img.g2a.com/323x433/1x1x0/god-of-war-pc-steam-key-global/98c4f59fc39f44aaa432445e', 12, 1, '10/10', '+18', 5),
-(12, 'Horizon Zero Dawn', 25, 'A unique gaming experience that puts you in the role of a post-apocalyptic robo-animals hunter, Aloy, who sets out on the quest to uncover her own past and prevent an even worse future to happen.', 'https://img.g2a.com/323x433/1x1x0/horizon-zero-dawn-pc-steam-key-global/5f02c6a57e696c6f690471f2', 10, 1, '9/10', '16', 5),
-(13, 'NBA 2K22', 22, 'After the lackluster reception of the last installment, NBA 2K22 could turn out to be what the fans have been waiting for.', 'https://img.g2a.com/323x433/1x1x0/nba-2k22-pc-steam-key-global/1bce4b4fdb554c79b94ebb49', 13, 0.3, '6/10', 'T', 4),
+(12, 'Horizon Zero Dawn', 25, 'A unique gaming experience that puts you in the role of a post-apocalyptic robo-animals hunter, Aloy, who sets out on the quest to uncover her own past and prevent an even worse future to happen.', 'https://img.g2a.com/323x433/1x1x0/horizon-zero-dawn-pc-steam-key-global/5f02c6a57e696c6f690471f2', 9, 1, '9/10', '16', 5),
+(13, 'NBA 2K22', 22, 'After the lackluster reception of the last installment, NBA 2K22 could turn out to be what the fans have been waiting for.', 'https://img.g2a.com/323x433/1x1x0/nba-2k22-pc-steam-key-global/1bce4b4fdb554c79b94ebb49', 11, 0.3, '6/10', 'T', 4),
 (14, 'Shadow of Mordor', 15, 'Meet Talion, a Gondorian ranger who lost all he had when Sauron\'s forces came back to Mordor. Middle-Earth: Shadow of Mordor is a third-person open-world action game developed by Monolith Productions.', 'https://img.g2a.com/323x433/1x1x0/middle-earth-shadow-of-mordor-game-of-the-year-edition-steam-key-global/5911a9c8ae653a2ed4758101', 9, 1, '8.5/10', '+18', 5),
 (15, 'Dying Light 2', 25, 'Explore the huge open city and the environment that dynamically changes according to the choices you make.', 'https://img.g2a.com/323x433/1x1x0/dying-light-2-pc-steam-key-global/a7f11c7ff17142279fbd79d3', 8, 1, '8/10', '+18', 2),
 (16, 'Forza Horizon 5', 40, 'Forza Horizon 5 brings the best the developers at Playground Games have to offer. With over 400 available cars, a dynamic, open world divided into several biomes, and stunning visuals.', 'https://img.g2a.com/323x433/1x1x0/forza-horizon-5-xbox-series-x-s-windows-10-xbox-live-key-global/dc4f80e65c984df5bc42b658', 17, 0.2, '8.5/10', 'T', 6),
@@ -224,7 +233,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `phone`, `email`, `password`, `is_admin`) VALUES
 (1, 'admin admin', '0777777777', 'admin@admin.com', 'Admin@123', 1),
 (5, 'test test', '0777777777', 'test@test.com', 'Zaid@123', 0),
-(6, 'zaid samamah', '0778564336', 'zsamamah@yahoo.com', 'Zaid@123', 0);
+(6, 'Zaid Samamah', '0777684935', 'zsamamah@yahoo.com', 'Zaid@123', 0);
 
 --
 -- Indexes for dumped tables
@@ -294,19 +303,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `newsletter`
@@ -318,25 +327,25 @@ ALTER TABLE `newsletter`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
