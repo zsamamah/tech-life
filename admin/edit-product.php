@@ -123,6 +123,12 @@ try {
                   <p>Contact CRUD</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="./index5.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Orders CRUD</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>

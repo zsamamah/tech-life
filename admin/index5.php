@@ -2,7 +2,6 @@
 session_start();
 if(!$_SESSION['Loggeduser'])
   header("Location: ../home");
-include './update-category.php';
 try {
   $sereverName = "localhost";
   $dbName = "tech-life";
@@ -20,37 +19,28 @@ try {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin Dashboard</title>
-  
+  <title>Orders CRUD</title>
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
+  <!-- IonIcons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<!--
+`body` tag options:
+
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
+
+  * sidebar-collapse
+  * sidebar-mini
+-->
+<body class="hold-transition sidebar-mini">
 <div class="wrapper">
-
-  <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
-
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -83,7 +73,7 @@ try {
         <div class="info">
           <a href="#" class="d-block">Admin</a>
         </div>
-      </div>  
+      </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -106,7 +96,7 @@ try {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.php" class="nav-link active">
+                <a href="./index2.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categories CRUD</p>
                 </a>
@@ -124,7 +114,7 @@ try {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index5.php" class="nav-link">
+                <a href="./index5.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Orders CRUD</p>
                 </a>
@@ -145,11 +135,11 @@ try {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Users</h1>
+            <h1 class="m-0">Orders</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Users</li>
+              <li class="breadcrumb-item active">Orders</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -157,68 +147,68 @@ try {
     </div>
     <!-- /.content-header -->
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
 
-        <div class="card card-primary">
+      <!-- products table start -->
+      <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Edit Category</h3>
+                <h3 class="card-title">Orders</h3>
               </div>
               <!-- /.card-header -->
-              <!-- form start -->
-              <form method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
-                <div class="card-body">
-                <input type="hidden" name="category-id" value="<?php echo $id ?>">
-                  <div class="form-group row">
-                    <label for="exampleInputPassword1" class="col-sm-2 col-form-label">Name</label>
-                    <div class="col-sm-10">
-                    <input type="text" name="c_name" class="form-control" id="exampleInputPassword1" value="<?php echo $categoryName ?>" placeholder="New Name">
-          </div>
-                  </div>
-                </div>
-                <!-- /.card-body -->
+              <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table table-head-fixed text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Username</th>
+                      <th>Phone</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                      <th>Details</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
 
-                <div class="card-footer">
-                  <button type="submit" name="update-category" class="btn btn-primary">Update</button>
-                </div>
-              </form>
+                    $sql = "SELECT orders.id as id,name,phone,orders.total,orders.status FROM users INNER JOIN orders ON orders.user_id=users.id";
+                    $result = $conn->query($sql);
+                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                    // echo "<pre>";
+                    // print_r($result);
+                    // echo "</pre>";
+                    foreach($result as $val){ ?>
+                      <tr>
+                      <td><?php echo $val['id']; ?></td>
+                      <td><?php echo $val['name'];?></td>
+                      <td><?php echo $val['phone'];?></td>
+                      <td><?php echo $val['total']; ?></td>
+                      <td><?php echo $val['status']; ?></td>
+                      <td><a href="view-order.php?id=<?php echo $val['id']?>">Details</a></td>
+                      <td><a href="delete-order.php?id=<?php echo $val['id'] ?>"><button class="btn btn-danger">Delete</button></a></td>
+                      </tr>
+
+                      <?php }; ?>
+                  
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
             </div>
-
-            <?php
-
-            // if(isset($_POST['category-id'])&&preg_match("/^[0-9]*$/",$_POST['category-id'])){
-            //   if(isset($_POST['c_name'])&&strlen($_POST['c_name'])>4){
-            //     $sql = "UPDATE categories SET name='{$_POST['c_name']}' WHERE id={$_POST['category-id']}";
-            //     $conn->query($sql);
-            //   }
-            //   header("Location: ./index.php");
-            // }
+        <!-- products table end -->
 
 
-            ?>
-        
-            <!-- edit product end -->
-
-        <!-- Main row -->
-        <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-7 connectedSortable">
-
-          </section>
-          <!-- /.Left col -->
-          <!-- right col (We are only adding the ID to make the widgets sortable)-->
-          <section class="col-lg-5 connectedSortable">
-
-          </section>
-          <!-- right col -->
-        </div>
-        <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
-    </section>
+    </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
   <footer class="main-footer">
     <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
     All rights reserved.
@@ -226,48 +216,23 @@ try {
       <b>Version</b> 3.1.0
     </div>
   </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
+<!-- REQUIRED SCRIPTS -->
+
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
+<!-- Bootstrap -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- ChartJS -->
-<script src="plugins/chart.js/Chart.min.js"></script>
-<!-- Sparkline -->
-<script src="plugins/sparklines/sparkline.js"></script>
-<!-- JQVMap -->
-<script src="plugins/jqvmap/jquery.vmap.min.js"></script>
-<script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="plugins/jquery-knob/jquery.knob.min.js"></script>
-<!-- daterangepicker -->
-<script src="plugins/moment/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Summernote -->
-<script src="plugins/summernote/summernote-bs4.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<!-- AdminLTE App -->
+<!-- AdminLTE -->
 <script src="dist/js/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="plugins/chart.js/Chart.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
+<script src="dist/js/pages/dashboard3.js"></script>
 </body>
 </html>
