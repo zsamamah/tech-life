@@ -116,6 +116,12 @@ try {
                   <p>Products CRUD</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="./index4.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Contact CRUD</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>

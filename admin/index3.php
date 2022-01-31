@@ -1,8 +1,8 @@
 <?php
 session_start();
+if(!$_SESSION['Loggeduser'])
+  header("Location: ../home");
 include "update-product.php";
-// if($_SESSION['logged_in']['is_admin']==='0')
-//   header("Location: ../welcome.php");
 try {
   $sereverName = "localhost";
   $dbName = "tech-life";
@@ -106,6 +106,12 @@ try {
                 <a href="./index3.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products CRUD</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./index4.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Contact CRUD</p>
                 </a>
               </li>
             </ul>
