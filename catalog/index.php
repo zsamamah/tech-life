@@ -1,5 +1,5 @@
 <?php
-// session_start();
+session_start();
 // unset($_SESSION['cart']);
 $servername = "localhost";
 $username = "root";
@@ -21,7 +21,7 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>
-    Catalog &middot; Unistore &middot; Responsive E-Commerce Template
+  Tech-Life | Catalog
   </title>
 
   <meta name="description" content="" />
@@ -129,7 +129,7 @@ try {
 
                     <a href="../catalog/product.php?details=<?php echo $product['id'] ?>" class="btn btn-link">
                       Details</a>
-                    <a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo $product['id'] ?>&&typeCart=addToCart"><button class="btn btn-primary btn-rounded btn-sm">
+                      <a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo $product['id'] ?>&&typeCart=addToCart"><button class="btn btn-primary btn-rounded btn-sm">
                       <i class="ion-bag"></i> Add to cart
                     </button></a>
                   </div>

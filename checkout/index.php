@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_SESSION['Loggeduser']) || !isset($_SESSION['cart']) || empty($_SESSION['cart'])){
+echo "<script>window.location.href='../catalog'</script>";
+}
 require '../database.php';
 $_SESSION['delivery'] = $_SESSION['total'] * 0.05;
 $_SESSION['final_total'] = $_SESSION['total'] + $_SESSION['delivery'];
@@ -12,7 +15,7 @@ $_SESSION['final_total'] = $_SESSION['total'] + $_SESSION['delivery'];
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title> Checkout &middot; Unistore &middot; Responsive E-Commerce Template</title>
+  <title> Tech-Life | Checkout</title>
 
   <meta name="description" content="">
   <meta name="keywords" content="">

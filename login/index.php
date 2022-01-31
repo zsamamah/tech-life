@@ -1,4 +1,5 @@
 <?php
+session_start();
 // database Connection 
 $servername = "localhost";
 $username = "root";
@@ -20,7 +21,7 @@ try {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title> Login &middot; Unistore &middot; Responsive E-Commerce Template</title>
+  <title>Tech-Life | Login</title>
 
   <meta name="description" content="">
   <meta name="keywords" content="">
@@ -83,7 +84,10 @@ try {
               $_SESSION["LoggeduserPhone"] = $row["phone"];
               $_SESSION["LoggeduserId"] = $row['id'];
               $_SESSION["LoggeduserAdmin"] = $row['is_admin'];
-              echo "<script>window.location.href='../home/index.php'</script>";
+              if(isset($_SESSION['cart']) && !empty($_SESSION['cart']))
+              echo "<script>window.location.href='../cart'</script>";
+              else
+              echo "<script>window.location.href='../home'</script>";
             } else {
               echo "<p style='color:brown'> invalid login please try again!</p> <br>";
             }

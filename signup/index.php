@@ -1,4 +1,5 @@
 <?php
+session_start();
 // database Connection 
 $servername = "localhost";
 $username = "root";
@@ -21,7 +22,7 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>
-    Sign Up &middot; Unistore &middot; Responsive E-Commerce Template
+  Tech-Life | Sign Up
   </title>
 
   <meta name="description" content="" />
