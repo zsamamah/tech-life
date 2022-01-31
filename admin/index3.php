@@ -2,7 +2,6 @@
 session_start();
 if(!$_SESSION['Loggeduser'])
   header("Location: ../home");
-include "update-product.php";
 try {
   $sereverName = "localhost";
   $dbName = "tech-life";
@@ -244,103 +243,8 @@ try {
         </div>
         <!-- Horizontal Form end -->
 
-        <!-- edit product start -->
         <div class="col-md-6">
-        <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Edit Product</h3>
-              </div>
-              <!-- /.card-header -->
-              <!-- form start -->
-              <form method="POST" action="update-product.php">
-                <div class="card-body">
-                <input type="hidden" name="product-id" value="<?php echo $id ?>">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Name</label>
-                    <input type="text" name="p_name" class="form-control" id="exampleInputPassword1" placeholder="New Name" value="<?php echo $productName; ?>">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Category</label>
-                    <select class="form-control" name="p_category">
-                    <!-- </select> -->
-                    <?php
-                    $sql = "SELECT id,name FROM categories";
-                    $result = $conn->query($sql);
-                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result as $v){
-                      echo "<option value='{$v['id']}'>";
-                      echo $v['name'];
-                      echo "</option>";
-                    }
-                    ?>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Image</label>
-                    <input type="text" name="p_image" class="form-control" id="exampleInputPassword1" placeholder="New Image" value="<?php echo $productImage; ?>">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Stock</label>
-                    <input type="number" name="p_stock" class="form-control" id="exampleInputPassword1" placeholder="New Stock Value" value="<?php echo $productStock; ?>">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Price</label>
-                    <input type="number" name="p_price" class="form-control" id="exampleInputPassword1" placeholder="New Price" value="<?php echo $productPrice; ?>">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Discount</label>
-                    <input type="text" name="p_discount" class="form-control" id="exampleInputPassword1" placeholder="New Discount" value="<?php echo $productDiscount; ?>">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Age Rating</label>
-                    <input type="text" name="p_age-rating" class="form-control" id="exampleInputPassword1" placeholder="New Age Rating" value="<?php echo $productAgeRating; ?>">
-                  </div>
-                </div>
-                <!-- /.card-body -->
-
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary" name="update-product">Update</button>
-                </div>
-              </form>
-            </div>
-
-            <?php
-
-            if(isset($_POST['c_id'])&&preg_match("/^[0-9]*$/",$_POST['c_id'])){
-              if(isset($_POST['c_name'])&&strlen($_POST['c_name'])>4){
-                $sql = "UPDATE products SET name='{$_POST['c_name']}' WHERE id={$_POST['c_id']}";
-                $conn->query($sql);
-              }
-              if(isset($_POST['c_description'])&&strlen($_POST['c_description'])>4){
-                $sql = "UPDATE products SET description='{$_POST['c_description']}' WHERE id={$_POST['c_id']}";
-                $conn->query($sql);
-              }
-              if(isset($_POST['c_category'])&&preg_match("/[0-9]/",$_POST['c_category'])){
-                $sql = "UPDATE products SET category_id='{$_POST['c_category']}' WHERE id={$_POST['c_id']}";
-                $conn->query($sql);
-              }
-              if(isset($_POST['c_image'])&&strlen($_POST['c_image'])>4){
-                $sql = "UPDATE products SET image='{$_POST['c_image']}' WHERE id={$_POST['c_id']}";
-                $conn->query($sql);
-              }
-              if(isset($_POST['c_stock'])&&preg_match("/[0-9]/",$_POST['c_stock'])){
-                $sql = "UPDATE products SET stock='{$_POST['c_stock']}' WHERE id={$_POST['c_id']}";
-                $conn->query($sql);
-              }
-              if(isset($_POST['c_price'])&&preg_match("/[0-9]/",$_POST['c_price'])){
-                $sql = "UPDATE products SET price='{$_POST['c_price']}' WHERE id={$_POST['c_id']}";
-                $conn->query($sql);
-              }
-              if(isset($_POST['c_discount'])&&preg_match("/[0-9]/",$_POST['c_discount'])){
-                $sql = "UPDATE products SET discount='{$_POST['c_discount']}' WHERE id={$_POST['c_id']}";
-                $conn->query($sql);
-              }
-            }
-
-
-            ?>
-        
-            <!-- edit product end -->
+         
 
 
       </div></div>
@@ -387,7 +291,7 @@ try {
                       <td><?php echo $val['stock']; ?></td>
                       <td><?php echo $val['description']; ?></td>
                       <td><?php echo $val['age_rating']; ?></td>
-                      <td><a href="index3.php?edit=<?php echo $val['id'];?>">Edit</a></td>
+                      <td><a href="edit-product.php?edit=<?php echo $val['id'];?>&&category=<?php echo $val['cat'] ?>">Edit</a></td>
                       <td><form method="post" action="update-product.php"><button class="btn btn-danger" type="submit" name="delete" value="<?php echo $val['id'] ?>">Delete</button></form></td>
                       </tr>
 

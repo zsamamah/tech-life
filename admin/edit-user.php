@@ -153,91 +153,57 @@ try {
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- add user -->
-        <div class="card card-primary">
+
+      <!-- edit user -->
+      <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">Add User</h3>
+            <h3 class="card-title">Edit User Data</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
+          <form method="POST">
             <div class="card-body">
               <div class="form-group">
-                <label for="exampleInputName">Full Name</label>
-                <input type="text" name="name" class="form-control" id="exampleInputName" placeholder="Enter name" required>
-              </div>
-              <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" value="<?php echo $_GET['email'] ?>" disabled>
               </div>
               <div class="form-group">
-                <label for="exampleInputEmail1">Phone</label>
-                <input type="tel" name="phone" class="form-control" id="exampleInputEmail1" placeholder="Enter phone number" required>
+                <label for="exampleInputName">Full Name</label>
+                <input type="text" name="c_name" class="form-control" id="exampleInputName" placeholder="Enter name">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputName">Phone</label>
+                <input type="tel" name="c_phone" class="form-control" id="exampleInputName" placeholder="Enter phnoe number">
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                <input type="password" name="c_password" class="form-control" id="exampleInputPassword1" placeholder="Password">
               </div>
             </div>
             <!-- /.card-body -->
 
             <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Edit Data</button>
             </div>
           </form>
           <?php
-          if(isset($_POST['name'])&&isset($_POST['email'])&&isset($_POST['password'])){
-            $sql = "INSERT INTO users(name,phone,email,password) VALUES ('{$_POST['name']}','{$_POST['phone']}','{$_POST['email']}','{$_POST['password']}')";
-            $conn->query($sql);
-          }
+            if(isset($_POST['c_name']) && preg_match("/(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/", $_POST['c_name']) && $_POST['c_name']!==""){
+              $sql = "UPDATE users SET name='{$_POST['c_name']}' WHERE email='{$_GET['email']}'";
+              $conn->exec($sql);
+            }
+            if(isset($_POST['c_password']) && preg_match("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/", $_POST['c_password'])){
+              $sql = "UPDATE users SET password='{$_POST['c_password']}' WHERE email='{$_GET['email']}'";
+              $conn->exec($sql);
+            }
+            if(isset($_POST['c_phone']) && preg_match("/^[0-9+]{10,}$/",$_POST['c_phone'])){
+              $sql = "UPDATE users SET phone='{$_POST['c_phone']}' WHERE email='{$_GET['email']}'";
+              $conn->exec($sql);
+            }
+            if($_SERVER["REQUEST_METHOD"]=="POST")
+                echo "<script>window.location.href='./index.php'</script>";
           ?>
         </div>
-        <!-- add user -->
-
-        <!-- users table -->
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>ID</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-              </thead>
-              <tbody>
-              <?php
-              $sql = "SELECT id,name,email,phone FROM users";
-              $data = $conn->query($sql);
-              $result = $data->fetchAll(PDO::FETCH_ASSOC);
-              // print_r($result);
-              foreach($result as $val){
-                echo "<tr>";
-                echo "<td>{$val['id']}</td>";
-                echo "<td>{$val['name']}</td>";
-                echo "<td>{$val['email']}</td>";
-                echo "<td>{$val['phone']}</td>";
-                echo "<td><a href='./edit-user.php?email={$val['email']}'><button value='{$val['id']}' class='btn btn-primary' style='background-color: blue;border: none;'>Edit</button></a></td>";
-                echo "<td><a href='./delete-user.php?d_id={$val['id']}'><button value='{$val['id']}' class='btn btn-primary' style='background-color: red;border: none;'>Remove</button></a></td>";
-                // echo "<td>{$val['last_login']}</td>";
-                // echo "<td>{$val['date_created']}</td>";
-                echo "</tr>";
-              }
-              ?>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- users table -->
-
+        <!-- edit user -->
 
         <!-- Main row -->
         <div class="row">

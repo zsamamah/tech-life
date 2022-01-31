@@ -4,7 +4,7 @@ if(!isset($_SESSION['Loggeduser']) || !isset($_SESSION['cart']) || empty($_SESSI
 echo "<script>window.location.href='../catalog'</script>";
 }
 require '../database.php';
-$_SESSION['delivery'] = $_SESSION['total'] * 0.05;
+$_SESSION['delivery'] = 2.5;
 $_SESSION['final_total'] = $_SESSION['total'] + $_SESSION['delivery'];
 ?>
 <!DOCTYPE html>
@@ -411,7 +411,7 @@ $_SESSION['final_total'] = $_SESSION['total'] + $_SESSION['delivery'];
                       <div class="box-default sm-padding" data-style="selected">
                         <hr class="offset-sm">
                         <img src="../assets/img/payments/cod.png" style="width: 40%;" title="paypal" alt="paypal" />
-                        <span>&nbsp;&nbsp;5% Service fee</span>
+                        <span>&nbsp;&nbsp;2.5 JD Service fee</span>
                         <div class="check">
                           <i class="ion-checkmark-round"></i>
                         </div>
@@ -448,12 +448,10 @@ $_SESSION['final_total'] = $_SESSION['total'] + $_SESSION['delivery'];
                   <div class="col-xs-6">
                     <p>Subtotal (<?php echo count($_SESSION['cart']) ?> items)</p>
                     <p>Delivery</p>
-                    <p>Discount</p>
                   </div>
                   <div class="col-xs-6">
                     <p><b><?php echo $_SESSION['total'] ?> JD</b></p>
                     <p><b><?php echo $_SESSION['delivery'] ?> JD</b></p>
-                    <p><b>$0</b></p>
                   </div>
                 </div>
               </div>
@@ -496,6 +494,7 @@ $_SESSION['final_total'] = $_SESSION['total'] + $_SESSION['delivery'];
     unset($_SESSION['total']);
     unset($_SESSION['delivery']);
     unset($_SESSION['final_total']);
+    echo "<script> alert('Your Order Submitted')</script>";
     echo "<script>window.location.href='../catalog/index.php'</script>";
   }
 

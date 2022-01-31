@@ -2,6 +2,7 @@
 session_start();
 if(!$_SESSION['Loggeduser'])
   header("Location: ../home");
+  include "update-product.php";
 try {
   $sereverName = "localhost";
   $dbName = "tech-life";
@@ -99,7 +100,7 @@ try {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.php" class="nav-link active">
+                <a href="./index.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Users CRUD</p>
                 </a>
@@ -111,7 +112,7 @@ try {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index3.php" class="nav-link">
+                <a href="./index3.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products CRUD</p>
                 </a>
@@ -153,91 +154,110 @@ try {
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- add user -->
-        <div class="card card-primary">
-          <div class="card-header">
-            <h3 class="card-title">Add User</h3>
-          </div>
-          <!-- /.card-header -->
-          <!-- form start -->
-          <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
-            <div class="card-body">
-              <div class="form-group">
-                <label for="exampleInputName">Full Name</label>
-                <input type="text" name="name" class="form-control" id="exampleInputName" placeholder="Enter name" required>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Phone</label>
-                <input type="tel" name="phone" class="form-control" id="exampleInputEmail1" placeholder="Enter phone number" required>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
-              </div>
-            </div>
-            <!-- /.card-body -->
 
-            <div class="card-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-          <?php
-          if(isset($_POST['name'])&&isset($_POST['email'])&&isset($_POST['password'])){
-            $sql = "INSERT INTO users(name,phone,email,password) VALUES ('{$_POST['name']}','{$_POST['phone']}','{$_POST['email']}','{$_POST['password']}')";
-            $conn->query($sql);
-          }
-          ?>
-        </div>
-        <!-- add user -->
+         <!-- edit product start -->
+         <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Edit Product</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form method="POST" action="update-product.php">
+                <div class="card-body">
+                <input type="hidden" name="product-id" value="<?php echo $id ?>">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Name</label>
+                    <input type="text" name="p_name" class="form-control" id="exampleInputPassword1" placeholder="New Name" value="<?php echo $productName; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Category</label>
+                    <select class="form-control" name="p_category">
+                    <!-- </select> -->
+                    <?php
+                    $sql = "SELECT id,name FROM categories";
+                    $result = $conn->query($sql);
+                    $result = $result->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($result as $v){
+                        if($v['name']==="{$_GET['category']}"){
+                            echo "<option value='{$v['id']}' selected>";
+                      echo $v['name'];
+                      echo "</option>";   
+                        }
+                        else{
+                            echo "<option value='{$v['id']}'>";
+                      echo $v['name'];
+                      echo "</option>";
+                        }
+                    }
+                    ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Image</label>
+                    <input type="text" name="p_image" class="form-control" id="exampleInputPassword1" placeholder="New Image" value="<?php echo $productImage; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Stock</label>
+                    <input type="number" name="p_stock" class="form-control" id="exampleInputPassword1" placeholder="New Stock Value" value="<?php echo $productStock; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Price</label>
+                    <input type="number" name="p_price" class="form-control" id="exampleInputPassword1" placeholder="New Price" value="<?php echo $productPrice; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Discount</label>
+                    <input type="text" name="p_discount" class="form-control" id="exampleInputPassword1" placeholder="New Discount" value="<?php echo $productDiscount; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Age Rating</label>
+                    <input type="text" name="p_age-rating" class="form-control" id="exampleInputPassword1" placeholder="New Age Rating" value="<?php echo $productAgeRating; ?>">
+                  </div>
+                </div>
+                <!-- /.card-body -->
 
-        <!-- users table -->
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">DataTable with default features</h3>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>ID</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-              </thead>
-              <tbody>
-              <?php
-              $sql = "SELECT id,name,email,phone FROM users";
-              $data = $conn->query($sql);
-              $result = $data->fetchAll(PDO::FETCH_ASSOC);
-              // print_r($result);
-              foreach($result as $val){
-                echo "<tr>";
-                echo "<td>{$val['id']}</td>";
-                echo "<td>{$val['name']}</td>";
-                echo "<td>{$val['email']}</td>";
-                echo "<td>{$val['phone']}</td>";
-                echo "<td><a href='./edit-user.php?email={$val['email']}'><button value='{$val['id']}' class='btn btn-primary' style='background-color: blue;border: none;'>Edit</button></a></td>";
-                echo "<td><a href='./delete-user.php?d_id={$val['id']}'><button value='{$val['id']}' class='btn btn-primary' style='background-color: red;border: none;'>Remove</button></a></td>";
-                // echo "<td>{$val['last_login']}</td>";
-                // echo "<td>{$val['date_created']}</td>";
-                echo "</tr>";
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" name="update-product">Update</button>
+                </div>
+              </form>
+            </div>
+
+            <?php
+
+            if(isset($_POST['c_id'])&&preg_match("/^[0-9]*$/",$_POST['c_id'])){
+              if(isset($_POST['c_name'])&&strlen($_POST['c_name'])>4){
+                $sql = "UPDATE products SET name='{$_POST['c_name']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
               }
-              ?>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- users table -->
+              if(isset($_POST['c_description'])&&strlen($_POST['c_description'])>4){
+                $sql = "UPDATE products SET description='{$_POST['c_description']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_category'])&&preg_match("/[0-9]/",$_POST['c_category'])){
+                $sql = "UPDATE products SET category_id='{$_POST['c_category']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_image'])&&strlen($_POST['c_image'])>4){
+                $sql = "UPDATE products SET image='{$_POST['c_image']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_stock'])&&preg_match("/[0-9]/",$_POST['c_stock'])){
+                $sql = "UPDATE products SET stock='{$_POST['c_stock']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_price'])&&preg_match("/[0-9]/",$_POST['c_price'])){
+                $sql = "UPDATE products SET price='{$_POST['c_price']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+              if(isset($_POST['c_discount'])&&preg_match("/[0-9]/",$_POST['c_discount'])){
+                $sql = "UPDATE products SET discount='{$_POST['c_discount']}' WHERE id={$_POST['c_id']}";
+                $conn->query($sql);
+              }
+            }
 
+
+            ?>
+        
+            <!-- edit product end -->
 
         <!-- Main row -->
         <div class="row">

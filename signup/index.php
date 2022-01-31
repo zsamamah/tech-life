@@ -1,5 +1,7 @@
 <?php
 session_start();
+if(isset($_SESSION['Loggeduser']))
+header("Location: ../home");
 // database Connection 
 $servername = "localhost";
 $username = "root";
