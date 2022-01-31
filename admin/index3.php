@@ -149,9 +149,9 @@ try {
 
     <!-- Main content -->
     <div class="content">
-      <div class="container-fluid row">
+      <div class="container-fluid">
         <!-- Horizontal Form start -->
-        <div class="col-md-6">
+        <!-- <div class="col-md-6"> -->
         <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Add Product</h3>
@@ -246,7 +246,7 @@ try {
 
             ?>
 
-        </div>
+        <!-- </div> -->
         <!-- Horizontal Form end -->
 
         <div class="col-md-6">

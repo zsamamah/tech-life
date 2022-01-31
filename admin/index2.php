@@ -154,7 +154,7 @@ try {
     <div class="content">
       <div class="container-fluid">
         <!-- Horizontal Form start -->
-        <div class="col-md-6">
+        <!-- <div class="col-md-6"> -->
         <div class="card card-info">
               <div class="card-header">
                 <h3 class="card-title">Add Category</h3>
@@ -190,7 +190,7 @@ try {
           <!-- /.col-md-6 -->
 
 
-        </div>
+        <!-- </div> -->
         <!-- Horizontal Form end -->
 
       <!-- products table start -->
