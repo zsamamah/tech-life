@@ -134,9 +134,6 @@ try {
                     </button></a>
                   </div>
                 </div> <?php }
-                else {
-                  echo "<p style='text-align:center;margin:10% 0% 10% 0;font-size:5rem;'>No Results Found</p>";
-                }
                     }
                   } else {
                     echo "<p style='text-align:center;margin:10% 0% 10% 0;font-size:5rem;'>No Results Found</p>";
