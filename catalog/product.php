@@ -133,7 +133,11 @@ else{
           <h1><?php echo $name; ?></h1>
 
           <p> &middot; Category: <?php echo $categoryName; ?></p>
-          <p> &middot; Stock: <?php echo $stock; ?></p>
+          <p> &middot; Stock: <?php if(!$stock == 0) {
+             echo $stock;
+           } else {
+             echo "<p>Out of Stock</p>";
+           } ?></p>
 
           <p class="price"><?php
                             if ($discount != 1) {
