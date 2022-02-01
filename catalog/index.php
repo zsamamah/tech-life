@@ -106,7 +106,7 @@ try {
           }
           $result->execute();
           $row = $result->fetchAll(PDO::FETCH_ASSOC);
-          if (count($row) > 0) {
+          if (count($row) > 0 ) {
             foreach ($row as $product) {
               $sql = "SELECT * FROM categories WHERE id=$product[category_id]";
               $result = $connection->query($sql);
@@ -134,6 +134,9 @@ try {
                     </button></a>
                   </div>
                 </div> <?php }
+                else {
+                  echo "<p style='text-align:center;margin:10% 0% 10% 0;font-size:5rem;'>No Results Found</p>";
+                }
                     }
                   } else {
                     echo "<p style='text-align:center;margin:10% 0% 10% 0;font-size:5rem;'>No Results Found</p>";
