@@ -133,7 +133,11 @@ else{
           <h1><?php echo $name; ?></h1>
 
           <p> &middot; Category: <?php echo $categoryName; ?></p>
-          <p> &middot; Stock: <?php echo $stock; ?></p>
+          <p> &middot; Stock: <?php if(!$stock == 0) {
+             echo $stock;
+           } else {
+             echo "<p>Out of Stock</p>";
+           } ?></p>
 
           <p class="price"><?php
                             if ($discount != 1) {
@@ -266,7 +270,8 @@ else{
               <label><?php echo $categoryName ?></label>
 
               <a href="../catalog/product.php?details=<?php echo $val['id'] ?>" class="btn btn-link"> Details</a>
-              <button class="btn btn-primary btn-rounded btn-sm"> <i class="ion-bag"></i> Add to cart</button>
+              <a style="color:white;text-decoration:none" href="./addToCart.php?id=<?php echo  $val['id'] ?>&&typeCart=addToCart">
+            <button class="btn btn-primary btn-rounded"> <i class="ion-bag"></i> Add to cart</button></a>
             </div>
           </div>
         <?php } ?>
