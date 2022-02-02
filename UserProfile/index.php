@@ -230,6 +230,7 @@ try {
                                         $_SESSION["Loggeduser"] = $name;
                                         $_SESSION["LoggeduserPhone"] = $phone;
                                         echo "<script>window.location.href='../UserProfile'</script>";
+                                        // echo "<h6> your account details has been successfully updated</h6>";
                                     }
                                 }
                                 ?>
@@ -248,46 +249,54 @@ try {
                             <hr>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">
-                                <table class="table table-hover text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th>Order#</th>
-                                            <th>Date</th>
-                                            <th>items</th>
-                                            <th>Status</th>
-                                            <th>total</th>
-                                            <th>payment type</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- php code___________________________________________________________ -->
-                                        <?php
-                                        $LoggedUserId = $_SESSION["LoggeduserId"];
-                                        // $data = $conn->query("SELECT * FROM orders WHERE user_id=$LoggedUserId ");
-                                        // $data->execute();
-                                        $data = $conn->prepare("SELECT order_id,date,SUM(order_item.quantity) AS quantity,total,delivery
-                                        FROM Orders 
-                                        INNER JOIN order_item ON orders.id=order_item.order_id WHERE user_id=$LoggedUserId GROUP BY order_id"); //GROUP BY order_id
-                                        $data->execute();
-                                        $row = $data->fetchAll(PDO::FETCH_ASSOC);
-                                        ?>
-                                        <?php
-                                        foreach ($row as $item) {
-                                        ?>
-                                            <tr class="table-row">
-                                                <td><?php echo $item["order_id"]; ?></td>
-                                                <td><?php echo $item["date"]; ?></td>
-                                                <td><?php echo $item["quantity"]; ?></td>
-                                                <td><span class="tag tag-success">Delivered</span></td>
-                                                <td><?php echo $item["total"] + $item['delivery'] . " JD"; ?></td>
-                                                <td>cash on delivery</td>
+                                <?php
+                                $LoggedUserId = $_SESSION["LoggeduserId"];
+                                // $data = $conn->query("SELECT * FROM orders WHERE user_id=$LoggedUserId ");
+                                // $data->execute();
+                                $data = $conn->prepare("SELECT order_id,date,SUM(order_item.quantity) AS quantity,total,delivery
+                               FROM Orders 
+                               INNER JOIN order_item ON orders.id=order_item.order_id WHERE user_id=$LoggedUserId GROUP BY order_id"); //GROUP BY order_id
+                                $data->execute();
+                                $row = $data->fetchAll(PDO::FETCH_ASSOC);
+                                if ($row == null) {
+                                    echo "<h3>No Orders yet</h3>";
+                                } else {
+                                ?>
+                                    <table class="table table-hover text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Order#</th>
+                                                <th>Date</th>
+                                                <th>items</th>
+                                                <th>Status</th>
+                                                <th>total</th>
+                                                <th>payment type</th>
                                             </tr>
-                                        <?php
-                                        }
-                                        ?>
+                                        </thead>
+                                        <tbody>
+                                            <!-- php code___________________________________________________________ -->
+                                            <?php
+                                            foreach ($row as $item) {
+                                            ?>
+                                                <tr class="table-row">
+                                                    <td><?php echo $item["order_id"]; ?></td>
+                                                    <td><?php echo $item["date"]; ?></td>
+                                                    <td><?php echo $item["quantity"]; ?></td>
+                                                    <td><span class="tag tag-success">Delivered</span></td>
+                                                    <td><?php echo $item["total"] + $item['delivery'] . " JD"; ?></td>
+                                                    <td>cash on delivery</td>
+                                                </tr>
+                                            <?php
+                                            }
 
-                                    </tbody>
-                                </table>
+                                            ?>
+
+                                        </tbody>
+                                    </table>
+                                <?php
+                                }
+
+                                ?>
                             </div>
                             <!-- /.card-body -->
                         </div>
