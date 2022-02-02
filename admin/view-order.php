@@ -161,7 +161,7 @@ try {
     //   echo "</pre>";
       ?>
 
-  <div class="invoice p-3 mb-3">
+  <div class="invoice p-3 mb-3" style="padding: 4em !important;">
               <!-- title row -->
               <div class="row">
                 <div class="col-12">
