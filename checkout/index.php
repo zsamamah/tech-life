@@ -494,8 +494,7 @@ $_SESSION['final_total'] = $_SESSION['total'] + $_SESSION['delivery'];
     unset($_SESSION['total']);
     unset($_SESSION['delivery']);
     unset($_SESSION['final_total']);
-    echo "<script> alert('Your Order Submitted')</script>";
-    echo "<script>window.location.href='../catalog/index.php'</script>";
+    echo "<script>window.location.href='./thank_you.php'</script>";
   }
 
   ?>
